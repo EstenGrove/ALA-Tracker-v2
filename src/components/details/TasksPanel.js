@@ -256,7 +256,7 @@ const TasksPanel = ({
 					{/* UNSCHEDULED TASKLIST */}
 					<TaskList
 						key="UNSCHEDULED_TASKS"
-						tasks={findAllTasksByADL(unscheduledTasks, category)}
+						tasks={findAllTasksByADL(unscheduled, category)}
 						viewDetails={viewDetails}
 						isEditing={showModal}
 					/>

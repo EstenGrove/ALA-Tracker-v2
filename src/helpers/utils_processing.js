@@ -53,7 +53,7 @@ const getCompletedCount = tasks => {
 	return tasks.filter(
 		task =>
 			task.IsCompleted ||
-			(!(task?.TaskStatus === "COMPLETE") ?? task.AssessmentTaskStatusId === 2)
+			(task?.TaskStatus === "COMPLETE" ?? task.AssessmentTaskStatusId === 2)
 	).length;
 };
 

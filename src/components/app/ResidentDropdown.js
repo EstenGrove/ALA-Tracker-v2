@@ -11,6 +11,7 @@ const ResidentDropdown = ({
 	name = "currentResident",
 	residents = [],
 	selectResident,
+	searchResident,
 	loadResident
 }) => {
 	return (
@@ -24,6 +25,7 @@ const ResidentDropdown = ({
 					name={name}
 					list={id}
 					onChange={selectResident}
+					onKeyDown={searchResident}
 					className={styles.ResidentDropdown_search_input}
 				/>
 				<SearchButton

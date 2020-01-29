@@ -25,6 +25,7 @@ const AuthenticatedView = ({ history }) => {
 	const { state, dispatch } = useContext(GlobalStateContext);
 
 	const [isExpanded, setIsExpanded] = useState(true);
+	const [residentVal, setResidentVal] = useState("");
 	const [currentResident, setCurrentResident] = useState({});
 
 	const handleSidebar = () => setIsExpanded(!isExpanded);
@@ -48,7 +49,17 @@ const AuthenticatedView = ({ history }) => {
 		return syncResourceToState({ ...resource, authData }, state, dispatch);
 	};
 
+	const searchResident = e => {
+		const { value } = e.target;
+		console.group("<AuthenticatedView/>");
+		console.log("value", value);
+		console.log("currentResident", currentResident);
+		console.groupEnd();
+		setResidentVal(value);
+	};
+
 	const selectResident = e => {
+		e.preventDefault();
 		const { value } = e.target;
 		if (isEmptyVal(value)) return setCurrentResident({});
 
@@ -114,6 +125,7 @@ const AuthenticatedView = ({ history }) => {
 							id="currentResident"
 							selectResident={selectResident}
 							loadResident={loadResident}
+							searchResident={searchResident}
 						/>
 						<DashboardNav />
 						<ResidentCard

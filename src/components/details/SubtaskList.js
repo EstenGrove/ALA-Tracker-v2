@@ -25,7 +25,6 @@ import SubtaskItem from "./SubtaskItem";
 
 const SubtaskList = ({
 	currentUser = {},
-	currentResident = {}, // might not be needed
 	task = {},
 	subtasks = [],
 	dispatch
@@ -39,9 +38,14 @@ const SubtaskList = ({
 		console.groupEnd();
 		setSubtaskList([newSubtask, ...subtaskList]);
 		return dispatch({
-			type: "CREATE_SUBTASK"
+			type: "CREATE_SUBTASK",
+			data: {
+				newSubtask: newSubtask
+			}
 		});
 	};
+
+	console.log("subtaskList", subtaskList);
 
 	if (isEmptyArray(subtasks)) {
 		return (

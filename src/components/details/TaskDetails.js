@@ -23,8 +23,6 @@ import {
 // UPDATE COMPONENT TO HANDLE UNSCHEDULED TASKS
 
 const TaskDetails = ({ task = {}, children }) => {
-	console.log(isScheduledTask(task));
-
 	if (isEmptyObj(task)) {
 		return <h1>No task found</h1>;
 	}
