@@ -53,7 +53,6 @@ const AuthenticatedView = ({ history }) => {
 		const { value } = e.target;
 		console.group("<AuthenticatedView/>");
 		console.log("value", value);
-		console.log("currentResident", currentResident);
 		console.groupEnd();
 		setResidentVal(value);
 	};
@@ -105,6 +104,10 @@ const AuthenticatedView = ({ history }) => {
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	console.group("<AuthenticatedView/>: resident dropdown handling");
+	console.log("residentVal", residentVal);
+	console.groupEnd();
 
 	return (
 		<>

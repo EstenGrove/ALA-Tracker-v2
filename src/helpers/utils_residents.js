@@ -44,8 +44,8 @@ const getResidentsByFacility = async (token, facilityID) => {
 
 // prevent error when typing into input
 const parseResidentBySeparator = (resident, separator = ":") => {
-	if (isEmptyVal(resident)) return;
-	if (resident.length < 5) return;
+	if (resident.length < 7) return;
+	if (!resident.includes("~ ALA ID:")) return;
 	const first = resident.split(" ")[0].trim();
 	const last = resident.split(" ")[1].trim();
 	const id = resident.split(separator)[1].trim();
@@ -61,6 +61,7 @@ const parseResidentBySeparator = (resident, separator = ":") => {
 // find resident from array of residents
 // set local state
 const handleResidentSelection = (value, residents, stateSetter) => {
+	if (!value.includes("~ ALA ID:")) return;
 	const { id } = parseResidentBySeparator(value, ":");
 	const [activeResident] = residents.filter(
 		res => res.ResidentID === Number(id)
