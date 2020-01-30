@@ -1,14 +1,40 @@
-import React, { useContext } from "react";
+import React, { useEffect } from "react";
 import { NavLink, withRouter, useRouteMatch } from "react-router-dom";
 import { PropTypes } from "prop-types";
+import { isMobile } from "../../helpers/utils_browser";
 import styles from "../../css/dashboard/Sidebar.module.scss";
 import sprite from "../../assets/sidebar.svg";
 
-// **IMPLEMENT MOBILE SIDEBAR**
-// PASS STATE (ie resident, tasks via routes)
-
-const Sidebar = ({ isExpanded, handleSidebar, setShowModal, state }) => {
+const Sidebar = ({
+	isExpanded,
+	handleSidebar,
+	setShowModal,
+	state,
+	history
+}) => {
 	const match = useRouteMatch(); // required for nested routes & link
+
+	const {
+		location: { pathname }
+	} = history;
+
+	// handles changing different sidebars
+	const renderSidebar = () => {
+		if (isMobile()) {
+			return mobileSidebar;
+		}
+		if (isExpanded) {
+			return expandedSidebar;
+		}
+		return collapsedSidebar;
+	};
+
+	const routeStyles = (active, toMatch) => {
+		if (active === toMatch) {
+			return styles.CollapsedSidebar_inner_list_item_active;
+		}
+		return styles.CollapsedSidebar_inner_list_item;
+	};
 
 	const expandedSidebar = (
 		<aside className={styles.Sidebar}>
@@ -139,7 +165,7 @@ const Sidebar = ({ isExpanded, handleSidebar, setShowModal, state }) => {
 							</svg>
 						</button>
 					</li>
-					<li className={styles.CollapsedSidebar_inner_list_item}>
+					<li className={routeStyles(pathname, "/dashboard/daily")}>
 						<NavLink to={`${match.url}/daily`} activeClassName={styles.active}>
 							<svg className={styles.CollapsedSidebar_inner_list_item_icon}>
 								<use xlinkHref={`${sprite}#icon-event_note`}></use>
@@ -149,7 +175,7 @@ const Sidebar = ({ isExpanded, handleSidebar, setShowModal, state }) => {
 							</div>
 						</NavLink>
 					</li>
-					<li className={styles.CollapsedSidebar_inner_list_item}>
+					<li className={routeStyles(pathname, "/dashboard/calendar")}>
 						<NavLink
 							to={`${match.url}/calendar`}
 							activeClassName={styles.active}
@@ -162,7 +188,7 @@ const Sidebar = ({ isExpanded, handleSidebar, setShowModal, state }) => {
 							</div>
 						</NavLink>
 					</li>
-					<li className={styles.CollapsedSidebar_inner_list_item}>
+					<li className={routeStyles(pathname, "/dashboard/summary")}>
 						<NavLink
 							to={`${match.url}/summary`}
 							activeClassName={styles.active}
@@ -177,7 +203,7 @@ const Sidebar = ({ isExpanded, handleSidebar, setShowModal, state }) => {
 							</div>
 						</NavLink>
 					</li>
-					<li className={styles.CollapsedSidebar_inner_list_item}>
+					<li className={routeStyles(pathname, "/dashboard/pastdue")}>
 						<NavLink
 							to={`${match.url}/pastdue`}
 							activeClassName={styles.active}
@@ -190,7 +216,7 @@ const Sidebar = ({ isExpanded, handleSidebar, setShowModal, state }) => {
 							</div>
 						</NavLink>
 					</li>
-					<li className={styles.CollapsedSidebar_inner_list_item}>
+					<li className={routeStyles(pathname, "/dashboard/residentinfo")}>
 						<NavLink
 							to={`${match.url}/residentinfo`}
 							activeClassName={styles.active}
@@ -203,7 +229,7 @@ const Sidebar = ({ isExpanded, handleSidebar, setShowModal, state }) => {
 							</div>
 						</NavLink>
 					</li>
-					<li className={styles.CollapsedSidebar_inner_list_item}>
+					<li className={routeStyles(pathname, "/dashboard/settings")}>
 						<NavLink
 							to={`${match.url}/settings`}
 							activeClassName={styles.active}
@@ -263,7 +289,26 @@ const Sidebar = ({ isExpanded, handleSidebar, setShowModal, state }) => {
 		</aside>
 	);
 
+	useEffect(() => {
+		let isMounted = true;
+		if (!isMounted) {
+			return;
+		}
+		isMobile();
+		return () => {
+			isMounted = false;
+		};
+	}, []);
+
 	return <>{isExpanded ? expandedSidebar : collapsedSidebar}</>;
+
+	// OPTION FOR HANDLING MOBILE
+	// return (
+	// 	<>
+	// 		{isMobile() && mobileSidebar}
+	// 		{!isMobile() && isExpanded ? expandedSidebar : collapsedSidebar}
+	// 	</>
+	// );
 };
 
 export default withRouter(Sidebar);

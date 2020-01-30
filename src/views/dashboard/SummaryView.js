@@ -10,6 +10,8 @@ import { PropTypes } from "prop-types";
 const SummaryView = ({ currentResident = {}, currentUser, vitals = [] }) => {
 	return (
 		<section className={styles.SummaryView}>
+			<h1 className="title">Summary/Reports View</h1>
+			<h2 className="subtitle">In-Progress</h2>
 			<header className={styles.SummaryView_header}>
 				{/*  */}
 				{/*  */}

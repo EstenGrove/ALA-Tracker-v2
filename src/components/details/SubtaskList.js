@@ -63,17 +63,23 @@ const SubtaskList = ({
 	// HANDLES REMOVING FROM SUBTASKLIST
 	// DISPATCHES ACTION TO GLOBAL STORE
 	// SUBMITTING TO SERVER FOR UPDATE
-	const deleteSubtask = subtask => {
-		if (isEmptyObj(subtask)) return;
-		const { AssessmentTrackingTaskShiftSubTaskId: id } = subtask;
+	const deleteSubtask = () => {
+		if (isEmptyObj(activeSubtask)) return;
+		const { AssessmentTrackingTaskShiftSubTaskId: id } = activeSubtask;
 		setShowConfirmation(false);
-		return setSubtaskList([
+		setSubtaskList([
 			...removeItemByProp(
 				id,
 				subtaskList,
 				"AssessmentTrackingTaskShiftSubTaskId"
 			)
 		]);
+		// return dispatch({
+		// 	type: "DELETE_SUBTASK",
+		// 	data: {
+		// 		updatedSubtaskList: subtaskList
+		// 	}
+		// });
 	};
 
 	console.log("subtaskList", subtaskList);
@@ -134,7 +140,7 @@ const SubtaskList = ({
 
 			{showConfirmation && (
 				<ConfirmationModal
-					handleConfirmation={openConfirmation}
+					handleConfirmation={() => deleteSubtask(activeSubtask)}
 					closeModal={() => setShowConfirmation(false)}
 					confirmText="Yes, delete item"
 					cancelText="No, cancel"
