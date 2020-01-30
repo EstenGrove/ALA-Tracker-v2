@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
-import { isEmptyVal } from "../../helpers/utils_types";
+import { isEmptyVal, isEmptyObj } from "../../helpers/utils_types";
 import styles from "../../css/details/SubtaskItem.module.scss";
 import sprite from "../../assets/tasks.svg";
 import sprite2 from "../../assets/notes.svg";

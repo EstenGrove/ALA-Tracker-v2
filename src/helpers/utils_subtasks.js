@@ -3,7 +3,7 @@ import { ScheduledSubTaskModel, UnscheduledSubTaskModel } from "./utils_models";
 import { replaceNullWithMsg, getInitials } from "./utils_processing";
 import { scheduledTasks } from "./utils_endpoints.js";
 import { isScheduledTask } from "./utils_tasks";
-import { isEmptyObj, isEmptyVal, isEmptyArray } from "./utils_types";
+import { isEmptyObj, isEmptyVal, isEmptyArray, hasProp } from "./utils_types";
 import { findShiftID, findShiftName } from "./utils_shifts";
 import { getReasonID } from "./utils_reasons";
 import { getResolutionID } from "./utils_resolution";
@@ -14,6 +14,9 @@ import { format } from "date-fns";
 // "id" utils for more readable code
 const TASK_ID = "AssessmentTrackingTaskId";
 const SUBTASK_ID = "AssessmentTrackingTaskShiftSubTaskId";
+
+const SCHEDULED_SUBTASK_ID = "AssessmentTrackingTaskShiftSubTaskId";
+const UNSCHEDULED_SUBTASK_ID = "AssessmentUnscheduleTaskShiftSubTaskId";
 
 /////////////////////////////////////////////
 /////////////// REQUEST UTILS ///////////////
@@ -419,6 +422,24 @@ const createEmptyUnscheduledSubtask = (activeTask, currentUser = {}) => {
 	};
 };
 
+const isScheduledSubtask = subtask => {
+	if (hasProp(subtask, SCHEDULED_SUBTASK_ID)) {
+		return true;
+	}
+	return false;
+};
+
+const getSubtaskDetails = subtask => {
+	if (isScheduledSubtask(subtask)) {
+		const notes = isEmptyVal(subtask.Description)
+			? subtask.Notes
+			: subtask.Description;
+		return replaceNullWithMsg(notes, "No desc");
+	}
+	const notes = isEmptyObj(subtask.Notes) ? subtask.Description : subtask.Notes;
+	return replaceNullWithMsg(notes, "No desc");
+};
+
 export {
 	createSubtaskVals,
 	groupByShift,
@@ -440,7 +461,8 @@ export {
 	subtaskUpdater, // used in the state updater in GlobalStateContext
 	createEmptyScheduledSubtask,
 	createEmptyUnscheduledSubtask,
-	mergeNewScheduledSubtask
+	mergeNewScheduledSubtask,
+	getSubtaskDetails // get subtask notes or description whichever IS NOT empty/null
 };
 
 // UPDATE FETCH UTILS
@@ -451,3 +473,5 @@ export {
 	deleteSubtask, // 1
 	deleteSubtaskMany // 1 or more
 };
+// common ids
+export { SCHEDULED_SUBTASK_ID, UNSCHEDULED_SUBTASK_ID };

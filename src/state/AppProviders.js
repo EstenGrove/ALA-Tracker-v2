@@ -7,7 +7,9 @@ const AppProviders = ({ children }) => {
 	return (
 		<AuthProvider>
 			<GlobalStateProvider>
-				<BlurProvider>{children}</BlurProvider>
+				{/* <BlurProvider> */}
+				{children}
+				{/* </BlurProvider> */}
 			</GlobalStateProvider>
 		</AuthProvider>
 	);

@@ -6,7 +6,7 @@
 	width: 100%;
 	height: 100%;
 
-	&_msg {
+	&_msg > * {
 		font-size: 1.8rem;
 		color: map-get($map: $colors, $key: "mainBlackBlue");
 		& b {

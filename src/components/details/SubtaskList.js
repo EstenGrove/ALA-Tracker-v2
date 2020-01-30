@@ -8,15 +8,13 @@ import { isEmptyArray, isEmptyObj } from "../../helpers/utils_types";
 import {
 	getSubtaskByShiftID,
 	createEmptyScheduledSubtask,
-	removeItemByProp
+	removeItemByProp,
+	getSubtaskDetails
 } from "../../helpers/utils_subtasks";
 import { findTaskRecordByProp } from "../../helpers/utils_tasks";
 import styles from "../../css/details/SubtaskList.module.scss";
-import sprite from "../../assets/tasks.svg";
-import sprite2 from "../../assets/buttons.svg";
 import ButtonSM from "../shared/ButtonSM";
 import SubtaskItem from "./SubtaskItem";
-import ModalSM from "../shared/ModalSM";
 import ConfirmationModal from "../shared/ConfirmationModal";
 
 // FINISH HANDLING SUBTASK UPDATES
@@ -35,6 +33,7 @@ const SubtaskList = ({
 	dispatch
 }) => {
 	const [subtaskList, setSubtaskList] = useState([...subtasks]);
+	const [activeSubtask, setActiveSubtask] = useState({});
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
 	// finish implementing and testing
@@ -53,24 +52,20 @@ const SubtaskList = ({
 	};
 
 	const openConfirmation = subtask => {
+		if (isEmptyObj(subtask)) return;
 		setShowConfirmation(true);
+		setActiveSubtask(subtask);
 		console.log("OPEN CONFIRMATION DIALOG SUCCESSFUL...");
 		console.log("SUBTASK FROM CONFIRMATION", subtask);
 		// return deleteSubtask(subtask);
 	};
 
-	// REQUIREMENTS:
-	// 1. MATCH RECORD IN LOCALSTATE "subtaskList"
-	// 2. IMMEDIATELY OPEN DESTRUCTIVE MODAL
-	// 3. REQUIRE CONFIRMATION FOR DELETIONS
+	// HANDLES REMOVING FROM SUBTASKLIST
+	// DISPATCHES ACTION TO GLOBAL STORE
+	// SUBMITTING TO SERVER FOR UPDATE
 	const deleteSubtask = subtask => {
 		if (isEmptyObj(subtask)) return;
-
 		const { AssessmentTrackingTaskShiftSubTaskId: id } = subtask;
-		console.group("deleteSubtask");
-		console.log("subtask (to delete)", subtask);
-		console.log("subtaskList", subtaskList);
-		console.groupEnd();
 		setShowConfirmation(false);
 		return setSubtaskList([
 			...removeItemByProp(
@@ -143,14 +138,16 @@ const SubtaskList = ({
 					closeModal={() => setShowConfirmation(false)}
 					confirmText="Yes, delete item"
 					cancelText="No, cancel"
+					icon="delete"
 					msg={
-						<h4>
+						<h1>
 							Are you sure you want to <b>delete</b> this item?
-						</h4>
+						</h1>
 					}
 				>
-					{/*  */}
-					{/*  */}
+					<p className={styles.SubtaskList_activeSubtask}>
+						Subtask: {getSubtaskDetails(activeSubtask)}
+					</p>
 				</ConfirmationModal>
 			)}
 		</>

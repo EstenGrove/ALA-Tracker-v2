@@ -41,7 +41,7 @@ const ConfirmationModal = ({
 	return (
 		<ModalXSM title={title} closeModal={closeModal}>
 			<section className={styles.ConfirmationModal_msg}>
-				<h1 className={styles.ConfirmationModal_msg}>{msg}</h1>
+				<div className={styles.ConfirmationModal_msg}>{msg}</div>
 			</section>
 			{children && (
 				<section className={styles.ConfirmationModal_children}>
@@ -77,7 +77,11 @@ ConfirmationModal.defaultProps = {
 
 ConfirmationModal.propTypes = {
 	title: PropTypes.string, // modal title bar heading
-	msg: PropTypes.string, // modal main message (ie action message)
+	msg: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.object,
+		PropTypes.array
+	]), // modal main message (ie action message)
 	confirmText: PropTypes.string, // confirm btn text
 	cancelText: PropTypes.string, // cancel btn text
 	icon: PropTypes.string, // confirm btn icon
