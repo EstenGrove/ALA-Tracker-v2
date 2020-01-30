@@ -12,8 +12,12 @@ import { findPriorityID } from "./utils_priority";
 import { format } from "date-fns";
 
 // "id" utils for more readable code
-const taskID = "AssessmentTrackingTaskId";
-const subtaskID = "AssessmentTrackingTaskShiftSubTaskId";
+const TASK_ID = "AssessmentTrackingTaskId";
+const SUBTASK_ID = "AssessmentTrackingTaskShiftSubTaskId";
+
+/////////////////////////////////////////////
+/////////////// REQUEST UTILS ///////////////
+/////////////////////////////////////////////
 
 // gets a count of the current ShiftSubTask records
 const getSubtaskCount = async token => {
@@ -162,6 +166,10 @@ const deleteSubtaskMany = async (token, ids) => {
 	}
 };
 
+/////////////////////////////////////////////
+/////////////// SUBTASK UTILS ///////////////
+/////////////////////////////////////////////
+
 // FIELDS TO UPDATE:
 // 1. IsCheck
 // 2. Notes
@@ -231,10 +239,7 @@ const getSubtaskByShiftID = (subtasks, shiftID) => {
 const findSubtaskByID = (active, records) => {
 	if (isEmptyObj(active)) return {};
 	return records.reduce((all, item) => {
-		if (
-			item.AssessmentTrackingTaskShiftSubTaskId ===
-			active.AssessmentTrackingTaskShiftSubTaskId
-		) {
+		if (item[SUBTASK_ID] === active[SUBTASK_ID]) {
 			all = item;
 			return all;
 		}
@@ -245,7 +250,7 @@ const findSubtaskByID = (active, records) => {
 const findSubtaskRecord = (activeID, records) => {
 	if (isEmptyVal(activeID)) return {};
 	return records.reduce((all, item) => {
-		if (item.AssessmentTrackingTaskShiftSubTaskId === activeID) {
+		if (item[SUBTASK_ID] === activeID) {
 			all = item;
 			return all;
 		}
@@ -327,7 +332,7 @@ const removeItemByProp = (id, records, prop) => {
  * @param {number} id - A unique id to use to filter for. Typically an "AssessmentTrackingTaskShiftSubTask"
  */
 const removeStaleSubtask = (subtasks, id) => {
-	return subtasks.filter(x => x.AssessmentTrackingTaskShiftSubTaskId !== id);
+	return subtasks.filter(x => x[SUBTASK_ID] !== id);
 };
 
 /**
@@ -338,11 +343,11 @@ const removeStaleSubtask = (subtasks, id) => {
  */
 const subtaskUpdater = (newSubtask, tasks) => {
 	return tasks.map((task, i) => {
-		if (task[taskID] === newSubtask[taskID]) {
+		if (task[TASK_ID] === newSubtask[TASK_ID]) {
 			const newTask = {
 				...task,
 				ShiftTasks: [
-					...removeStaleSubtask(task.ShiftTasks, newSubtask[subtaskID]),
+					...removeStaleSubtask(task.ShiftTasks, newSubtask[SUBTASK_ID]),
 					newSubtask
 				]
 			};

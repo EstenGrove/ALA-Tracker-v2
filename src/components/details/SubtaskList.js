@@ -45,6 +45,12 @@ const SubtaskList = ({
 		});
 	};
 
+	// REQUIREMENTS:
+	// 1. MATCH RECORD IN LOCALSTATE "subtaskList"
+	// 2. IMMEDIATELY OPEN DESTRUCTIVE MODAL
+	// 3. REQUIRE CONFIRMATION FOR DELETIONS
+	const deleteSubtask = subtask => {};
+
 	console.log("subtaskList", subtaskList);
 
 	if (isEmptyArray(subtasks)) {
