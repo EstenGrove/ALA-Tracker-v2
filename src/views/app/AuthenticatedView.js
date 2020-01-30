@@ -105,10 +105,6 @@ const AuthenticatedView = ({ history }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	console.group("<AuthenticatedView/>: resident dropdown handling");
-	console.log("residentVal", residentVal);
-	console.groupEnd();
-
 	return (
 		<>
 			<div className={styles.AuthenticatedView}>

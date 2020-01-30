@@ -19,7 +19,7 @@
 	border-top: 5px solid map-get($map: $colors, $key: "main");
 	-webkit-box-shadow: 6px 6px 42px -5px rgba(0, 0, 0, 0.75);
 	box-shadow: 6px 6px 42px -5px rgba(0, 0, 0, 0.75);
-	z-index: 40;
+	z-index: 100;
 
 	&::-webkit-scrollbar {
 		border-radius: 0.5rem;

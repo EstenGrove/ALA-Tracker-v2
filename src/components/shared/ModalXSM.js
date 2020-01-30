@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useOutsideClick } from "../../utils/useOutsideClick";
 import styles from "../../css/shared/ModalXSM.module.scss";
+import sprite from "../../assets/buttons.svg";
 
 const ModalXSM = ({ title, closeModal, children }) => {
 	const modalXSMRef = useRef();
@@ -24,7 +25,7 @@ const ModalXSM = ({ title, closeModal, children }) => {
 			<header className={styles.ModalXSM_header}>
 				<h2 className={styles.ModalXSM_header_title}>{title}</h2>
 				<svg className={styles.ModalXSM_header_closeIcon} onClick={closeModal}>
-					<use xlinkHref={`/buttons.svg/#icon-clearclose`} />
+					<use xlinkHref={`${sprite}#icon-clearclose`} />
 				</svg>
 			</header>
 			<section className={styles.ModalXSM_main}>{children}</section>

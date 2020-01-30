@@ -52,10 +52,11 @@ const SubtaskList = ({
 		});
 	};
 
-	const confirmDelete = subtask => {
-		console.log("CONFIRMATION SUCCESSFUL...");
+	const openConfirmation = subtask => {
 		setShowConfirmation(true);
-		return deleteSubtask(subtask);
+		console.log("OPEN CONFIRMATION DIALOG SUCCESSFUL...");
+		console.log("SUBTASK FROM CONFIRMATION", subtask);
+		// return deleteSubtask(subtask);
 	};
 
 	// REQUIREMENTS:
@@ -104,7 +105,7 @@ const SubtaskList = ({
 								dispatch={dispatch}
 								key={`${subtask.AssessmentTrackingTaskShiftSubTaskId}_${index}`}
 								subtask={subtask}
-								deleteSubtask={() => deleteSubtask(subtask)}
+								deleteSubtask={() => openConfirmation(subtask)}
 							/>
 						))}
 				</section>
@@ -117,7 +118,7 @@ const SubtaskList = ({
 								dispatch={dispatch}
 								key={`${subtask.AssessmentTrackingTaskShiftSubTaskId}_${index}`}
 								subtask={subtask}
-								deleteSubtask={() => deleteSubtask(subtask)}
+								deleteSubtask={() => openConfirmation(subtask)}
 							/>
 						))}
 				</section>
@@ -130,7 +131,7 @@ const SubtaskList = ({
 								dispatch={dispatch}
 								key={`${subtask.AssessmentTrackingTaskShiftSubTaskId}_${index}`}
 								subtask={subtask}
-								deleteSubtask={() => deleteSubtask(subtask)}
+								deleteSubtask={() => openConfirmation(subtask)}
 							/>
 						))}
 				</section>
@@ -138,7 +139,7 @@ const SubtaskList = ({
 
 			{showConfirmation && (
 				<ConfirmationModal
-					handleConfirmation={confirmDelete}
+					handleConfirmation={openConfirmation}
 					closeModal={() => setShowConfirmation(false)}
 					confirmText="Yes, delete item"
 					cancelText="No, cancel"

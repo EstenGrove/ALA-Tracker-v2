@@ -29,6 +29,7 @@ const ICONS = {
 };
 
 const ConfirmationModal = ({
+	title = "Confirm Action",
 	msg,
 	confirmText = "Yes",
 	cancelText = "No, cancel",
@@ -38,7 +39,7 @@ const ConfirmationModal = ({
 	children
 }) => {
 	return (
-		<ModalXSM title="Delete Item?" closeModal={closeModal}>
+		<ModalXSM title={title} closeModal={closeModal}>
 			<section className={styles.ConfirmationModal_msg}>
 				<h1 className={styles.ConfirmationModal_msg}>{msg}</h1>
 			</section>
@@ -68,17 +69,19 @@ const ConfirmationModal = ({
 export default ConfirmationModal;
 
 ConfirmationModal.defaultProps = {
+	title: "Confirm Action",
 	confirmText: "Yes",
 	cancelText: "No, cancel",
 	icon: "save"
 };
 
 ConfirmationModal.propTypes = {
-	msg: PropTypes.string,
-	confirmText: PropTypes.string,
-	cancelText: PropTypes.string,
-	icon: PropTypes.string,
-	handleConfirmation: PropTypes.func.isRequired,
-	closeModal: PropTypes.func.isRequired,
+	title: PropTypes.string, // modal title bar heading
+	msg: PropTypes.string, // modal main message (ie action message)
+	confirmText: PropTypes.string, // confirm btn text
+	cancelText: PropTypes.string, // cancel btn text
+	icon: PropTypes.string, // confirm btn icon
+	handleConfirmation: PropTypes.func.isRequired, // confirm btn onClick handler
+	closeModal: PropTypes.func.isRequired, // close modal handler
 	children: PropTypes.any
 };
