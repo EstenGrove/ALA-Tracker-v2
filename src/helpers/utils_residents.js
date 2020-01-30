@@ -1,6 +1,5 @@
 import { residents } from "./utils_endpoints";
 import { test } from "./utils_env";
-import { isEmptyVal } from "./utils_types";
 
 const getResidentsByUserEmail = async (token, email) => {
 	let url = test.base + residents.byUserEmail;

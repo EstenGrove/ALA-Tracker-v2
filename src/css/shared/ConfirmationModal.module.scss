@@ -1,0 +1,33 @@
+@import "../../sass/variables";
+@import "../../sass/mixins";
+@import "../../sass/animations";
+
+.ConfirmationModal {
+	width: 100%;
+	height: 100%;
+
+	&_msg {
+		font-size: 1.8rem;
+		color: map-get($map: $colors, $key: "mainBlackBlue");
+		& b {
+			color: map-get($map: $colors, $key: "mainRed");
+		}
+	}
+	&_children {
+		width: 100%;
+		height: auto;
+		margin: 1rem 0 0 0;
+	}
+
+	&_actions {
+		width: 100%;
+		height: 60%;
+		@include row_between_end;
+
+		&_icon {
+			width: 1.6rem;
+			height: 1.6rem;
+			fill: #ffffff;
+		}
+	}
+}
