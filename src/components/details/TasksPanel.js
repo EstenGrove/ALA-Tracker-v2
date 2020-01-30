@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
 import { useForm } from "../../utils/useForm";
 import { useCounter } from "../../utils/useCounter";
+import { useOutsideClick } from "../../utils/useOutsideClick";
 import styles from "../../css/details/TasksPanel.module.scss";
 import sprite2 from "../../assets/buttons.svg";
 import StatefulButton from "../shared/StatefulButton";

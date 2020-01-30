@@ -1,24 +1,25 @@
 import { useState, useEffect } from "react";
 
 export const useOutsideClick = nodeRef => {
-  const [isOutside, setIsOutside] = useState(false);
-  const handleOutsideClick = e => {
-    if (nodeRef.current.contains(e.target)) {
-      return setIsOutside(false);
-    }
-    return setIsOutside(true);
-  };
+	const [isOutside, setIsOutside] = useState(false);
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleOutsideClick);
+	const handleOutsideClick = e => {
+		if (nodeRef.current.contains(e.target)) {
+			return setIsOutside(false);
+		}
+		return setIsOutside(true);
+	};
 
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+	useEffect(() => {
+		document.addEventListener("mousedown", handleOutsideClick);
 
-  return {
-    isOutside
-  };
+		return () => {
+			document.removeEventListener("mousedown", handleOutsideClick);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return {
+		isOutside
+	};
 };
