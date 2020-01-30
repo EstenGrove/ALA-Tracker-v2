@@ -42,7 +42,7 @@ const themeColors = {
 		saturated: "hsla(211, 25%, 84%, 1)",
 		text: "hsla(216, 15%, 52%, 1)",
 		headings: "hsla(218, 17%, 35%, 1)",
-		subheadings: "hsla(218, 17, 65, 1)",
+		subheadings: "hsla(218, 17%, 65%, 1)",
 		light: "hsla(204, 46%, 98%, 1)",
 		lightened: "hsla(234, 32%, 91%, 0.4)"
 	},

@@ -7,7 +7,8 @@ import {
 import { isEmptyArray, isEmptyObj } from "../../helpers/utils_types";
 import {
 	getSubtaskByShiftID,
-	createEmptyScheduledSubtask
+	createEmptyScheduledSubtask,
+	removeItemByProp
 } from "../../helpers/utils_subtasks";
 import { findTaskRecordByProp } from "../../helpers/utils_tasks";
 import styles from "../../css/details/SubtaskList.module.scss";
@@ -16,6 +17,7 @@ import sprite2 from "../../assets/buttons.svg";
 import ButtonSM from "../shared/ButtonSM";
 import SubtaskItem from "./SubtaskItem";
 import ModalSM from "../shared/ModalSM";
+import ConfirmationModal from "../shared/ConfirmationModal";
 
 // FINISH HANDLING SUBTASK UPDATES
 // IE. IsCheck, IsCompleted, adding Notes
@@ -35,6 +37,7 @@ const SubtaskList = ({
 	const [subtaskList, setSubtaskList] = useState([...subtasks]);
 	const [showConfirmation, setShowConfirmation] = useState(false);
 
+	// finish implementing and testing
 	const addNewSubtask = (task, currentUser) => {
 		const newSubtask = createEmptyScheduledSubtask(task, currentUser);
 		console.group("Adding new subtask...");
@@ -49,11 +52,33 @@ const SubtaskList = ({
 		});
 	};
 
+	const confirmDelete = subtask => {
+		console.log("CONFIRMATION SUCCESSFUL...");
+		setShowConfirmation(true);
+		return deleteSubtask(subtask);
+	};
+
 	// REQUIREMENTS:
 	// 1. MATCH RECORD IN LOCALSTATE "subtaskList"
 	// 2. IMMEDIATELY OPEN DESTRUCTIVE MODAL
 	// 3. REQUIRE CONFIRMATION FOR DELETIONS
-	const deleteSubtask = subtask => {};
+	const deleteSubtask = subtask => {
+		if (isEmptyObj(subtask)) return;
+
+		const { AssessmentTrackingTaskShiftSubTaskId: id } = subtask;
+		console.group("deleteSubtask");
+		console.log("subtask (to delete)", subtask);
+		console.log("subtaskList", subtaskList);
+		console.groupEnd();
+		setShowConfirmation(false);
+		return setSubtaskList([
+			...removeItemByProp(
+				id,
+				subtaskList,
+				"AssessmentTrackingTaskShiftSubTaskId"
+			)
+		]);
+	};
 
 	console.log("subtaskList", subtaskList);
 
@@ -79,6 +104,7 @@ const SubtaskList = ({
 								dispatch={dispatch}
 								key={`${subtask.AssessmentTrackingTaskShiftSubTaskId}_${index}`}
 								subtask={subtask}
+								deleteSubtask={() => deleteSubtask(subtask)}
 							/>
 						))}
 				</section>
@@ -91,6 +117,7 @@ const SubtaskList = ({
 								dispatch={dispatch}
 								key={`${subtask.AssessmentTrackingTaskShiftSubTaskId}_${index}`}
 								subtask={subtask}
+								deleteSubtask={() => deleteSubtask(subtask)}
 							/>
 						))}
 				</section>
@@ -103,25 +130,27 @@ const SubtaskList = ({
 								dispatch={dispatch}
 								key={`${subtask.AssessmentTrackingTaskShiftSubTaskId}_${index}`}
 								subtask={subtask}
+								deleteSubtask={() => deleteSubtask(subtask)}
 							/>
 						))}
 				</section>
 			</article>
 
 			{showConfirmation && (
-				<ModalSM
-					title="Delete a Task"
+				<ConfirmationModal
+					handleConfirmation={confirmDelete}
 					closeModal={() => setShowConfirmation(false)}
+					confirmText="Yes, delete item"
+					cancelText="No, cancel"
+					msg={
+						<h4>
+							Are you sure you want to <b>delete</b> this item?
+						</h4>
+					}
 				>
-					<h2 className="title">Are you sure you want to delete?</h2>
-					<ButtonSM>
-						<svg className={styles.SubtaskList_icon}>
-							<use xlinkHref={`${sprite2}#icon-delete`}></use>
-						</svg>
-						<span>Delete Item</span>
-					</ButtonSM>
 					{/*  */}
-				</ModalSM>
+					{/*  */}
+				</ConfirmationModal>
 			)}
 		</>
 	);

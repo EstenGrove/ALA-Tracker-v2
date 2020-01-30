@@ -7,12 +7,12 @@ import sprite2 from "../../assets/tasks.svg";
 import ModalXSM from "./ModalXSM";
 import ButtonSM from "./ButtonSM";
 
-const deleteBtn = {
+const confirmBtn = {
 	backgroundColor: themeColors.main.red,
 	cursor: "pointer"
 };
 const cancelBtn = {
-	backgroundColor: themeColors.main.green,
+	backgroundColor: themeColors.blueGreys.subheadings,
 	cursor: "pointer"
 };
 
@@ -32,6 +32,7 @@ const ConfirmationModal = ({
 	msg,
 	confirmText = "Yes",
 	cancelText = "No, cancel",
+	handleConfirmation,
 	closeModal,
 	icon = "save",
 	children
@@ -47,13 +48,13 @@ const ConfirmationModal = ({
 				</section>
 			)}
 			<section className={styles.ConfirmationModal_actions}>
-				<ButtonSM customStyles={cancelBtn}>
+				<ButtonSM customStyles={confirmBtn} handleClick={handleConfirmation}>
 					<svg className={styles.ConfirmationModal_actions_icon}>
 						<use xlinkHref={`${sprite2}#icon-${ICONS[icon]}`} />
 					</svg>
 					<span>{confirmText}</span>
 				</ButtonSM>
-				<ButtonSM customStyles={deleteBtn} handleClick={closeModal}>
+				<ButtonSM customStyles={cancelBtn} handleClick={closeModal}>
 					<svg className={styles.ConfirmationModal_actions_icon}>
 						<use xlinkHref={`${sprite}#icon-clearclose`} />
 					</svg>
@@ -66,7 +67,18 @@ const ConfirmationModal = ({
 
 export default ConfirmationModal;
 
+ConfirmationModal.defaultProps = {
+	confirmText: "Yes",
+	cancelText: "No, cancel",
+	icon: "save"
+};
+
 ConfirmationModal.propTypes = {
 	msg: PropTypes.string,
-	closeModal: PropTypes.func.isRequired
+	confirmText: PropTypes.string,
+	cancelText: PropTypes.string,
+	icon: PropTypes.string,
+	handleConfirmation: PropTypes.func.isRequired,
+	closeModal: PropTypes.func.isRequired,
+	children: PropTypes.any
 };

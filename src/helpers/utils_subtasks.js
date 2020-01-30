@@ -235,9 +235,13 @@ const getSubtaskByShiftID = (subtasks, shiftID) => {
 	if (isEmptyArray(subtasks)) return [];
 	return subtasks.filter(subtask => subtask.AssessmentShiftId === shiftID);
 };
-// active subtask and subtask records
+/**
+ * @description - Accepts an activeSubtask record and maps thru a list of Subtask records and find the matching record to update. Used for state updates and server-side requests.
+ * @param {object} active - An active subtask record
+ * @param {array} records - An array of Subtask records (ie AssessmentTrackingTaskShiftSubTask(s) or AssessmentUnscheduleTaskShiftSubTask(s))
+ */
 const findSubtaskByID = (active, records) => {
-	if (isEmptyObj(active)) return {};
+	if (isEmptyObj(active) || isEmptyArray(records)) return {};
 	return records.reduce((all, item) => {
 		if (item[SUBTASK_ID] === active[SUBTASK_ID]) {
 			all = item;
