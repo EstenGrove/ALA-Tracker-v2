@@ -3,10 +3,21 @@ import { unscheduledTasks } from "./utils_endpoints";
 import { requestParams } from "./utils_params";
 // helpers
 import { UnscheduledTaskModel } from "./utils_models";
-import { isEmptyObj, isEmptyVal, isEmptyArray } from "./utils_types";
-import { getCategoryID, getCategoryNameFromID } from "./utils_categories";
+import { isEmptyObj, isEmptyVal } from "./utils_types";
+import { getCategoryID } from "./utils_categories";
 import { replaceNullWithMsg } from "./utils_processing";
 import { findPriorityID } from "./utils_priority";
+import { getResolutionID } from "./utils_resolution";
+import { findShiftID } from "./utils_shifts";
+import { findStatusID } from "./utils_status";
+
+const UNSCHEDULED_ID = "AssessmentUnscheduleTaskId";
+const UNSCHEDULED_SUBTASK_ID = "AssessmentUnscheduleTaskShiftSubTaskId";
+
+/////////////////////////////////////////////////////////////
+//////////////// UNSCHEDULED REQUEST HELPERS ////////////////
+/////////////////////////////////////////////////////////////
+
 /**
  * @description "CREATE" request to create and save one or more new task records
  * @param {string} token base64 encoded auth token
@@ -166,15 +177,127 @@ const mapUpdatesToModel = (formVals, residentID, userID) => {
 };
 
 const findUnscheduledByADL = (tasks, adl) => {
-	console.group("findUnscheduledByADL");
-	console.log("tasks", tasks);
-	console.log("adl", adl);
-	console.log(
-		"AssessmentCategoryId (each task)",
-		tasks.filter(task => task.AssessmentCategoryId === getCategoryID(adl))
-	);
-	console.groupEnd();
 	return tasks.filter(task => task.AssessmentCategoryId === getCategoryID(adl));
+};
+const findUnscheduledRecord = (active, records) => {
+	if (isEmptyObj(active)) return {};
+	return records.reduce((all, item) => {
+		if (item[UNSCHEDULED_ID] === active[UNSCHEDULED_ID]) {
+			all = item;
+			return all;
+		}
+		return all;
+	}, {});
+};
+// UNSCHEDULED TASK UPDATER
+const findAndUpdateUnscheduledRecord = (vals, record) => {
+	switch (vals.status) {
+		case "COMPLETE": {
+			return handleCompletion(vals, record);
+		}
+		case "NOT-COMPLETE": {
+			return handleException(vals, record);
+		}
+		case "PENDING": {
+			return handlePending(vals, record);
+		}
+		case "MISSED-EVENT": {
+			return handleException(vals, record);
+		}
+		case "IN-PROGRESS": {
+			return handlePending(vals, record);
+		}
+		default:
+			return handlePending(vals, record);
+	}
+};
+
+const determineResolution = vals => {
+	if (vals.residentUnavailable) {
+		return "RESIDENT-DENIED";
+	}
+	if (isEmptyVal(vals.followUpDate) && !vals.residentUnavailable) {
+		return "TBC-NEXT-SHIFT";
+	}
+	if (vals.requiresMedCheck && !vals.residentUnavailable) {
+		return "TBC-NEXT-SHIFT-NEEDS";
+	}
+	if (vals.reassess) {
+		return "COMPLETED-REASSESSMENT-NEEDED";
+	}
+	return "PENDING";
+};
+
+const handleUnscheduledNotes = vals => {
+	if (!vals.reassess) return vals.notes;
+	return `${vals.notes} \nReassess Notes: ${vals.reassessNotes}`;
+};
+
+const handleCompletion = (vals, record) => {
+	return {
+		...record,
+		CompletedAssessmentShiftId: findShiftID(vals.shift),
+		AssessmentResolutionId: getResolutionID(determineResolution(vals)),
+		AssessmentReasonId: 6,
+		AssessmentTaskStatusId: findStatusID(vals.status),
+		AssessmentPriorityId: replaceNullWithMsg(findPriorityID(vals.priority), 0),
+		CompletedDate: new Date().toUTCString(),
+		FollowUpDate: vals.followUpDate,
+		SignedBy: vals.signature,
+		InitialBy: getTaskInitials(vals.signature),
+		Notes: handleUnscheduledNotes(vals),
+		IsCompleted: true,
+		IsFinal: isEmptyVal(vals.followUpDate) ? true : false
+	};
+};
+// TBC
+const handleException = (vals, record) => {
+	return {
+		...record,
+		CompletedAssessmentShiftId: findShiftID(vals.shift),
+		AssessmentResolutionId: getResolutionID(determineResolution(vals)),
+		AssessmentReasonId: 4,
+		AssessmentTaskStatusId: findStatusID(vals.status),
+		AssessmentPriorityId: replaceNullWithMsg(findPriorityID(vals.priority), 0),
+		CompletedDate: new Date().toUTCString(),
+		FollowUpDate: vals.followUpDate,
+		SignedBy: vals.signature,
+		InitialBy: getTaskInitials(vals.signature),
+		Notes: vals.notes,
+		IsCompleted: false,
+		IsFinal: false
+	};
+};
+
+// TBC
+const handlePending = (vals, record) => {
+	return {
+		...record,
+		CompletedAssessmentShiftId: findShiftID(vals.shift),
+		AssessmentResolutionId: getResolutionID(determineResolution(vals)),
+		AssessmentReasonId: 4,
+		AssessmentTaskStatusId: findStatusID(vals.status),
+		AssessmentPriorityId: replaceNullWithMsg(findPriorityID(vals.priority), 0),
+		CompletedDate: new Date().toUTCString(),
+		FollowUpDate: vals.followUpDate,
+		SignedBy: vals.signature,
+		InitialBy: getTaskInitials(vals.signature),
+		Notes: vals.notes,
+		IsCompleted: false,
+		IsFinal: false
+	};
+};
+
+// used for parsing a user's name into initials.
+const getTaskInitials = strUser => {
+	if (isEmptyVal(strUser)) return "NA";
+	const first = strUser.slice(0, 1);
+	const last = strUser.split(" ")[1].slice(0, 1);
+	return `${first}.${last}.`;
+};
+
+const removeStaleRecordByProp = (activeID, records, prop) => {
+	return records.filter(item => item[prop] !== activeID);
 };
 
 export {
@@ -182,6 +305,17 @@ export {
 	getUnscheduledTasks,
 	updateUnscheduledTask,
 	deleteUnscheduledTask
+};
+
+// FINDING MATCHING RECORDS
+export {
+	findUnscheduledRecord,
+	handleUnscheduledNotes,
+	handleCompletion,
+	handleException,
+	handlePending,
+	removeStaleRecordByProp,
+	findAndUpdateUnscheduledRecord // UPDATER FUNCTINO FOR UNSCHEDULED TASKS
 };
 
 // new task creation (ie unscheduled tasks)

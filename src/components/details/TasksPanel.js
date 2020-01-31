@@ -15,7 +15,8 @@ import EditTaskForm from "./EditTaskForm";
 import TaskNotesList from "./TaskNotesList";
 import {
 	findTaskRecordByID,
-	findTaskRecordByProp
+	findTaskRecordByProp,
+	isScheduledTask
 } from "../../helpers/utils_tasks";
 import { findRecordAndUpdate, deepDiff } from "../../helpers/utils_updates";
 import { updateCareTaskRecord } from "../../helpers/utils_careTasks";
@@ -27,6 +28,10 @@ import {
 } from "../../helpers/utils_scheduled";
 import ViewNotes from "./ViewNotes";
 import Spinner from "../shared/Spinner";
+import {
+	findAndUpdateUnscheduledRecord,
+	removeStaleRecordByProp
+} from "../../helpers/utils_unscheduled";
 
 const btnStyles = {
 	backgroundColor: "hsla(170, 100%, 39%, 1)",
@@ -122,15 +127,13 @@ const TasksPanel = ({
 		setActiveTask(task);
 	};
 
-	// update task locally before submitting to server.
 	const saveTaskLocally = e => {
 		const { values } = formState;
+		// HANDLES UNSCHEDULED TASK RECORD UPDATES //
+		if (!isScheduledTask(activeTask)) {
+			return saveUnscheduledUpdate(e, activeTask);
+		}
 		const updatedCareTask = updateCareTaskRecord(values, activeTask);
-		console.group("saveTaskLocally");
-		console.log("activeTask", activeTask);
-		console.log("updatedCareTask", updatedCareTask);
-		console.log("activeTask.ShiftTasks", activeTask.ShiftTasks);
-		console.groupEnd();
 		setTasks([
 			...tasks.filter(
 				task =>
@@ -177,6 +180,26 @@ const TasksPanel = ({
 				}
 			});
 		}
+	};
+
+	const saveUnscheduledUpdate = async (e, activeUnscheduledTask) => {
+		e.persist();
+		e.preventDefault();
+		const { values } = formState;
+		const updatedUnscheduled = findAndUpdateUnscheduledRecord(
+			values,
+			activeTask,
+			unscheduled
+		);
+		// MAKE REQUEST AND DISPATCH HERE... //
+		return setUnscheduled([
+			updatedUnscheduled,
+			...removeStaleRecordByProp(
+				activeTask.AssesmentUnscheduleTaskId,
+				unscheduled,
+				"AssesmentUnscheduleTaskId"
+			)
+		]);
 	};
 
 	// displays pending task changes in count form
