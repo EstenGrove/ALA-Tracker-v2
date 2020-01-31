@@ -34,6 +34,10 @@ const AuthenticatedView = ({ history }) => {
 	const customStyles = {
 		paddingLeft: isExpanded ? "22rem" : "8rem"
 	};
+	// IMPLEMENT MOBILE CHECKER FOR CONTAINER
+	const mobileStyles = {
+		paddingLeft: window.innerWidth <= 500 ? "2rem" : null
+	};
 
 	const handleLogout = async e => {
 		const { token } = authData;

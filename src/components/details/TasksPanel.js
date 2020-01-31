@@ -14,9 +14,9 @@ import SubtaskList from "./SubtaskList";
 import EditTaskForm from "./EditTaskForm";
 import TaskNotesList from "./TaskNotesList";
 import {
-	findTaskRecordByID,
-	findTaskRecordByProp,
-	isScheduledTask
+	isScheduledTask,
+	SCHEDULED_ID,
+	UNSCHEDULED_ID
 } from "../../helpers/utils_tasks";
 import { findRecordAndUpdate, deepDiff } from "../../helpers/utils_updates";
 import { updateCareTaskRecord } from "../../helpers/utils_careTasks";
@@ -30,7 +30,8 @@ import ViewNotes from "./ViewNotes";
 import Spinner from "../shared/Spinner";
 import {
 	findAndUpdateUnscheduledRecord,
-	removeStaleRecordByProp
+	removeStaleRecordByProp,
+	saveUnscheduledTasks
 } from "../../helpers/utils_unscheduled";
 
 const btnStyles = {
@@ -135,10 +136,7 @@ const TasksPanel = ({
 		}
 		const updatedCareTask = updateCareTaskRecord(values, activeTask);
 		setTasks([
-			...tasks.filter(
-				task =>
-					task.AssessmentTrackingTaskId !== activeTask.AssessmentTrackingTaskId
-			),
+			...tasks.filter(task => task[SCHEDULED_ID] !== activeTask[SCHEDULED_ID]),
 			updatedCareTask
 		]);
 		setShowModal(false);
@@ -169,9 +167,7 @@ const TasksPanel = ({
 							...state.globals,
 							scheduledTasks: [
 								...scheduledTasks.filter(
-									task =>
-										task.AssessmentTrackingTaskId !==
-										activeTask.AssessmentTrackingTaskId
+									task => task[SCHEDULED_ID] !== activeTask[SCHEDULED_ID]
 								),
 								updateCareTask
 							]
@@ -182,7 +178,7 @@ const TasksPanel = ({
 		}
 	};
 
-	const saveUnscheduledUpdate = async (e, activeUnscheduledTask) => {
+	const saveUnscheduledUpdate = async (e, activeUnscheduled) => {
 		e.persist();
 		e.preventDefault();
 		const { values } = formState;
@@ -191,15 +187,28 @@ const TasksPanel = ({
 			activeTask,
 			unscheduled
 		);
-		// MAKE REQUEST AND DISPATCH HERE... //
-		return setUnscheduled([
-			updatedUnscheduled,
-			...removeStaleRecordByProp(
-				activeTask.AssesmentUnscheduleTaskId,
-				unscheduled,
-				"AssesmentUnscheduleTaskId"
-			)
-		]);
+		const success = await saveUnscheduledTasks(
+			currentUser.token,
+			updatedUnscheduled
+		);
+		if (success) {
+			setUnscheduled([
+				updatedUnscheduled,
+				...removeStaleRecordByProp(
+					activeTask[UNSCHEDULED_ID],
+					unscheduled,
+					UNSCHEDULED_ID
+				)
+			]);
+			setShowModal(false);
+			return dispatch({
+				type: "UPDATE_UNSCHEDULED_TASK",
+				data: {
+					updatedUnscheduled: updatedUnscheduled
+				}
+			});
+		}
+		return;
 	};
 
 	// displays pending task changes in count form

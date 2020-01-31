@@ -78,7 +78,11 @@ const TaskItem = ({ viewDetails, addNote, task = {}, values = {} }) => {
 
 	return (
 		<article
-			className={isCompleted ? styles.TaskItem_isCompleted : styles.TaskItem}
+			className={
+				isCompleted || task.IsCompleted
+					? styles.TaskItem_isCompleted
+					: styles.TaskItem
+			}
 		>
 			<ShiftTag shift={getTaskShift(task)} />
 			<section className={styles.TaskItem_inner}>

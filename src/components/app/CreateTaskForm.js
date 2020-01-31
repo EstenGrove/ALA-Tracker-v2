@@ -87,7 +87,7 @@ const CreateTaskForm = ({
 							placeholder={`Click 'Start Recording' to record a note \nClick 'Stop Recording' to stop.`}
 							label="Notes/Comments"
 							addRequiredFlag={true}
-							maxChar={250}
+							maxChar={1000}
 							enableCharCount={true}
 						/>
 					</VoiceRecorder>
@@ -101,7 +101,7 @@ const CreateTaskForm = ({
 						val={vals.newTaskNote}
 						addRequiredFlag={true}
 						enableCharCount={true}
-						maxChar={250}
+						maxChar={1000}
 						handleChange={handleChange}
 					/>
 				)}

@@ -1,5 +1,9 @@
 import React, { createContext, useReducer } from "react";
 import { subtaskUpdater } from "../helpers/utils_subtasks";
+import {
+	removeStaleRecordByProp,
+	updateUnscheduledTask
+} from "../helpers/utils_unscheduled";
 
 const initialGlobalState = {
 	app: {
@@ -141,6 +145,22 @@ const reducer = (state, action) => {
 				globals: {
 					...state.globals,
 					scheduledTasks: [...newTasks]
+				}
+			};
+		}
+		case "UPDATE_UNSCHEDULED_TASK": {
+			const { updatedUnscheduled } = action.data;
+			const newUnscheduled = [
+				...removeStaleRecordByProp(
+					updatedUnscheduled,
+					state.globals.unscheduledTasks
+				)
+			];
+			return {
+				...state,
+				globals: {
+					...state.globals,
+					unscheduled: [updateUnscheduledTask, ...newUnscheduled]
 				}
 			};
 		}

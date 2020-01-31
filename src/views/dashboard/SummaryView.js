@@ -111,7 +111,7 @@ const SummaryView = ({
 			</header>
 
 			<main className={styles.SummaryView_main}>
-				<ReportPane isLoading={isLoading} title="Vitals" size="HALF">
+				<ReportPane isLoading={isLoading} title="Projected/Actual" size="LG">
 					{!isEmptyArray(data) && (
 						<BarGraph
 							xKey="datMeasured"
@@ -123,7 +123,7 @@ const SummaryView = ({
 						/>
 					)}
 				</ReportPane>
-				<ReportPane isLoading={isLoading} title="Weight" size="HALF">
+				{/* <ReportPane isLoading={isLoading} title="Weight" size="HALF">
 					{!isEmptyArray(data) && (
 						<AreaGraph
 							dataProp="WeightMeasured"
@@ -132,7 +132,7 @@ const SummaryView = ({
 							data={data}
 						/>
 					)}
-				</ReportPane>
+				</ReportPane> */}
 				<ReportPane isLoading={isLoading} title="Reports" size="LG">
 					{!isEmptyArray(data) && <LineGraph />}
 				</ReportPane>

@@ -1,11 +1,11 @@
-import {
-	hasProperty,
-	isEmptyArray,
-	isEmptyVal,
-	isEmptyObj
-} from "./utils_types";
+import { isEmptyArray, isEmptyVal, isEmptyObj } from "./utils_types";
 import { replaceNullWithMsg, addEllipsis } from "./utils_processing";
 import { format } from "date-fns";
+
+export const SCHEDULED_ID = "AssessmentTrackingTaskId";
+export const UNSCHEDULED_ID = "AssessmentUnscheduleTaskId";
+export const SCHEDULED_SUBTASK_ID = "AssessmentTrackingTaskShiftSubTaskId";
+export const UNSCHEDULED_SUBTASK_ID = "AssessmentUnscheduleTaskShiftSubTaskId";
 
 const findTaskRecordByProp = (task, taskRecords, prop) => {
 	if (isEmptyObj(task)) return {};
@@ -70,14 +70,14 @@ const findTaskRecordByID = (
 };
 
 const isScheduledTask = task => {
-	if (hasProp(task, "AssessmentUnscheduleTaskId")) {
+	if (hasProp(task, UNSCHEDULED_ID)) {
 		return false;
 	}
 	return true;
 };
 
 const isUnscheduledTask = task => {
-	if (hasProp(task, "AssessmentUnscheduleTaskId")) {
+	if (hasProp(task, UNSCHEDULED_ID)) {
 		return true;
 	}
 	return false;
@@ -98,9 +98,7 @@ const hasProp = (obj, prop) => {
 // determines if a task is "scheduled" or "unscheduled"
 // and returns the appropriate task id.
 const getTaskID = task => {
-	return isScheduledTask(task)
-		? "AssessmentTrackingTaskId"
-		: "AssessmentUnscheduleTaskId";
+	return isScheduledTask(task) ? SCHEDULED_ID : UNSCHEDULED_ID;
 };
 
 // checks for notes in unscheduled tasks
