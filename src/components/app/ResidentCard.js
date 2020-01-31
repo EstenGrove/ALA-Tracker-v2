@@ -86,7 +86,8 @@ const ResidentCard = ({ currentResident, residentDetails, meds = [] }) => {
 						</div>
 						<div className={styles.ResidentCard_row_tile_group}>
 							<h6 className={styles.ResidentCard_row_tile_group_subtitle}>
-								Notes: {replaceNullWithMsg(currentResident.medNotes, "No meds")}
+								Notes:{" "}
+								{replaceNullWithMsg(currentResident.medNotes, "No notes")}
 							</h6>
 						</div>
 					</section>
@@ -103,7 +104,7 @@ const ResidentCard = ({ currentResident, residentDetails, meds = [] }) => {
 							Due:{" "}
 							{replaceNullWithMsg(
 								format(residentDetails.ServicePlanDue, "MM/DD/YYYY"),
-								"No scheduled service plans in the future."
+								""
 							)}
 						</div>
 					</section>

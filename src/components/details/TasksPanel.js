@@ -126,6 +126,11 @@ const TasksPanel = ({
 	const saveTaskLocally = e => {
 		const { values } = formState;
 		const updatedCareTask = updateCareTaskRecord(values, activeTask);
+		console.group("saveTaskLocally");
+		console.log("activeTask", activeTask);
+		console.log("updatedCareTask", updatedCareTask);
+		console.log("activeTask.ShiftTasks", activeTask.ShiftTasks);
+		console.groupEnd();
 		setTasks([
 			...tasks.filter(
 				task =>
@@ -257,7 +262,7 @@ const TasksPanel = ({
 					{/* UNSCHEDULED TASKLIST */}
 					<TaskList
 						key="UNSCHEDULED_TASKS"
-						tasks={findAllTasksByADL(unscheduled, category)}
+						tasks={unscheduled}
 						viewDetails={viewDetails}
 						isEditing={showModal}
 					/>
