@@ -312,14 +312,6 @@ const Sidebar = ({
 	console.log("<Sidebar/>", width);
 
 	return <>{renderSidebar()}</>;
-
-	// OPTION FOR HANDLING MOBILE
-	// return (
-	//      <>
-	//              {isMobile() && mobileSidebar}
-	//              {!isMobile() && isExpanded ? expandedSidebar : collapsedSidebar}
-	//      </>
-	// );
 };
 
 export default withRouter(Sidebar);

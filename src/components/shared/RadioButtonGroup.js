@@ -7,7 +7,12 @@ import { PropTypes } from "prop-types";
 // 2. PASS THE EVENT HANDLER AS PROPS (IE "handleRadio")
 // 3. IF USING "GROUPS" PASS A GROUP AS PROPS (ie "groupName")
 
-const RadioButtonGroup = ({ groupName, handleRadio, children }) => {
+const RadioButtonGroup = ({
+	groupName,
+	handleRadio,
+	customStyles = {},
+	children
+}) => {
 	const radios = React.Children.map(children, child => {
 		return React.cloneElement(child, {
 			handleSelection: handleRadio,
@@ -16,18 +21,23 @@ const RadioButtonGroup = ({ groupName, handleRadio, children }) => {
 	});
 	return (
 		<section className={styles.RadioButtonGroup}>
-			<div className={styles.RadioButtonGroup_radios}>{radios}</div>
+			<div className={styles.RadioButtonGroup_radios} style={customStyles}>
+				{radios}
+			</div>
 		</section>
 	);
 };
 
 export default RadioButtonGroup;
 
-RadioButtonGroup.defaultProps = {};
+RadioButtonGroup.defaultProps = {
+	customStyles: {}
+};
 
 RadioButtonGroup.propTypes = {
 	radios: PropTypes.array,
 	groupName: PropTypes.string, // is required if using single choice
 	handleSelection: PropTypes.func.isRequired,
-	children: PropTypes.any
+	children: PropTypes.any,
+	customStyles: PropTypes.object
 };

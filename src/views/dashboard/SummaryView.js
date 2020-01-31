@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import styles from "../../css/dashboard/SummaryView.module.scss";
 import { PropTypes } from "prop-types";
 import { format } from "date-fns";
-import { isEmptyArray } from "../../helpers/utils_types";
+import {
+	isEmptyArray,
+	isEmptyVal,
+	isEmptyObj
+} from "../../helpers/utils_types";
 
 import sprite from "../../assets/buttons.svg";
 import ReportPane from "../../components/summary/ReportPane";
@@ -27,9 +31,6 @@ const formatDates = (items, prop) => {
 		};
 	});
 };
-
-// REQUIREMENTS:
-// 1. HANDLE DATA RESOURCE (WHERE SHOULD IT COME FROM: PROPS, GLOBAL STORE OR SERVER)
 
 const SummaryView = ({
 	vals = {},
@@ -108,9 +109,7 @@ const SummaryView = ({
 					className={styles.SummaryView_header_reportSelection}
 				></section>
 			</header>
-			{/* REPORTS & DATA VIZ */}
-			{/* REPORTS & DATA VIZ */}
-			{/* REPORTS & DATA VIZ */}
+
 			<main className={styles.SummaryView_main}>
 				<ReportPane isLoading={isLoading} title="Vitals" size="HALF">
 					{!isEmptyArray(data) && (
@@ -135,7 +134,7 @@ const SummaryView = ({
 					)}
 				</ReportPane>
 				<ReportPane isLoading={isLoading} title="Reports" size="LG">
-					<LineGraph />
+					{!isEmptyArray(data) && <LineGraph />}
 				</ReportPane>
 			</main>
 		</section>
