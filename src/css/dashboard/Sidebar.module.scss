@@ -2,277 +2,337 @@
 @import "../../sass/mixins";
 
 .Sidebar {
-	position: fixed;
-	display: block;
-	top: 6rem;
-	left: 0;
-	width: 20rem;
-	height: calc(100vh - 6rem);
-	background-color: #ffffff;
-	margin-right: 10rem;
-	-webkit-box-shadow: map-get($map: $shadows, $key: "light");
-	box-shadow: map-get($map: $shadows, $key: "light");
+  position: fixed;
+  display: block;
+  top: 6rem;
+  left: 0;
+  width: 20rem;
+  height: calc(100vh - 6rem);
+  background-color: #ffffff;
+  margin-right: 10rem;
+  -webkit-box-shadow: map-get($map: $shadows, $key: "light");
+  box-shadow: map-get($map: $shadows, $key: "light");
 
-	&_top {
-		width: 100%;
-		height: auto;
-		padding: 1rem;
-		@include row_end_center;
+  &_top {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    @include row_end_center;
 
-		&_icon {
-			width: 1.7rem;
-			height: 1.7rem;
-			fill: map-get($map: $blueGreys, $key: "headings");
+    &_icon {
+      width: 1.7rem;
+      height: 1.7rem;
+      fill: map-get($map: $blueGreys, $key: "headings");
 
-			&:hover {
-				cursor: pointer;
-				fill: map-get($map: $colors, $key: "main");
-			}
-		}
-	}
+      &:hover {
+        cursor: pointer;
+        fill: map-get($map: $colors, $key: "main");
+      }
+    }
+  }
 
-	&_inner {
-		@include fill_container;
+  &_inner {
+    @include fill_container;
 
-		&_list {
-			@include fill_container;
-			list-style: none;
-			padding: 3rem 0.3rem;
+    &_list {
+      @include fill_container;
+      list-style: none;
+      padding: 3rem 0.3rem;
 
-			&_newTask {
-				@include row_center_all;
-				width: 100%;
-				padding: 0 1rem;
+      &_newTask {
+        @include row_center_all;
+        width: 100%;
+        padding: 0 1rem;
 
-				&_btn {
-					width: 100%;
-					padding: 1.2rem 2rem;
-					margin-bottom: 2rem;
-					background-color: map-get($map: $colors, $key: "main");
-					color: #ffffff;
-					font-size: 1.5rem;
-					font-weight: 500;
-					border-radius: 0.5rem;
-					border: none;
-					outline: none;
+        &_btn {
+          width: 100%;
+          padding: 1.2rem 2rem;
+          margin-bottom: 2rem;
+          background-color: map-get($map: $colors, $key: "main");
+          color: #ffffff;
+          font-size: 1.5rem;
+          font-weight: 500;
+          border-radius: 0.5rem;
+          border: none;
+          outline: none;
 
-					&:focus-within {
-						-webkit-box-shadow: map-get($map: $shadows, $key: "mainOutline");
-						box-shadow: map-get($map: $shadows, $key: "mainOutline");
-					}
+          &:focus-within {
+            -webkit-box-shadow: map-get($map: $shadows, $key: "mainOutline");
+            box-shadow: map-get($map: $shadows, $key: "mainOutline");
+          }
 
-					&:hover {
-						cursor: pointer;
-						background-color: map-get($map: $colors, $key: "mainBlue");
-						-webkit-box-shadow: map-get($map: $shadows, $key: "light");
-						box-shadow: map-get($map: $shadows, $key: "light");
-					}
-				}
-			}
+          &:hover {
+            cursor: pointer;
+            background-color: map-get($map: $colors, $key: "mainBlue");
+            -webkit-box-shadow: map-get($map: $shadows, $key: "light");
+            box-shadow: map-get($map: $shadows, $key: "light");
+          }
+        }
+      }
 
-			&_item {
-				width: 100%;
-				padding: 1rem 0.5rem; // 2.2rem
-				border-radius: 5rem;
-				@include row_vertical_center;
-				margin-bottom: 2rem;
+      &_item {
+        width: 100%;
+        padding: 1rem 0.5rem; // 2.2rem
+        border-radius: 5rem;
+        @include row_vertical_center;
+        margin-bottom: 2rem;
 
-				&:hover {
-					cursor: pointer;
-					background-color: map-get($map: $greys, $key: "chalk");
-					color: map-get($map: $colors, $key: "main");
-				}
+        &:hover {
+          cursor: pointer;
+          background-color: map-get($map: $greys, $key: "chalk");
+          color: map-get($map: $colors, $key: "main");
+        }
 
-				&:hover &_icon {
-					color: map-get($map: $colors, $key: "main");
-					fill: map-get($map: $colors, $key: "main");
-				}
+        &:hover &_icon {
+          color: map-get($map: $colors, $key: "main");
+          fill: map-get($map: $colors, $key: "main");
+        }
 
-				&:hover & > a {
-					color: map-get($map: $colors, $key: "main");
-				}
+        &:hover & > a {
+          color: map-get($map: $colors, $key: "main");
+        }
 
-				&:hover & > a > div {
-					color: map-get($map: $colors, $key: "main");
-				}
+        &:hover & > a > div {
+          color: map-get($map: $colors, $key: "main");
+        }
 
-				& > a {
-					width: 100%;
-					height: 100%;
-					padding: 1rem 1.3rem;
-					@include row_start_center;
-					text-decoration: none;
-					font-size: 1.6rem;
-					font-weight: 500;
-					color: map-get($map: $blueGreys, $key: "headings");
-					border-radius: 5rem;
+        & > a {
+          width: 100%;
+          height: 100%;
+          padding: 1rem 1.3rem;
+          @include row_start_center;
+          text-decoration: none;
+          font-size: 1.6rem;
+          font-weight: 500;
+          color: map-get($map: $blueGreys, $key: "headings");
+          border-radius: 5rem;
 
-					& > div {
-						&:hover {
-							cursor: pointer;
-							color: map-get($map: $colors, $key: "main");
-						}
-					}
-				}
+          & > div {
+            &:hover {
+              cursor: pointer;
+              color: map-get($map: $colors, $key: "main");
+            }
+          }
+        }
 
-				&_icon {
-					width: 2.5rem;
-					height: 2.5rem;
-					fill: map-get($map: $blueGreys, $key: "headings");
-					margin-right: 2rem;
+        &_icon {
+          width: 2.5rem;
+          height: 2.5rem;
+          fill: map-get($map: $blueGreys, $key: "headings");
+          margin-right: 2rem;
 
-					&:hover {
-						cursor: pointer;
-						fill: map-get($map: $colors, $key: "main");
-					}
-				}
-			}
-		}
-	}
+          &:hover {
+            cursor: pointer;
+            fill: map-get($map: $colors, $key: "main");
+          }
+        }
+      }
+    }
+  }
 }
 
 .CollapsedSidebar {
-	position: fixed;
-	display: block;
-	top: 6rem;
-	left: 0;
-	width: 10rem;
-	height: calc(100vh - 6rem);
-	background-color: #ffffff;
-	margin-right: 10rem;
-	-webkit-box-shadow: map-get($map: $shadows, $key: "light");
-	box-shadow: map-get($map: $shadows, $key: "light");
-	z-index: 1;
+  position: fixed;
+  display: block;
+  top: 6rem;
+  left: 0;
+  width: 10rem;
+  height: calc(100vh - 6rem);
+  background-color: #ffffff;
+  margin-right: 10rem;
+  -webkit-box-shadow: map-get($map: $shadows, $key: "light");
+  box-shadow: map-get($map: $shadows, $key: "light");
+  z-index: 1;
 
-	&_top {
-		width: 100%;
-		height: auto;
-		padding: 1rem;
-		@include row_end_center;
+  &_top {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    @include row_end_center;
 
-		&_icon {
-			width: 1.7rem;
-			height: 1.7rem;
-			fill: map-get($map: $blueGreys, $key: "headings");
+    &_icon {
+      width: 1.7rem;
+      height: 1.7rem;
+      fill: map-get($map: $blueGreys, $key: "headings");
 
-			&:hover {
-				cursor: pointer;
-				fill: map-get($map: $colors, $key: "main");
-			}
-		}
-	}
+      &:hover {
+        cursor: pointer;
+        fill: map-get($map: $colors, $key: "main");
+      }
+    }
+  }
 
-	&_inner {
-		@include fill_container;
+  &_inner {
+    @include fill_container;
 
-		&_list {
-			@include fill_container;
-			list-style: none;
-			padding: 4rem 1rem;
-			@include col_start_center;
+    &_list {
+      @include fill_container;
+      list-style: none;
+      padding: 4rem 1rem;
+      @include col_start_center;
 
-			&_newTask {
-				@include row_center_all;
-				margin-bottom: 4rem;
+      &_newTask {
+        @include row_center_all;
+        margin-bottom: 4rem;
 
-				&_btn {
-					width: 4rem;
-					height: 4rem;
-					border-radius: 50%;
-					border: none;
-					outline: none;
-					background-color: map-get($map: $colors, $key: "main");
-					@include row_center_all;
+        &_btn {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 50%;
+          border: none;
+          outline: none;
+          background-color: map-get($map: $colors, $key: "main");
+          @include row_center_all;
 
-					&:focus-within {
-						-webkit-box-shadow: map-get($map: $shadows, $key: "mainOutline");
-						box-shadow: map-get($map: $shadows, $key: "mainOutline");
-					}
+          &:focus-within {
+            -webkit-box-shadow: map-get($map: $shadows, $key: "mainOutline");
+            box-shadow: map-get($map: $shadows, $key: "mainOutline");
+          }
 
-					&:hover {
-						cursor: pointer;
-						background-color: map-get($map: $colors, $key: "mainBlue");
-						-webkit-box-shadow: map-get($map: $shadows, $key: "light");
-						box-shadow: map-get($map: $shadows, $key: "light");
-					}
+          &:hover {
+            cursor: pointer;
+            background-color: map-get($map: $colors, $key: "mainBlue");
+            -webkit-box-shadow: map-get($map: $shadows, $key: "light");
+            box-shadow: map-get($map: $shadows, $key: "light");
+          }
 
-					&_icon {
-						width: 1.8rem;
-						height: 1.8rem;
-						fill: #ffffff;
-					}
-				}
-			}
+          &_icon {
+            width: 1.8rem;
+            height: 1.8rem;
+            fill: #ffffff;
+          }
+        }
+      }
 
-			&_item {
-				position: relative;
-				width: 100%;
-				padding: 1rem 2.2rem;
-				border-radius: 5rem;
-				@include row_center_all;
-				margin-bottom: 4rem;
+      &_item {
+        position: relative;
+        width: 100%;
+        padding: 1rem 2.2rem;
+        border-radius: 5rem;
+        @include row_center_all;
+        margin-bottom: 4rem;
 
-				&:hover {
-					cursor: pointer;
-					background-color: map-get($map: $greys, $key: "chalk");
-				}
+        &:hover {
+          cursor: pointer;
+          background-color: map-get($map: $greys, $key: "chalk");
+        }
 
-				&:hover &_icon {
-					fill: map-get($map: $colors, $key: "main");
-				}
-				&_active {
-					@extend .CollapsedSidebar_inner_list_item;
-					cursor: pointer;
-					background-color: map-get($map: $greys, $key: "chalk");
-				}
+        &:hover &_icon {
+          fill: map-get($map: $colors, $key: "main");
+        }
+        &_active {
+          @extend .CollapsedSidebar_inner_list_item;
+          cursor: pointer;
+          background-color: map-get($map: $greys, $key: "chalk");
+        }
 
-				& > a {
-					width: 100%;
-					height: 100%;
-					@include row_center_all;
-				}
+        & > a {
+          width: 100%;
+          height: 100%;
+          @include row_center_all;
+        }
 
-				&_icon {
-					width: 2.2rem;
-					height: 2.2rem;
-					fill: map-get($map: $blueGreys, $key: "headings");
+        &_icon {
+          width: 2.2rem;
+          height: 2.2rem;
+          fill: map-get($map: $blueGreys, $key: "headings");
 
-					&:hover {
-						fill: map-get($map: $colors, $key: "main");
-						cursor: pointer;
-					}
-				}
+          &:hover {
+            fill: map-get($map: $colors, $key: "main");
+            cursor: pointer;
+          }
+        }
 
-				&:hover &_text {
-					display: block;
-					bottom: 0;
-					opacity: 1;
-				}
+        &:hover &_text {
+          display: block;
+          bottom: 0;
+          opacity: 1;
+        }
 
-				&_text {
-					display: block;
-					opacity: 0;
-					bottom: 0;
-					position: absolute;
-					-webkit-transition: opacity 0.3s ease-in-out;
-					transition: opacity 0.3s ease-in-out;
-				}
-			}
-		}
-	}
+        &_text {
+          display: block;
+          opacity: 0;
+          bottom: 0;
+          position: absolute;
+          -webkit-transition: opacity 0.3s ease-in-out;
+          transition: opacity 0.3s ease-in-out;
+        }
+      }
+    }
+  }
+}
+
+.MobileSidebar {
+  position: fixed;
+  display: block;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+  width: 100%;
+  height: 8rem;
+  background-color: #ffffff;
+  margin-right: 10rem;
+  -webkit-box-shadow: map-get($map: $shadows, $key: "light");
+  box-shadow: map-get($map: $shadows, $key: "light");
+
+  &_inner {
+    @include fill_container;
+    @include row_between_center;
+    list-style: none;
+    padding: 0.3rem 2%;
+
+    &_newTask {
+      width: 3.5rem;
+      height: 3.5rem;
+      padding: 0.5rem;
+      @include col_center_all;
+      border-radius: 50%;
+      background-color: map-get($map: $colors, $key: "main");
+      margin-right: 0.5rem;
+      &:hover {
+        cursor: pointer;
+        background-color: map-get($map: $colors, $key: "mainBlue");
+      }
+      &_icon {
+        width: 2rem;
+        height: 2rem;
+        fill: #ffffff;
+      }
+    }
+    &_item {
+      width: auto;
+      height: auto;
+
+      &_active {
+        @extend .MobileSidebar_inner_item;
+        background-color: map-get($map: $greys, $key: "chalk");
+        border-radius: 5rem;
+      }
+
+      &_icon {
+        width: 2.4rem;
+        height: 2.4rem;
+        fill: map-get($map: $colors, $key: "mainBlackBlue");
+        &:hover {
+          cursor: pointer;
+          fill: map-get($map: $colors, $key: "main");
+        }
+      }
+    }
+  }
 }
 
 .active {
-	width: 100%;
-	height: 100%;
-	background-color: map-get($map: $greys, $key: "chalk");
-	fill: map-get($map: $colors, $key: "main");
-	color: map-get($map: $colors, $key: "main");
+  width: 100%;
+  height: 100%;
+  background-color: map-get($map: $greys, $key: "chalk");
+  fill: map-get($map: $colors, $key: "main");
+  color: map-get($map: $colors, $key: "main");
 }
 
 .active > svg,
 .active > div {
-	background-color: map-get($map: $greys, $key: "chalk");
-	fill: map-get($map: $colors, $key: "main");
-	color: map-get($map: $colors, $key: "main");
+  background-color: map-get($map: $greys, $key: "chalk");
+  fill: map-get($map: $colors, $key: "main");
+  color: map-get($map: $colors, $key: "main");
 }
