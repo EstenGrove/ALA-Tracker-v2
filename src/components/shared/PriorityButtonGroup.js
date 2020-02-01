@@ -17,7 +17,7 @@ const PriorityButtonGroup = ({ handleClick, val }) => {
 			<PriorityButton
 				id="priorityLow"
 				name="priorityLow"
-				label="!"
+				label="LOW"
 				isChecked={val === "LOW"}
 				handleClick={() => handleClick("LOW")}
 				priority="low"
@@ -25,7 +25,7 @@ const PriorityButtonGroup = ({ handleClick, val }) => {
 			<PriorityButton
 				id="priorityMedium"
 				name="priorityMedium"
-				label="!!"
+				label="MED"
 				isChecked={val === "MEDIUM"}
 				handleClick={() => handleClick("MEDIUM")}
 				priority="medium"
@@ -33,7 +33,7 @@ const PriorityButtonGroup = ({ handleClick, val }) => {
 			<PriorityButton
 				id="priorityHigh"
 				name="priorityHigh"
-				label="!!!"
+				label="HIGH"
 				isChecked={val === "HIGH"}
 				handleClick={() => handleClick("HIGH")}
 				priority="high"

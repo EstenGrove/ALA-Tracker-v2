@@ -48,7 +48,7 @@ const ResidentCard = ({ currentResident, residentDetails, meds = [] }) => {
 								replaceNullWithMsg(currentResident.LastName, "NA")}
 						</h2>
 						<h4 className={styles.ResidentCard_row_top_group_subtitle}>
-							Unit: {replaceNullWithMsg(currentResident.Unit, "NA")}
+							Unit: {replaceNullWithMsg(residentDetails.FloorUnit, "Unknown")}
 						</h4>
 						<h4 className={styles.ResidentCard_row_top_group_subtitle}>
 							ALA ID: {replaceNullWithMsg(currentResident.ResidentID, "NA")}
