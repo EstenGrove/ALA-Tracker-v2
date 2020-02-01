@@ -1,18 +1,12 @@
 import React from "react";
 import { PropTypes } from "prop-types";
-import {
-	isEmptyObj,
-	isEmptyArray,
-	isEmptyVal
-} from "../../helpers/utils_types";
+import { isEmptyObj, isEmptyArray } from "../../helpers/utils_types";
 import {
 	isCompleted,
-	addEllipsis,
 	replaceNullWithMsg
 } from "../../helpers/utils_processing";
 import { getNotesCount } from "../../helpers/utils_taskNotes";
 import {
-	hasProp,
 	getTaskID,
 	getTaskStatus,
 	getTaskDescription

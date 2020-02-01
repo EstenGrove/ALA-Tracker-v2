@@ -131,7 +131,7 @@ const statusReducer = (status = "PENDING") => {
 		case "NOT-COMPLETE":
 			return {
 				backgroundColor: themeColors.blueGreys.saturated,
-				color: "#ffffff",
+				color: themeColors.main.charcoal,
 				border: `1px solid ${themeColors.main.charcoal}`,
 				fontSize: "1.3rem",
 				fontWeight: "400"

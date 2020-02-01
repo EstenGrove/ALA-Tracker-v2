@@ -2,6 +2,9 @@ import { test } from "./utils_env";
 import { scheduledTasks, unscheduledTasks } from "./utils_endpoints";
 import { isEmptyArray } from "./utils_types";
 
+const SCHEDULED_ID = "AssessmentTrackingTaskId";
+const UNSCHEDULED_ID = "AssessmentUnscheduleTaskId";
+
 // fetches ALL task notes for scheduled tasks.
 const getScheduledTaskNotes = async token => {
 	let url = test.base + scheduledTasks.get.note;
@@ -90,13 +93,11 @@ const getScheduledData = async (token, dataType = "task") => {
 	}
 };
 
-const TASK_ID = "AssessmentTrackingTaskId";
-const UNSCHEDULED_ID = "AssessmentUnscheduleTaskId";
 // HELPERS //
 const getNotesCount = (taskID, notes) => {
 	if (isEmptyArray(notes)) return 0;
 	return notes.filter(entry => {
-		if (entry[TASK_ID] === taskID) {
+		if (entry[SCHEDULED_ID] === taskID) {
 			return entry;
 		}
 		return null;
@@ -112,4 +113,4 @@ export {
 };
 
 // TASK ID HELPERS
-export { TASK_ID, UNSCHEDULED_ID };
+export { SCHEDULED_ID, UNSCHEDULED_ID };
