@@ -130,7 +130,7 @@ const statusReducer = (status = "PENDING") => {
 			}; // "hsla(170, 100%, 39%, 1)"
 		case "NOT-COMPLETE":
 			return {
-				backgroundColor: themeColors.main.charcoal,
+				backgroundColor: themeColors.blueGreys.saturated,
 				color: "#ffffff",
 				border: `1px solid ${themeColors.main.charcoal}`,
 				fontSize: "1.3rem",
@@ -140,7 +140,7 @@ const statusReducer = (status = "PENDING") => {
 			return {
 				backgroundColor: themeColors.main.mustard,
 				color: "hsla(218, 17%, 35%, 1)",
-				border: `1px solid ${themeColors.main.Green}`,
+				border: `1px solid ${themeColors.main.altRed}`,
 				fontSize: "1.3rem",
 				fontWeight: "400"
 			}; // "hsla(39, 100%, 70%, 1)"
@@ -156,7 +156,7 @@ const statusReducer = (status = "PENDING") => {
 			return {
 				backgroundColor: themeColors.flat.red,
 				color: "hsla(218, 17%, 35%, 1)",
-				border: `1px solid ${themeColors.main.charcoal}`,
+				border: `1px solid ${themeColors.main.red}`,
 				fontSize: "1.3rem",
 				fontWeight: "400"
 			}; // "hsla(352, 70%, 50%, 1)"

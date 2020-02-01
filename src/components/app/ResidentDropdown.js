@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { PropTypes } from "prop-types";
 import { formatResidentNameOnly } from "../../helpers/utils_residents";
 import { isEmptyArray } from "../../helpers/utils_types";
@@ -13,6 +13,18 @@ const ResidentDropdown = ({
 	selectResident,
 	loadResident
 }) => {
+	const searchRef = useRef();
+	useEffect(() => {
+		let isMounted = true;
+		if (!isMounted) {
+			return;
+		}
+		searchRef.current.focus(); // focus onMount
+		return () => {
+			isMounted = false;
+		};
+	}, []);
+
 	return (
 		<div className={styles.ResidentDropdown}>
 			<h4 htmlFor="currentResident" className={styles.ResidentDropdown_label}>
@@ -20,6 +32,7 @@ const ResidentDropdown = ({
 			</h4>
 			<section className={styles.ResidentDropdown_search}>
 				<input
+					ref={searchRef}
 					type="search"
 					name={name}
 					list={id}

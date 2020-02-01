@@ -1,6 +1,7 @@
 import { isEmptyArray, isEmptyVal, isEmptyObj } from "./utils_types";
 import { replaceNullWithMsg, addEllipsis } from "./utils_processing";
 import { format } from "date-fns";
+import { findStatusNameFromID } from "./utils_status";
 
 export const SCHEDULED_ID = "AssessmentTrackingTaskId";
 export const UNSCHEDULED_ID = "AssessmentUnscheduleTaskId";
@@ -122,6 +123,13 @@ const getTaskDescription = task => {
 	);
 };
 
+const getTaskStatus = task => {
+	if (!isScheduledTask(task)) {
+		return findStatusNameFromID(task.AssessmentTaskStatusId);
+	}
+	return task.TaskStatus;
+};
+
 export {
 	findTaskRecordByProp,
 	sortByIdAsc,
@@ -135,7 +143,7 @@ export {
 };
 
 // tasks/unscheduled notes and description processing
-export { getTaskDescription, checkForNotes };
+export { getTaskDescription, getTaskStatus, checkForNotes };
 
 // determining scheduled|unscheduled tasks and their ids
 export { isScheduledTask, isUnscheduledTask, hasProp, getTaskID };

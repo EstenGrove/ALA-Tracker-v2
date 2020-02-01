@@ -100,6 +100,29 @@ const AuthenticatedView = ({ history }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		let isMounted = true;
+		if (!isMounted) {
+			return;
+		}
+		const handleShortcuts = e => {
+			console.log("e", e);
+			if (e.key === "/" || e.code === "Slash") {
+				return setIsExpanded(!isExpanded);
+			}
+			if (e.key === "s" && e.ctrlKey) {
+				return alert("hellow");
+			}
+			return;
+		};
+		window.addEventListener("keydown", handleShortcuts);
+
+		return () => {
+			isMounted = false;
+			window.removeEventListener("keydown", handleShortcuts);
+		};
+	}, [isExpanded]);
+
 	return (
 		<>
 			<div className={styles.AuthenticatedView}>

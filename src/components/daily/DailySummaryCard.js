@@ -90,108 +90,121 @@ const DailySummaryCard = ({
 	]);
 
 	return (
-		<div className={styles.DailySummaryCard}>
-			<section className={styles.DailySummaryCard_top}>
-				<div className={styles.DailySummaryCard_top_date}>
-					<h4 className={styles.DailySummaryCard_top_date_adl}>
-						{checkCategoryNaming(category.AdlCategoryType)}
-					</h4>
-					<time className={styles.DailySummaryCard_top_date_title}>
-						{format(day, "MMM. Do, YYYY")}
-					</time>
-				</div>
-				<svg
-					className={styles.DailySummaryCard_top_icon}
-					onClick={() => setIsOpen(!isOpen)}
-				>
-					<use xlinkHref={`${sprite}#icon-dots-three-horizontal`}></use>
-				</svg>
-				{/* SIDE MENU */}
-				{isOpen && (
-					<aside className={styles.DailySummaryCard_menu}>
-						<div className={styles.DailySummaryCard_menu_close}>
-							<svg
-								className={styles.DailySummaryCard_menu_close_icon}
-								onClick={() => setIsOpen(!isOpen)}
+		<NavLink
+			to={{
+				pathname: `${match.url}/details/${category.AdlCategoryType}`,
+				state: {
+					currentUser: currentUser,
+					category: category
+				}
+			}}
+			style={{ textDecoration: "none" }}
+		>
+			<div className={styles.DailySummaryCard}>
+				<section className={styles.DailySummaryCard_top}>
+					<div className={styles.DailySummaryCard_top_date}>
+						<h4 className={styles.DailySummaryCard_top_date_adl}>
+							{checkCategoryNaming(category.AdlCategoryType)}
+						</h4>
+						<time className={styles.DailySummaryCard_top_date_title}>
+							{format(day, "MMM. Do, YYYY")}
+						</time>
+					</div>
+					<svg
+						className={styles.DailySummaryCard_top_icon}
+						onClick={() => setIsOpen(!isOpen)}
+					>
+						<use xlinkHref={`${sprite}#icon-dots-three-horizontal`}></use>
+					</svg>
+					{/* SIDE MENU */}
+					{isOpen && (
+						<aside className={styles.DailySummaryCard_menu}>
+							<div className={styles.DailySummaryCard_menu_close}>
+								<svg
+									className={styles.DailySummaryCard_menu_close_icon}
+									onClick={() => setIsOpen(!isOpen)}
+								>
+									<use xlinkHref={`${sprite}#icon-clearclose`}></use>
+								</svg>
+							</div>
+							<NavLink
+								to={{
+									pathname: `${match.url}/details/${category.AdlCategoryType}`,
+									state: {
+										currentUser: currentUser,
+										category: category
+									}
+								}}
 							>
-								<use xlinkHref={`${sprite}#icon-clearclose`}></use>
-							</svg>
-						</div>
-						<NavLink
-							to={{
-								pathname: `${match.url}/details/${category.AdlCategoryType}`,
-								state: {
-									currentUser: currentUser,
-									category: category
-								}
-							}}
+								View Today's <strong>{category.AdlCategoryType}</strong> Details
+							</NavLink>
+							<p className={styles.DailySummaryCard_menu_item}>
+								Mark all tasks complete
+							</p>
+						</aside>
+					)}
+				</section>
+				<section className={styles.DailySummaryCard_inner}>
+					<div className={styles.DailySummaryCard_inner_tile}>
+						<h4 className={styles.DailySummaryCard_inner_tile_heading}>
+							Total
+						</h4>
+						<h4
+							className={styles.DailySummaryCard_inner_tile_val}
+							value={taskCounts.total}
 						>
-							View Today's <strong>{category.AdlCategoryType}</strong> Details
-						</NavLink>
-						<p className={styles.DailySummaryCard_menu_item}>
-							Mark all tasks complete
-						</p>
-					</aside>
-				)}
-			</section>
-			<section className={styles.DailySummaryCard_inner}>
-				<div className={styles.DailySummaryCard_inner_tile}>
-					<h4 className={styles.DailySummaryCard_inner_tile_heading}>Total</h4>
-					<h4
-						className={styles.DailySummaryCard_inner_tile_val}
-						value={taskCounts.total}
-					>
-						{!isEmptyArray(scheduledTasks) ? taskCounts.total : 0}
-					</h4>
-				</div>
-				<div className={styles.DailySummaryCard_inner_tile}>
-					<h4 className={styles.DailySummaryCard_inner_tile_heading}>
-						Completed
-					</h4>
-					<h4
-						className={styles.DailySummaryCard_inner_tile_val_green}
-						value={taskCounts.total}
-					>
-						{!isEmptyArray(scheduledTasks) ? taskCounts.complete : 0}
-					</h4>
-				</div>
-				<div className={styles.DailySummaryCard_inner_tile}>
-					<h4 className={styles.DailySummaryCard_inner_tile_heading}>
-						Pending
-					</h4>
-					<h4
-						className={styles.DailySummaryCard_inner_tile_val_red}
-						value={taskCounts.total}
-					>
-						{!isEmptyArray(scheduledTasks) ? taskCounts.pending : 0}
-					</h4>
-				</div>
-				<div className={styles.DailySummaryCard_inner_tile}>
-					<h4 className={styles.DailySummaryCard_inner_tile_heading}>
-						Total Points
-					</h4>
-					<h4
-						className={styles.DailySummaryCard_inner_tile_val_red}
-						value={taskCounts.total}
-					>
-						{!isEmptyObj(category) ? checkForADLPoints(category) : 0}
-					</h4>
-				</div>
-			</section>
-			<section className={styles.DailySummaryCard_tasks}>
-				<DailySummaryList
-					key="SCHEDULED_TASKS"
-					tasks={[...scheduledTasks, ...unscheduledTasks]}
-					notes={[...scheduledTaskNotes, ...unscheduledTaskNotes]}
-					category={category}
-				/>
-				{/* <DailySummaryList
+							{!isEmptyArray(scheduledTasks) ? taskCounts.total : 0}
+						</h4>
+					</div>
+					<div className={styles.DailySummaryCard_inner_tile}>
+						<h4 className={styles.DailySummaryCard_inner_tile_heading}>
+							Completed
+						</h4>
+						<h4
+							className={styles.DailySummaryCard_inner_tile_val_green}
+							value={taskCounts.total}
+						>
+							{!isEmptyArray(scheduledTasks) ? taskCounts.complete : 0}
+						</h4>
+					</div>
+					<div className={styles.DailySummaryCard_inner_tile}>
+						<h4 className={styles.DailySummaryCard_inner_tile_heading}>
+							Pending
+						</h4>
+						<h4
+							className={styles.DailySummaryCard_inner_tile_val_red}
+							value={taskCounts.total}
+						>
+							{!isEmptyArray(scheduledTasks) ? taskCounts.pending : 0}
+						</h4>
+					</div>
+					<div className={styles.DailySummaryCard_inner_tile}>
+						<h4 className={styles.DailySummaryCard_inner_tile_heading}>
+							Total Points
+						</h4>
+						<h4
+							className={styles.DailySummaryCard_inner_tile_val_red}
+							value={taskCounts.total}
+						>
+							{!isEmptyObj(category) ? checkForADLPoints(category) : 0}
+						</h4>
+					</div>
+				</section>
+				<section className={styles.DailySummaryCard_tasks}>
+					<DailySummaryList
+						key="SCHEDULED_TASKS"
+						tasks={[...scheduledTasks, ...unscheduledTasks]}
+						notes={[...scheduledTaskNotes, ...unscheduledTaskNotes]}
+						category={category}
+					/>
+					{/* <DailySummaryList
 					key="UNSCHEDULED_TASKS"
 					tasks={unscheduledTasks}
 					category={category}
 				/> */}
-			</section>
-		</div>
+				</section>
+			</div>
+		</NavLink>
 	);
 };
 export default withRouter(DailySummaryCard);

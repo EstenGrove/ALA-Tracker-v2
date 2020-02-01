@@ -8,6 +8,7 @@
 	border: 1px solid map-get($map: $colors, $key: "mainGrey");
 	border-radius: 0.5rem;
 	background-color: #ffffff;
+	color: map-get($map: $colors, $key: "mainBlackBlue");
 	-webkit-box-shadow: map-get($map: $shadows, $key: "subtleInset");
 	box-shadow: map-get($map: $shadows, $key: "subtleInset");
 	z-index: 1;

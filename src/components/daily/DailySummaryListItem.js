@@ -14,6 +14,7 @@ import { getNotesCount } from "../../helpers/utils_taskNotes";
 import {
 	hasProp,
 	getTaskID,
+	getTaskStatus,
 	getTaskDescription
 } from "../../helpers/utils_tasks";
 import { statusReducer } from "../../helpers/utils_styles";
@@ -45,9 +46,12 @@ const DailySummaryListItem = ({ task, notes = [] }) => {
 			</section>
 			<div className={styles.DailySummaryListItem_item}>
 				<div
-					title={task.TaskStatus}
+					title={getTaskStatus(task)}
 					className={styles.DailySummaryListItem_item_status}
-					style={replaceNullWithMsg(statusReducer(task.TaskStatus), "PENDING")}
+					style={replaceNullWithMsg(
+						statusReducer(getTaskStatus(task)),
+						"PENDING"
+					)}
 				>
 					<div className={styles.DailySummaryListItem_item_status_badge}></div>
 				</div>
