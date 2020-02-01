@@ -47,10 +47,13 @@ Current build of Advantage Tracker v1.0
 
 ```
                                       <DetailsView>
-                                    /             \
+                                    /
                           <TasksPanel>
                          /            \
-                <TaskList>
-
-
+              (SCHEDULED)             (UNSCHEDULED)
+               <TaskList>              <TaskList>
+              /           \
+        <Modal>          <SubtaskList>
+           |
+      <EditTaskForm>
 ```

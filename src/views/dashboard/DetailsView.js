@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { withRouter } from "react-router-dom";
 import { PropTypes } from "prop-types";
 
@@ -16,10 +16,6 @@ import PanelLG from "../../components/shared/PanelLG";
 import TasksPanel from "../../components/details/TasksPanel";
 import Spinner from "../../components/shared/Spinner";
 
-// **TODOS**:
-// 1. REASSESS NOTES TEXTAREA NOT SHOWING WHEN REASSESS CHECKBOX IS SELECTED
-
-// DETAILS VIEW - CHILD ROUTE OF THE <DailyView/> route
 const DetailsView = props => {
 	const { category, currentUser } = props.location.state;
 	const { state, dispatch } = useContext(GlobalStateContext);

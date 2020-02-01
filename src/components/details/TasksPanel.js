@@ -178,7 +178,7 @@ const TasksPanel = ({
 		}
 	};
 
-	const saveUnscheduledUpdate = async (e, activeUnscheduled) => {
+	const saveUnscheduledUpdate = async e => {
 		e.persist();
 		e.preventDefault();
 		const { values } = formState;

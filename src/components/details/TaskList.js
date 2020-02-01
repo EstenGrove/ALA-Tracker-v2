@@ -24,7 +24,7 @@ const TaskList = ({
 		stop,
 		final
 	} = useSpeechRecognition({ continuous: true, interimResults: true });
-	const { formState, setFormState, handleChange, handleCheckbox } = useForm({
+	const { formState, handleChange } = useForm({
 		voiceNote: "",
 		taskNote: ""
 	});
@@ -36,10 +36,6 @@ const TaskList = ({
 		console.log("adding note...");
 		// dispatch action to update task add task note
 	};
-
-	console.group("<TaskList/>");
-	console.log("tasks", tasks);
-	console.groupEnd();
 
 	if (isEmptyArray(tasks)) {
 		return (
