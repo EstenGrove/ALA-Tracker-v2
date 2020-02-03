@@ -1,4 +1,5 @@
 import { handleEmpties } from "./utils_types";
+import { isLOA } from "./utils_residentData";
 
 const populateState = (data, state) => {
 	const {
@@ -28,7 +29,8 @@ const populateState = (data, state) => {
 			...state.globals,
 			currentResident: {
 				...resident,
-				ResidentId: ResidentId
+				ResidentId: ResidentId,
+				isLOA: isLOA(LOA[0])
 			},
 			adlDescriptions: handleEmpties(ADL),
 			unscheduledTasks: handleEmpties(UnscheduledTasks),

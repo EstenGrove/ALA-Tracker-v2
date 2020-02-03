@@ -2,146 +2,157 @@
 @import "../../sass/mixins";
 
 .ResidentCard {
-    display: block;
-    margin: 2rem auto;
-    max-width: 35rem;
-    width: 35rem;
-    height: auto;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    -webkit-box-shadow: map-get($map: $shadows, $key: "medSubtle");
-    box-shadow: map-get($map: $shadows, $key: "medSubtle");
-    background-color: #ffffff;
+	display: block;
+	margin: 2rem auto;
+	max-width: 35rem;
+	width: 35rem;
+	height: auto;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	-webkit-box-shadow: map-get($map: $shadows, $key: "medSubtle");
+	box-shadow: map-get($map: $shadows, $key: "medSubtle");
+	background-color: #ffffff;
 
-    &_row {
-        width: 100%;
-        height: auto;
-        @include row_between_start;
-        margin-bottom: 4rem;
+	&_row {
+		width: 100%;
+		height: auto;
+		@include row_between_start;
+		margin-bottom: 4rem;
 
-        &_top {
-            width: 80%;
-            @include row_start_center;
+		&_top {
+			width: 80%;
+			@include row_start_center;
 
-            &_group {
-                width: auto;
-                @include col_start_start;
-                margin-left: 1rem;
+			&_group {
+				width: auto;
+				@include col_start_start;
+				margin-left: 1rem;
 
-                &_title {
-                    color: map-get($map: $colors, $key: "mainBlackBlue");
-                }
+				&_title {
+					color: map-get($map: $colors, $key: "mainBlackBlue");
+				}
 
-                &_subtitle {
-                    color: map-get($map: $blueGreys, $key: "headings");
-                }
-            }
-        }
+				&_subtitle {
+					color: map-get($map: $blueGreys, $key: "headings");
+				}
+			}
+		}
 
-        &_menu {
-            width: auto;
-            height: auto;
-            position: relative;
+		&_menu {
+			width: auto;
+			height: auto;
+			position: relative;
 
-            &_icon {
-                width: 1.6rem;
-                height: 1.6rem;
-                fill: map-get($map: $colors, $key: "mainBlackBlue");
+			&_icon {
+				width: 1.6rem;
+				height: 1.6rem;
+				fill: map-get($map: $colors, $key: "mainBlackBlue");
 
-                &:hover {
-                    cursor: pointer;
-                    fill: map-get($map: $colors, $key: "main");
-                }
-            }
+				&:hover {
+					cursor: pointer;
+					fill: map-get($map: $colors, $key: "main");
+				}
+			}
 
-            &_dropdown {
-                position: absolute;
-                right: 0;
-                width: 12rem;
-                height: 5rem;
-                padding: 1rem;
-                border-radius: 0.5rem;
-                background-color: #ffffff;
-                -webkit-box-shadow: map-get($map: $shadows, $key: "medSubtle");
-                box-shadow: map-get($map: $shadows, $key: "heavy");
+			&_dropdown {
+				position: absolute;
+				right: 0;
+				width: 12rem;
+				height: 5rem;
+				padding: 1rem;
+				border-radius: 0.5rem;
+				background-color: #ffffff;
+				-webkit-box-shadow: map-get($map: $shadows, $key: "medSubtle");
+				box-shadow: map-get($map: $shadows, $key: "heavy");
 
-                &_option,
-                &_option>a {
-                    color: map-get($map: $colors, $key: "main");
-                    text-decoration: none;
-                    text-align: center;
+				&_option,
+				&_option > a {
+					color: map-get($map: $colors, $key: "main");
+					text-decoration: none;
+					text-align: center;
 
-                    &:hover {
-                        cursor: pointer;
-                        color: map-get($map: $colors, $key: "mainBlue");
-                    }
-                }
-            }
-        }
+					&:hover {
+						cursor: pointer;
+						color: map-get($map: $colors, $key: "mainBlue");
+					}
+				}
+			}
+		}
 
-        &_tile {
-            width: 50%;
-            height: auto;
+		&_tile {
+			width: 50%;
+			height: auto;
 
-            &_group {
-                @include row_center_all;
-                margin-bottom: 1rem;
+			&_group {
+				@include row_center_all;
+				margin-bottom: 1rem;
 
-                &_subtitle {
-                    font-size: 1.3rem;
-                    font-weight: 600;
-                    text-align: center;
-                    padding-left: 3rem;
-                }
+				&_subtitle {
+					font-size: 1.3rem;
+					font-weight: 600;
+					text-align: center;
+					padding-left: 3rem;
+				}
 
-                &_title {
-                    font-size: 1.6rem;
-                    margin-left: 1rem;
-                }
-            }
+				&_title {
+					font-size: 1.6rem;
+					margin-left: 1rem;
+				}
+			}
 
-            &_icon {
-                width: 2rem;
-                height: 2rem;
+			&_icon {
+				width: 2rem;
+				height: 2rem;
 
-                &_red {
-                    @extend .ResidentCard_row_tile_icon;
-                    fill: map-get($map: $colors, $key: "mainRed");
-                }
+				&_red {
+					@extend .ResidentCard_row_tile_icon;
+					fill: map-get($map: $colors, $key: "mainRed");
+				}
 
-                &_blue {
-                    @extend .ResidentCard_row_tile_icon;
-                    fill: map-get($map: $colors, $key: "main");
-                }
-            }
+				&_blue {
+					@extend .ResidentCard_row_tile_icon;
+					fill: map-get($map: $colors, $key: "main");
+				}
+			}
 
-            &_plans {
-                width: 100%;
-                height: auto;
-                font-size: 1.3rem;
-                font-weight: 600;
-                text-align: center;
-                padding-left: 3rem;
-            }
-        }
-    }
+			&_plans {
+				width: 100%;
+				height: auto;
+				font-size: 1.3rem;
+				font-weight: 600;
+				text-align: center;
+				padding-left: 3rem;
+			}
+		}
+	}
 
-    &_viewDetails {
-        display: block;
-        margin: 0 auto;
-        padding: 1.2rem 2.2rem;
-        border-radius: 5rem;
-        border: none;
-        outline: none;
-        background-color: map-get($map: $colors, $key: "main");
-        color: #ffffff;
-        font-size: 1.2rem;
-        font-weight: 700;
+	&_viewDetails {
+		display: block;
+		margin: 0 auto;
+		padding: 1.2rem 2.2rem;
+		border-radius: 5rem;
+		border: none;
+		outline: none;
+		background-color: map-get($map: $colors, $key: "main");
+		color: #ffffff;
+		font-size: 1.2rem;
+		font-weight: 700;
 
-        &:hover {
-            cursor: pointer;
-            -webkit-box-shadow: map-get($map: $shadows, $key: "mainOutline");
-            box-shadow: map-get($map: $shadows, $key: "mainOutline");
-        }
-    }
+		&:hover {
+			cursor: pointer;
+			-webkit-box-shadow: map-get($map: $shadows, $key: "mainOutline");
+			box-shadow: map-get($map: $shadows, $key: "mainOutline");
+		}
+	}
+}
+
+.isLOA {
+	width: max-content;
+	height: max-content;
+	border-radius: 50%;
+
+	&_active {
+		@extend .isLOA;
+		border: 2px solid map-get($map: $colors, $key: "mainRed");
+	}
 }

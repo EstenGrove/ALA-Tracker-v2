@@ -8,6 +8,7 @@ import { useOutsideClick } from "../../utils/useOutsideClick";
 import styles from "../../css/app/ResidentCard.module.scss";
 import sprite from "../../assets/resident-details.svg";
 import ResidentPhoto from "./ResidentPhoto";
+import { themeColors } from "../../helpers/utils_styles";
 
 const ResidentCard = ({ currentResident, residentDetails, meds = [] }) => {
 	const cardRef = useRef();
@@ -40,12 +41,21 @@ const ResidentCard = ({ currentResident, residentDetails, meds = [] }) => {
 		<article className={styles.ResidentCard}>
 			<div className={styles.ResidentCard_row}>
 				<section className={styles.ResidentCard_row_top}>
-					<ResidentPhoto imgSize="MD" />
+					<div
+						className={
+							residentDetails.isLOA ? styles.isLOA_active : styles.isLOA
+						}
+					>
+						<ResidentPhoto imgSize="MD" />
+					</div>
 					<hgroup className={styles.ResidentCard_row_top_group}>
 						<h2 className={styles.ResidentCard_row_top_group_title}>
 							{replaceNullWithMsg(currentResident.FirstName, "NA") +
 								" " +
-								replaceNullWithMsg(currentResident.LastName, "NA")}
+								replaceNullWithMsg(currentResident.LastName, "NA")}{" "}
+							{residentDetails.isLOA && (
+								<b style={{ color: themeColors.main.red }}>(LOA)</b>
+							)}
 						</h2>
 						<h4 className={styles.ResidentCard_row_top_group_subtitle}>
 							Unit: {replaceNullWithMsg(residentDetails.FloorUnit, "Unknown")}
