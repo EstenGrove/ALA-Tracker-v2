@@ -6,11 +6,13 @@ import { GlobalStateContext } from "../../state/GlobalStateContext";
 
 import { findAllTasksByADL } from "../../helpers/utils_scheduled"; // handles ALL tasks (scheduled|unscheduled)
 import { adlColors } from "../../helpers/utils_styles";
+import { formatReturnDate } from "../../helpers/utils_dates";
 import Spinner from "../../components/shared/Spinner";
 import ContainerLG from "../../components/shared/ContainerLG";
 import Row from "../../components/shared/Row";
 import CardSM from "../../components/shared/CardSM";
 import DailySummaryCard from "../../components/daily/DailySummaryCard";
+import { format } from "date-fns";
 
 // REQUIRED PROPS:
 // 1. resident data
@@ -31,8 +33,10 @@ const DailyView = props => {
 		unscheduledTasks,
 		unscheduledTaskNotes,
 		trackingTasks,
-		categories
+		categories,
+		loa
 	} = globals;
+	const { isLOA } = currentResident;
 
 	if (isLoading) {
 		return <Spinner />;
@@ -40,36 +44,43 @@ const DailyView = props => {
 	return (
 		<div className={styles.DailyView}>
 			<h1 className={styles.DailyView_title}>Today's Agenda</h1>
-			<ContainerLG>
-				<Row rowHeight="auto" rowSpacing="space-evenly" wrapItems="wrap">
-					{categories &&
-						categories.map((adl, index) => (
-							<CardSM
-								customStyles={{
-									borderTop: `2px solid ${adlColors[adl.AdlCategoryType]}`
-								}}
-								key={`${adl.AdlId}_${index}`}
-							>
-								<DailySummaryCard
-									key={`${adl.AdlId}_${adl.AdlCategoryId}`}
-									scheduledTaskNotes={scheduledTaskNotes}
-									scheduledTasks={findAllTasksByADL(
-										scheduledTasks,
-										adl.AdlCategoryType
-									)}
-									unscheduledTaskNotes={unscheduledTaskNotes}
-									unscheduledTasks={findAllTasksByADL(
-										unscheduledTasks,
-										adl.AdlCategoryType
-									)}
-									currentUser={user}
-									category={adl}
-									day={new Date()}
-								/>
-							</CardSM>
-						))}
-				</Row>
-			</ContainerLG>
+			{isLOA && (
+				<h2 className={styles.DailyView_LOA}>
+					On Leave Of Absence Until {formatReturnDate(loa[0].ReturnDate)}
+				</h2>
+			)}
+			{!isLOA && (
+				<ContainerLG>
+					<Row rowHeight="auto" rowSpacing="space-evenly" wrapItems="wrap">
+						{categories &&
+							categories.map((adl, index) => (
+								<CardSM
+									customStyles={{
+										borderTop: `2px solid ${adlColors[adl.AdlCategoryType]}`
+									}}
+									key={`${adl.AdlId}_${index}`}
+								>
+									<DailySummaryCard
+										key={`${adl.AdlId}_${adl.AdlCategoryId}`}
+										scheduledTaskNotes={scheduledTaskNotes}
+										scheduledTasks={findAllTasksByADL(
+											scheduledTasks,
+											adl.AdlCategoryType
+										)}
+										unscheduledTaskNotes={unscheduledTaskNotes}
+										unscheduledTasks={findAllTasksByADL(
+											unscheduledTasks,
+											adl.AdlCategoryType
+										)}
+										currentUser={user}
+										category={adl}
+										day={new Date()}
+									/>
+								</CardSM>
+							))}
+					</Row>
+				</ContainerLG>
+			)}
 		</div>
 	);
 };

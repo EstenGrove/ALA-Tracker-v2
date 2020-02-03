@@ -1,7 +1,11 @@
-@import '../../sass/variables';
-@import '../../sass/mixins';
+@import "../../sass/variables";
+@import "../../sass/mixins";
 
 .DailyView {
-    @include fill_container;
-    padding: 2rem;
+	@include fill_container;
+	padding: 2rem;
+
+	&_LOA {
+		color: map-get($map: $colors, $key: "mainRed");
+	}
 }

@@ -17,6 +17,14 @@ const formatDate = (date = null) => {
 	return `${day}, ${month} ${dayDate} ${year}`;
 };
 
+const formatReturnDate = strDate => {
+	const weekDay = format(new Date(strDate), "ddd"); // dddd for full weekDay
+	const month = format(new Date(strDate), "MMMM");
+	const day = format(new Date(strDate), "Do");
+	const year = format(new Date(strDate), "YYYY");
+	return `${weekDay} ${month}, ${day} ${year}`;
+};
+
 const formatTime = time => {
 	let hours = time.getHours();
 	let mins = time.getMinutes();
@@ -95,6 +103,7 @@ const checkForPastDue = task => {
 };
 
 export {
+	formatReturnDate,
 	formatDate,
 	formatTime,
 	formatTimeToNow,
