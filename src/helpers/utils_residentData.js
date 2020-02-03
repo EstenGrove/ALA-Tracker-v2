@@ -1,7 +1,7 @@
 import { residentData, forTracker } from "./utils_endpoints";
 import { test } from "./utils_env";
-import { format } from "date-fns";
-import { isEmptyVal } from "./utils_types";
+import { format, isWithinRange } from "date-fns";
+import { isEmptyVal, isEmptyObj } from "./utils_types";
 import { getUnscheduledTasks } from "./utils_unscheduled";
 
 // defaults to today's date if no date is passed
@@ -102,6 +102,38 @@ const getAssessmentCategories = async token => {
 	}
 };
 
+// returns an array of LOA entries
+// includes the start/end dates, reason & other relevant data
+const getResidentLOA = async (token, residentID) => {
+	let url = test.base + residentData.getLOA;
+	url += "?residentId=" + residentID;
+
+	try {
+		const request = await fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: "Basic " + btoa(test.user + ":" + test.password),
+				SecurityToken: token
+			}
+		});
+		const response = await request.json();
+		return response.Data;
+	} catch (err) {
+		return console.log("An error occured: " + err);
+	}
+};
+
+/**
+ * @description - Helper that accepts a "LeaveOfAbsence" entry and checks if today is within the leave of absence range.
+ * @param {object} loa - An LeaveOfAbsence data object
+ * @returns boolean
+ */
+const isLOA = loa => {
+	if (isEmptyObj(loa)) return false;
+	if (!isWithinRange(new Date(), loa.LeaveDate, loa.ReturnDate)) return false;
+	return true;
+};
+
 // FORMATTING DATA (RESIDENT DATA)
 const formatResidentSearch = resident => {
 	const { FirstName, LastName, ResidentID } = resident;
@@ -164,10 +196,12 @@ const fetchWeeklyResidentData = async (token, residentID, startDay = 0) => {
 const mergeDailyResidentData = async (token, residentID, day = new Date()) => {
 	const dailyData = await fetchDailyResidentData(token, residentID, day);
 	const unscheduledTasks = await getUnscheduledTasks(token, residentID);
+	const l_o_a = await getResidentLOA(token, residentID); // leave_of_absence
 
 	const merged = {
 		...dailyData,
 		UnscheduledTasks: unscheduledTasks,
+		LOA: [...l_o_a],
 		ResidentId: residentID
 	};
 	return { ...merged };
@@ -178,6 +212,8 @@ export {
 	getResidentDay, // forTracker
 	getResidentWeek, // forTracker
 	getAssessmentCategories,
+	getResidentLOA,
+	isLOA, // checks for active LOA status
 	// formatting utils
 	formatCurrentResident, // previous version
 	formatResidentSearch,

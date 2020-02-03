@@ -38,7 +38,8 @@ const initialGlobalState = {
 			bathNotes: null,
 			escortNotes: null,
 			groomingNotes: null,
-			hygieneNotes: null
+			hygieneNotes: null,
+			loa: {}
 		},
 		residents: [],
 		adlDescriptions: [],

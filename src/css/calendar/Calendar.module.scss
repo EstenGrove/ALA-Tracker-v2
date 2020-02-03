@@ -2,25 +2,25 @@
 @import "../../sass/variables";
 
 .Calendar {
-    width: 100%;
-    min-height: 100%;
-    border-radius: 1rem;
-    border-bottom: none;
-    padding: 1rem 10rem;
-    background-color: transparent;
+	width: 100%;
+	min-height: 100%;
+	border-radius: 1rem;
+	border-bottom: none;
+	padding: 1rem 10rem;
+	background-color: transparent;
 
-    &_inner {
-        -webkit-box-shadow: map-get($map: $shadows, $key: 'light');
-        box-shadow: map-get($map: $shadows, $key: 'light');
-        border: 1px solid #ccc;
-        border-bottom: none;
-        border-radius: 1rem;
-        background-color: transparent;
-    }
+	&_inner {
+		-webkit-box-shadow: map-get($map: $shadows, $key: "light");
+		box-shadow: map-get($map: $shadows, $key: "light");
+		border: 1px solid #ccc;
+		border-bottom: none;
+		border-radius: 1rem;
+		background-color: transparent;
+	}
 }
 
 @media screen and (max-width: 950px) {
-    .Calendar {
-        padding: 1rem 5rem;
-    }
+	.Calendar {
+		padding: 1rem 5rem;
+	}
 }

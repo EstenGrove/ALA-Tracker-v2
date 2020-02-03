@@ -15,7 +15,8 @@ const populateState = (data, state) => {
 		Vitals,
 		UnscheduledTasks,
 		AssessmentUnscheduleTaskNote,
-		ADLCategory
+		ADLCategory,
+		LOA
 		// AssessmentTask,
 		// AssessmentTracking,
 	} = data;
@@ -40,7 +41,8 @@ const populateState = (data, state) => {
 			categories: handleEmpties(ADLCareLevel),
 			activeCategories: handleEmpties(ADLCategory),
 			charting: handleEmpties(Charts),
-			vitals: handleEmpties(Vitals)
+			vitals: handleEmpties(Vitals),
+			loa: handleEmpties(LOA)
 		}
 	};
 
