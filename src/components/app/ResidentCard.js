@@ -41,7 +41,11 @@ const ResidentCard = ({ currentResident, residentDetails, meds = [] }) => {
 		<article className={styles.ResidentCard}>
 			<div className={styles.ResidentCard_row}>
 				<section className={styles.ResidentCard_row_top}>
-					<div className={true ? styles.isLOA_active : styles.isLOA}>
+					<div
+						className={
+							residentDetails.isLOA ? styles.isLOA_active : styles.isLOA
+						}
+					>
 						<ResidentPhoto imgSize="MD" />
 					</div>
 					<hgroup className={styles.ResidentCard_row_top_group}>
@@ -49,7 +53,9 @@ const ResidentCard = ({ currentResident, residentDetails, meds = [] }) => {
 							{replaceNullWithMsg(currentResident.FirstName, "NA") +
 								" " +
 								replaceNullWithMsg(currentResident.LastName, "NA")}{" "}
-							{true && <b style={{ color: themeColors.main.red }}>(LOA)</b>}
+							{residentDetails.isLOA && (
+								<b style={{ color: themeColors.main.red }}>(LOA)</b>
+							)}
 						</h2>
 						<h4 className={styles.ResidentCard_row_top_group_subtitle}>
 							Unit: {replaceNullWithMsg(residentDetails.FloorUnit, "Unknown")}

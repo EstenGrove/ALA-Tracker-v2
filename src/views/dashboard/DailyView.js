@@ -38,6 +38,8 @@ const DailyView = props => {
 	} = globals;
 	const { isLOA } = currentResident;
 
+	console.log("isLOA", isLOA);
+
 	if (isLoading) {
 		return <Spinner />;
 	}
