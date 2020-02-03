@@ -32,13 +32,10 @@ const DailyView = props => {
 		scheduledTaskNotes,
 		unscheduledTasks,
 		unscheduledTaskNotes,
-		trackingTasks,
 		categories,
 		loa
 	} = globals;
 	const { isLOA } = currentResident;
-
-	console.log("isLOA", isLOA);
 
 	if (isLoading) {
 		return <Spinner />;

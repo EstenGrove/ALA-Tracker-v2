@@ -4,6 +4,7 @@ import {
 	removeStaleRecordByProp,
 	updateUnscheduledTask
 } from "../helpers/utils_unscheduled";
+import { removeStaleAndMergeRecord } from "../helpers/utils_updates";
 
 const initialGlobalState = {
 	app: {
@@ -151,17 +152,16 @@ const reducer = (state, action) => {
 		}
 		case "UPDATE_UNSCHEDULED_TASK": {
 			const { updatedUnscheduled } = action.data;
-			const newUnscheduled = [
-				...removeStaleRecordByProp(
-					updatedUnscheduled,
-					state.globals.unscheduledTasks
-				)
-			];
+			const newUnscheduledRecords = removeStaleAndMergeRecord(
+				updatedUnscheduled,
+				...state.globals.unscheduledTasks,
+				"AssessmentUnscheduleTaskId"
+			);
 			return {
 				...state,
 				globals: {
 					...state.globals,
-					unscheduled: [updateUnscheduledTask, ...newUnscheduled]
+					unscheduled: [updatedUnscheduled, ...newUnscheduledRecords]
 				}
 			};
 		}

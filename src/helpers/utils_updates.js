@@ -155,6 +155,19 @@ const deepDiff = (item1, item2) => {
 	return true;
 };
 
+/**
+ * @description - Filter out a stale task record and replace it with the updated task record.
+ * @param {object} activeRecord - An updated task record (AssessmentTrackingTaskRecord, ADLCareTask record, AssessmentUnscheduleTask record)
+ * @param {array} records - An array of task records to be updated.
+ * @param {string} prop - A string-form ID used to match the "stale" record in an array and replace wiht the updated record.
+ */
+const removeStaleAndMergeRecord = (activeRecord, records, prop) => {
+	return [
+		activeRecord,
+		...records.filter(record => record[prop] !== activeRecord[prop])
+	];
+};
+
 export {
 	determineResolution,
 	handleTaskNotes,
@@ -164,4 +177,4 @@ export {
 	deepDiff
 };
 
-export { updateTaskRecord, findRecordAndUpdate };
+export { updateTaskRecord, findRecordAndUpdate, removeStaleAndMergeRecord };

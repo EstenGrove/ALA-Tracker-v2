@@ -17,6 +17,8 @@ const formatDate = (date = null) => {
 	return `${day}, ${month} ${dayDate} ${year}`;
 };
 
+// used specifically for handling the LOA return date.
+// DOES NOT accept an actual date but rather a stringifyied date
 const formatReturnDate = strDate => {
 	const weekDay = format(new Date(strDate), "ddd"); // dddd for full weekDay
 	const month = format(new Date(strDate), "MMMM");

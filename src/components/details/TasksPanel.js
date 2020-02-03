@@ -18,7 +18,7 @@ import {
 	SCHEDULED_ID,
 	UNSCHEDULED_ID
 } from "../../helpers/utils_tasks";
-import { findRecordAndUpdate, deepDiff } from "../../helpers/utils_updates";
+import { findRecordAndUpdate } from "../../helpers/utils_updates";
 import { updateCareTaskRecord } from "../../helpers/utils_careTasks";
 import { createSubtaskVals } from "../../helpers/utils_subtasks";
 import {
@@ -103,11 +103,6 @@ const TasksPanel = ({
 		minutes: 0,
 		priority: "",
 		// ** task update values end here **
-		// Create task values - **REMOVE THESE VALUES**
-		newTaskName: "", // ** remove - has been lifted up **
-		newTaskADL: "", // ** remove - has been lifted up **
-		newTaskNote: "", // ** remove - has been lifted up **
-		newTaskShift: "", // ** remove - has been lifted up **
 		// Subtask values
 		...createSubtaskVals(activeTask)
 	});
