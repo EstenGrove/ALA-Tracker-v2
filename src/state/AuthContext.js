@@ -7,7 +7,8 @@ const initialAuthState = {
 	token: null,
 	sessionID: null,
 	isAuthenticated: false,
-	isAdmin: false
+	isAdmin: false,
+	isLOA: false
 };
 
 const AuthContext = createContext(initialAuthState);

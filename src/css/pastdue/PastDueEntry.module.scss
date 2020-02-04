@@ -1,0 +1,135 @@
+@import "../../sass/variables";
+@import "../../sass/mixins";
+
+.PastDueEntry {
+  width: 100%;
+  height: 10rem;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  display: grid;
+  grid-template-rows: repeat(2, auto-fit);
+  grid-template-columns: repeat(2, auto-fit);
+  grid-auto-flow: row;
+  background-color: #ffffff;
+  border: 1px solid map-get($map: $colors, $key: "mainGrey");
+  box-shadow: map-get($map: $shadows, $key: "subtle");
+  margin-bottom: 1.5rem;
+
+  &_group {
+    width: 100%;
+    height: 100%;
+
+    &_two {
+      @extend .PastDueEntry_group;
+      grid-column-start: 2;
+      @include row_end_start;
+    }
+    &_three {
+      @extend .PastDueEntry_group;
+      @include row_start_center;
+
+      &_date {
+        color: map-get($map: $blueGreys, $key: "headings");
+        font-size: 1.2rem;
+        font-weight: 400;
+        margin-left: 0.3rem;
+        & > b {
+          color: map-get($map: $colors, $key: "mainRed");
+          font-size: 1.3rem;
+        }
+      }
+    }
+
+    &_four {
+      position: relative;
+      @extend .PastDueEntry_group;
+      grid-column-start: 2;
+      grid-row-start: 2;
+      @include row_end_end;
+
+      &_menu {
+        width: 15rem;
+        height: 15rem;
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 0;
+        padding: 0.5rem 0;
+        border-radius: 0.5rem;
+        background-color: #ffffff;
+        box-shadow: map-get($map: $shadows, $key: "raised");
+        z-index: 10;
+        &_list {
+          list-style: none;
+          & > li {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            &:hover {
+              cursor: pointer;
+              background-color: map-get($map: $greys, $key: "chalk");
+            }
+            &:nth-child(1) {
+              @include row_end_start;
+              margin-bottom: 0;
+              &:hover {
+                background-color: transparent;
+              }
+            }
+            &:nth-child(2) {
+              color: map-get($map: $colors, $key: "mainGreen");
+            }
+            &:nth-child(4) {
+              @include row_start_center;
+              color: map-get($map: $colors, $key: "mainRed");
+              & > svg {
+                margin-right: 0.5rem;
+                margin-left: -0.3rem;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &_title {
+      color: map-get($map: $blueGreys, $key: "subheadings");
+    }
+    &_text {
+      font-size: 1.2rem;
+      color: map-get($map: $blueGreys, $key: "headings");
+    }
+  }
+
+  &_status {
+    font-weight: 600;
+    margin-left: auto;
+    justify-self: flex-end;
+
+    &_text {
+      padding: 0.5rem 1rem;
+      border: 1px solid map-get($map: $colors, $key: "mainRed");
+      background-color: map-get($map: $flatColors, $key: "mainRed");
+      border-radius: 5rem;
+    }
+  }
+
+  &_icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    fill: map-get($map: $blueGreys, $key: "headings");
+    &:hover {
+      cursor: pointer;
+      fill: map-get($map: $colors, $key: "main");
+    }
+  }
+}
+#menu {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}

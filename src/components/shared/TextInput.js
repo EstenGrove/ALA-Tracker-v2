@@ -13,7 +13,8 @@ const TextInput = ({
   handleBlur,
   handleFocus,
   handleReset,
-  addRequiredFlag = false
+  addRequiredFlag = false,
+  customStyles = {}
 }) => {
   return (
     <div className={styles.TextInput}>
@@ -35,6 +36,7 @@ const TextInput = ({
         onBlur={handleBlur}
         onFocus={handleFocus}
         onReset={handleReset}
+        style={customStyles}
       />
     </div>
   );
@@ -45,7 +47,8 @@ export default TextInput;
 // #PropTypes
 TextInput.defaultProps = {
   required: false,
-  addRequiredFlag: false
+  addRequiredFlag: false,
+  customStyles: {}
 };
 
 TextInput.propTypes = {
@@ -59,5 +62,6 @@ TextInput.propTypes = {
   handleFocus: PropTypes.func,
   handleBlur: PropTypes.func,
   handleReset: PropTypes.func,
-  addRequiredFlag: PropTypes.bool
+  addRequiredFlag: PropTypes.bool,
+  customStyles: PropTypes.object
 };
