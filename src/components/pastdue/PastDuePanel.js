@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { PropTypes } from "prop-types";
-import { sortAlphabetically } from "../../helpers/utils_tasks";
-import { isEmptyVal } from "../../helpers/utils_types";
+import { isEmptyVal, isEmptyArray } from "../../helpers/utils_types";
 import styles from "../../css/pastdue/PastDuePanel.module.scss";
 import sprite from "../../assets/carets-arrows.svg";
 import TextInput from "../shared/TextInput";
 import PastDueList from "./PastDueList";
 import ButtonSM from "../shared/ButtonSM";
+import Placeholder from "../shared/Placeholder";
+import { sortPastDueRecords } from "../../helpers/utils_pastdue";
 
 const customStyles = {
 	backgroundColor: "#ffffff"
@@ -21,7 +22,7 @@ const viewMoreStyles = {
 
 const PastDuePanel = ({ records = [] }) => {
 	const [sortedRecords, setSortedRecords] = useState(
-		sortAlphabetically(records, "ResidentInfo", "ResidentLastName")
+		sortPastDueRecords(records)
 	);
 	const [search, setSearch] = useState("");
 	// number of rows current fetched from database
@@ -30,12 +31,8 @@ const PastDuePanel = ({ records = [] }) => {
 		const { value } = e.target;
 		setSearch(value);
 		setSortedRecords(
-			sortAlphabetically(
-				records,
-				"ResidentInfo",
-				"ResidentLastName"
-			).filter(entry =>
-				entry.ResidentInfo.ResidentLastName.toLowerCase().startsWith(
+			sortPastDueRecords(records).filter(entry =>
+				entry.Resident[0].ResidentLastName.toLowerCase().startsWith(
 					search.toLowerCase()
 				)
 			)
@@ -48,9 +45,7 @@ const PastDuePanel = ({ records = [] }) => {
 
 	useEffect(() => {
 		if (isEmptyVal(search)) {
-			return setSortedRecords(
-				sortAlphabetically(records, "ResidentInfo", "ResidentLastName")
-			);
+			return setSortedRecords(sortPastDueRecords(records));
 		}
 	}, [records, search]);
 
@@ -65,20 +60,22 @@ const PastDuePanel = ({ records = [] }) => {
 						placeholder="resident's last name..."
 						val={search}
 						handleChange={handleSearch}
-						customStyles={customStyles}
 					/>
 				</section>
 				<section className={styles.PastDuePanel_entries}>
-					{sortedRecords &&
+					{sortedRecords ? (
 						sortedRecords.map((entry, index) => (
 							<>
 								<hr />
 								<PastDueList
 									record={entry}
-									key={entry.ResidentInfo.ResidentID + index}
+									key={entry.Resident[0].ResidentID + index}
 								/>
 							</>
-						))}
+						))
+					) : (
+						<Placeholder msg="No Past Due records found" />
+					)}
 					<div style={{ display: "flex", justifyContent: "center" }}>
 						<ButtonSM handleClick={viewMore} customStyles={viewMoreStyles}>
 							<div className={styles.PastDuePanel_viewMore}>

@@ -2,52 +2,52 @@
 @import "../../sass/mixins";
 
 .PastDuePanel {
-  min-width: 25rem;
-  width: 100%;
-  max-height: 100%;
-  height: 100%;
-  padding: 2rem 1rem;
-  padding-bottom: 4rem;
-  border-radius: 0.5rem;
-  border-bottom: 10rem solid map-get($map: $blueGreys, $key: "main");
-  background-color: map-get($map: $blueGreys, $key: "main");
-  box-shadow: map-get($map: $shadows, $key: "medSubtle");
-  position: relative;
+	min-width: 25rem;
+	width: 100%;
+	max-height: 100%;
+	height: 100%;
+	padding: 2rem 1rem;
+	padding-bottom: 4rem;
+	border-radius: 0.5rem;
+	border-bottom: 10rem solid #ffffff;
+	background-color: #ffffff;
+	box-shadow: map-get($map: $shadows, $key: "medSubtle");
+	position: relative;
 
-  z-index: 10;
+	z-index: 10;
 
-  &_search {
-    width: 100%;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    margin-bottom: 4rem;
-  }
+	&_search {
+		width: 100%;
+		height: -webkit-max-content;
+		height: -moz-max-content;
+		height: max-content;
+		margin-bottom: 4rem;
+	}
 
-  &_entries {
-    width: 100%;
-    height: 100%;
-    padding-bottom: 3rem;
-    overflow-y: auto;
-    position: relative;
-    @include scroll_gradient;
-    z-index: 5;
-    & > hr {
-      opacity: 0.6;
-      margin: 1rem 0;
-    }
-  }
+	&_entries {
+		width: 100%;
+		height: 100%;
+		padding-bottom: 3rem;
+		overflow-y: auto;
+		position: relative;
+		@include scroll_gradient;
+		z-index: 5;
+		& > hr {
+			opacity: 0.6;
+			margin: 1rem 0;
+		}
+	}
 
-  &_viewMore {
-    width: 100%;
-    height: 100%;
-    padding: 0.2rem 0.5rem;
-    @include row_start_center;
+	&_viewMore {
+		width: 100%;
+		height: 100%;
+		padding: 0.2rem 0.5rem;
+		@include row_start_center;
 
-    &_icon {
-      width: 2rem;
-      height: 2rem;
-      fill: #ffffff;
-    }
-  }
+		&_icon {
+			width: 2rem;
+			height: 2rem;
+			fill: #ffffff;
+		}
+	}
 }

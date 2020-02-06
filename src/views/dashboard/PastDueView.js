@@ -2,8 +2,15 @@ import React, { useEffect, useState, useContext } from "react";
 import { PropTypes } from "prop-types";
 import { GlobalStateContext } from "../../state/GlobalStateContext";
 import { isEmptyArray, isEmptyObj } from "../../helpers/utils_types";
-import styles from "../../css/dashboard/PastDueView.module.scss";
+import {
+	getDailyPastDue,
+	getWeeklyPastDue,
+	getMonthlyPastDue
+} from "../../helpers/utils_pastdue";
 import { getGenericCount } from "../../helpers/utils_generic";
+import styles from "../../css/dashboard/PastDueView.module.scss";
+import PastDuePanel from "../../components/pastdue/PastDuePanel";
+import { startOfDay, endOfDay } from "date-fns";
 
 const PastDueView = ({ history }) => {
 	const { state, dispatch } = useContext(GlobalStateContext);
@@ -12,7 +19,19 @@ const PastDueView = ({ history }) => {
 	const [pastDueRecords, setPastDueRecords] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const getPastDueRecords = async () => {};
+	const getPastDueRecords = async () => {
+		const { token, facilityID } = user;
+
+		const records = await getDailyPastDue(
+			token,
+			facilityID,
+			startOfDay(new Date()),
+			endOfDay(new Date()),
+			0,
+			25
+		);
+		return setPastDueRecords(records);
+	};
 
 	const getPastDueCount = async () => {
 		const { token, facilityID } = user;
@@ -23,13 +42,18 @@ const PastDueView = ({ history }) => {
 		return setPastDueCount(count);
 	};
 
+	const getInitialPastDue = () => {
+		getPastDueRecords();
+		getPastDueCount();
+	};
+
 	useEffect(() => {
 		let isMounted = true;
 		if (!isMounted) {
 			return;
 		}
 		// fetches TOTAL number of past due records for facility
-		getPastDueCount();
+		getInitialPastDue();
 		return () => {
 			isMounted = false;
 		};
@@ -40,7 +64,7 @@ const PastDueView = ({ history }) => {
 		<div className={styles.PastDueView}>
 			<h1 className="title">Past Due View</h1>
 			<h2 className="subtitle">Coming Soon</h2>
-			{/*  */}
+			<PastDuePanel records={pastDueRecords} />
 		</div>
 	);
 };
