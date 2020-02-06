@@ -23,14 +23,13 @@ const viewMoreStyles = {
 	boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)"
 };
 
-const PastDuePanel = ({ records = [], isLoading }) => {
+const PastDuePanel = ({ records = [], isLoading, viewMore }) => {
 	const [showControls, setShowControls] = useState(false);
 	const [sortedRecords, setSortedRecords] = useState(
 		sortPastDueRecords(records)
 	);
 	const [search, setSearch] = useState("");
 	// number of rows current fetched from database
-	const [rowCount, setRowCount] = useState(25);
 
 	const handleSearch = e => {
 		const { value } = e.target;
@@ -42,10 +41,6 @@ const PastDuePanel = ({ records = [], isLoading }) => {
 				)
 			)
 		);
-	};
-
-	const viewMore = async e => {
-		// FETCH MORE RECORDS BY ROW COUNT
 	};
 
 	useEffect(() => {
@@ -74,10 +69,10 @@ const PastDuePanel = ({ records = [], isLoading }) => {
 					/>
 				</section>
 				<section className={styles.PastDuePanel_entries}>
-					{isEmptyArray(records) && !isLoading && (
+					{!isLoading && isEmptyArray(records) && (
 						<Placeholder msg="No past due records found" />
 					)}
-					{isEmptyArray(records) && isLoading && <Spinner />}
+					{isLoading && <Spinner />}
 					{sortedRecords &&
 						sortedRecords.map((entry, index) => (
 							<>

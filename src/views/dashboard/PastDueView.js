@@ -16,6 +16,7 @@ const PastDueView = ({ history }) => {
 	const { state, dispatch } = useContext(GlobalStateContext);
 	const { app, user, globals } = state;
 	const [pastDueCount, setPastDueCount] = useState(null);
+	const [currentIndex, setCurrentIndex] = useState(25);
 	const [pastDueRecords, setPastDueRecords] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -33,6 +34,21 @@ const PastDueView = ({ history }) => {
 		return setPastDueRecords(records);
 	};
 
+	// used for fetching more records after initial fetch.
+	const getMorePastDueRecords = async index => {
+		const { token, facilityID } = user;
+		setIsLoading(true);
+		const records = await getDailyPastDue(
+			token,
+			facilityID,
+			startOfDay(new Date()),
+			endOfDay(new Date()),
+			index,
+			index + 25
+		);
+		return setPastDueRecords(records);
+	};
+
 	const getPastDueCount = async () => {
 		const { token, facilityID } = user;
 		const params = {
@@ -45,6 +61,11 @@ const PastDueView = ({ history }) => {
 	const getInitialPastDue = () => {
 		getPastDueRecords();
 		getPastDueCount();
+	};
+
+	const viewMorePastDue = () => {
+		setCurrentIndex(currentIndex + 25);
+		return getMorePastDueRecords(currentIndex);
 	};
 
 	useEffect(() => {
@@ -77,7 +98,11 @@ const PastDueView = ({ history }) => {
 		<div className={styles.PastDueView}>
 			<h1 className="title">Past Due View</h1>
 			<h2 className="subtitle">Under Construction</h2>
-			<PastDuePanel records={pastDueRecords} isLoading={isLoading} />
+			<PastDuePanel
+				records={pastDueRecords}
+				isLoading={isLoading}
+				viewMore={viewMorePastDue}
+			/>
 		</div>
 	);
 };
