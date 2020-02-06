@@ -40,6 +40,24 @@ const requestParams = {
 	unscheduledShift: {
 		...dbBase,
 		source: "AssessmentUnscheduleTaskShift"
+	},
+	genericCount: {
+		residents: {
+			...dbBase,
+			source: "Residents"
+		},
+		scheduledTasks: {
+			...dbBase,
+			source: "AssessmentTrackingTask"
+		},
+		unscheduledTasks: {
+			...dbBase,
+			source: "AssessmentUnscheduleTask"
+		},
+		adls: {
+			...dbBase,
+			source: "AssessmentCategory"
+		}
 	}
 };
 // SCHEDULED TASK - RELATED
@@ -58,6 +76,8 @@ const {
 	unscheduledShift
 } = requestParams;
 
+const { genericCount } = requestParams;
+
 // SCHEDULED TASK - RELATED
 export { scheduledTask, scheduledSubtask, scheduledNote, scheduledShift };
 
@@ -68,5 +88,8 @@ export {
 	unscheduledNote,
 	unscheduledShift
 };
+
+// GETTING COUNTS FROM GENERIC API
+export { genericCount };
 
 export { requestParams };

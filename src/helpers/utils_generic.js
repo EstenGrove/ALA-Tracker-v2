@@ -2,9 +2,14 @@ import { test } from "./utils_env";
 import { generic } from "./utils_endpoints";
 import { genericCount } from "./utils_params";
 
-const getGenericCount = async (token, params) => {
+const getGenericCount = async (token, params, type = "residents") => {
 	let url = test.base + generic.count;
-	url += "?" + new URLSearchParams(params);
+	url +=
+		"?" +
+		new URLSearchParams({
+			...genericCount[type],
+			...params
+		});
 
 	try {
 		const request = await fetch(url, {
@@ -22,3 +27,5 @@ const getGenericCount = async (token, params) => {
 		return err.message;
 	}
 };
+
+export { getGenericCount };

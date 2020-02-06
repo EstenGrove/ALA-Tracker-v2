@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { NavLink, withRouter, useRouteMatch } from "react-router-dom";
 import { PropTypes } from "prop-types";
-import { isMobile } from "../../helpers/utils_browser";
-import { useMediaQuery } from "../../utils/useMediaQuery";
 import styles from "../../css/dashboard/Sidebar.module.scss";
 import sprite from "../../assets/sidebar.svg";
 
@@ -15,7 +13,6 @@ const Sidebar = ({
 	history
 }) => {
 	const match = useRouteMatch(); // required for nested routes & link
-	// const { width } = useMediaQuery();
 	const {
 		location: { pathname }
 	} = history;
@@ -309,8 +306,6 @@ const Sidebar = ({
 			</ul>
 		</aside>
 	);
-
-	console.log("<Sidebar/>", viewWidth);
 
 	return <>{renderSidebar()}</>;
 };
