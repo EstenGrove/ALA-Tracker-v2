@@ -4,7 +4,6 @@ import { themeColors } from "../../helpers/utils_styles";
 import {
 	getTaskCategory,
 	getTaskDescription,
-	getTaskStatus,
 	getTaskDueDate
 } from "../../helpers/utils_tasks";
 import sprite from "../../assets/tasks.svg";

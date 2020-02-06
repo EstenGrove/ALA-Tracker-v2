@@ -1,6 +1,7 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 import { isEmptyArray } from "../../helpers/utils_types";
+import { getResidentNamePastDue } from "../../helpers/utils_pastdue";
 import styles from "../../css/pastdue/PastDueList.module.scss";
 import ResidentPhoto from "../app/ResidentPhoto";
 import PastDueEntry from "./PastDueEntry";
@@ -15,19 +16,12 @@ import Placeholder from "../shared/Placeholder";
 // INCLUDES THE RESIDENT AVATAR AND THEIR PAST DUE RECORDS
 
 const PastDueList = ({ record }) => {
-	console.group("<PastDueList/>");
-	console.log("Resident entry (record)", record);
-	console.log("record.PastDueScheduleTasks", record.PastDueScheduleTask);
-	console.groupEnd();
-
 	return (
 		<div className={styles.PastDueList}>
 			<section className={styles.PastDueList_heading}>
 				<ResidentPhoto alt="Resident image" src={""} imgSize="SM" />
 				<h2 className={styles.PastDueList_heading_title}>
-					{record.Resident[0].ResidentFirstName +
-						" " +
-						record.Resident[0].ResidentLastName}
+					{getResidentNamePastDue(record)}
 				</h2>
 			</section>
 			<section className={styles.PastDueList_entries}>
@@ -40,10 +34,9 @@ const PastDueList = ({ record }) => {
 					<section className={styles.PastDueList_entries_EMPTY}>
 						<Placeholder
 							size="SM"
-							msg={`No past due found for ${record.Resident[0]
-								.ResidentFirstName +
-								" " +
-								record.Resident[0].ResidentLastName}`}
+							msg={`No past due records found for ${getResidentNamePastDue(
+								record
+							)}`}
 						/>
 					</section>
 				)}

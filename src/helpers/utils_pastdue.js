@@ -168,6 +168,11 @@ const getTotalPastDueCount = records => {
 	}, 0);
 };
 
+const getResidentNamePastDue = record => {
+	const { ResidentFirstName, ResidentLastName } = record.Resident[0];
+	return `${ResidentFirstName} ${ResidentLastName}`;
+};
+
 // FETCHING PAST DUE RECORDS
 export {
 	getCommunityPastDue,
@@ -176,4 +181,9 @@ export {
 	getMonthlyPastDue
 };
 
-export { sortPastDueRecords, countPastDuePerResident, getTotalPastDueCount };
+export {
+	sortPastDueRecords,
+	countPastDuePerResident,
+	getTotalPastDueCount,
+	getResidentNamePastDue
+};

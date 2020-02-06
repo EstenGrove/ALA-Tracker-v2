@@ -201,7 +201,7 @@ const mergeDailyResidentData = async (token, residentID, day = new Date()) => {
 	const merged = {
 		...dailyData,
 		UnscheduledTasks: unscheduledTasks,
-		LOA: [...l_o_a],
+		LOA: [l_o_a],
 		ResidentId: residentID
 	};
 	return { ...merged };
