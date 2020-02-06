@@ -21,7 +21,7 @@ const PastDueView = ({ history }) => {
 
 	const getPastDueRecords = async () => {
 		const { token, facilityID } = user;
-
+		setIsLoading(true);
 		const records = await getDailyPastDue(
 			token,
 			facilityID,
@@ -60,11 +60,24 @@ const PastDueView = ({ history }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []); // onMount ONLY
 
+	useEffect(() => {
+		let isMounted = true;
+		if (!isMounted) {
+			return;
+		}
+		if (!isEmptyArray(pastDueRecords)) {
+			return setIsLoading(false);
+		}
+		return () => {
+			isMounted = false;
+		};
+	}, [pastDueRecords]);
+
 	return (
 		<div className={styles.PastDueView}>
 			<h1 className="title">Past Due View</h1>
-			<h2 className="subtitle">Coming Soon</h2>
-			<PastDuePanel records={pastDueRecords} />
+			<h2 className="subtitle">Under Construction</h2>
+			<PastDuePanel records={pastDueRecords} isLoading={isLoading} />
 		</div>
 	);
 };

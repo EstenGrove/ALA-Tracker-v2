@@ -9,6 +9,7 @@ import PastDueList from "./PastDueList";
 import PastDueController from "./PastDueController";
 import ButtonSM from "../shared/ButtonSM";
 import Placeholder from "../shared/Placeholder";
+import Spinner from "../shared/Spinner";
 import { sortPastDueRecords } from "../../helpers/utils_pastdue";
 
 const customStyles = {
@@ -22,7 +23,7 @@ const viewMoreStyles = {
 	boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)"
 };
 
-const PastDuePanel = ({ records = [] }) => {
+const PastDuePanel = ({ records = [], isLoading }) => {
 	const [showControls, setShowControls] = useState(false);
 	const [sortedRecords, setSortedRecords] = useState(
 		sortPastDueRecords(records)
@@ -30,6 +31,7 @@ const PastDuePanel = ({ records = [] }) => {
 	const [search, setSearch] = useState("");
 	// number of rows current fetched from database
 	const [rowCount, setRowCount] = useState(25);
+
 	const handleSearch = e => {
 		const { value } = e.target;
 		setSearch(value);
@@ -72,9 +74,10 @@ const PastDuePanel = ({ records = [] }) => {
 					/>
 				</section>
 				<section className={styles.PastDuePanel_entries}>
-					{isEmptyArray(records) && (
+					{isEmptyArray(records) && !isLoading && (
 						<Placeholder msg="No past due records found" />
 					)}
+					{isEmptyArray(records) && isLoading && <Spinner />}
 					{sortedRecords &&
 						sortedRecords.map((entry, index) => (
 							<>
