@@ -24,6 +24,7 @@ const DashboardContainer = ({
 	state,
 	dispatch,
 	isExpanded,
+	viewWidth,
 	handleSidebar,
 	history
 }) => {
@@ -126,6 +127,7 @@ const DashboardContainer = ({
 			<div className={styles.DashboardContainer}>
 				<Sidebar
 					isExpanded={isExpanded}
+					viewWidth={viewWidth}
 					handleSidebar={handleSidebar}
 					setShowModal={setShowModal}
 					state={state}

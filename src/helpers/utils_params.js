@@ -1,3 +1,7 @@
+const dbBase = {
+	"db-meta": "Advantage"
+};
+
 /**
  * @description - A request utility for setting the request params for all CRUD request functions.
  * Covers requests for CRUD including: CREATE, READ, UPDATE, DELETE
@@ -6,35 +10,35 @@
  */
 const requestParams = {
 	scheduledTask: {
-		"db-meta": "Advantage",
+		...dbBase,
 		source: "AssessmentTrackingTask"
 	},
 	scheduledSubtask: {
-		"db-meta": "Advantage",
+		...dbBase,
 		source: "AssessmentTrackingTaskShiftSubTask"
 	},
 	scheduledNote: {
-		"db-meta": "Advantage",
+		...dbBase,
 		source: "AssessmentTrackingTaskNote"
 	},
 	scheduledShift: {
-		"db-meta": "Advantage",
+		...dbBase,
 		source: "AssessmentTrackingTaskShift"
 	},
 	unscheduledTask: {
-		"db-meta": "Advantage",
+		...dbBase,
 		source: "AssessmentUnscheduleTask"
 	},
 	unscheduledSubtask: {
-		"db-meta": "Advantage",
+		...dbBase,
 		source: "AssessmentUnscheduleTaskShiftSubTask"
 	},
 	unscheduledNote: {
-		"db-meta": "Advantage",
+		...dbBase,
 		source: "AssessmentUnscheduleTaskNote"
 	},
 	unscheduledShift: {
-		"db-meta": "Advantage",
+		...dbBase,
 		source: "AssessmentUnscheduleTaskShift"
 	}
 };

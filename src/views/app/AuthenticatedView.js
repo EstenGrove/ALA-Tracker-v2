@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { PropTypes } from "prop-types";
 import { AuthContext } from "../../state/AuthContext";
 import { GlobalStateContext } from "../../state/GlobalStateContext";
+import { useMediaQuery } from "../../utils/useMediaQuery";
 import { logout } from "../../helpers/utils_auth";
 import {
 	getInitialResource,
@@ -23,7 +24,7 @@ import DashboardContainer from "../../components/dashboard/DashboardContainer";
 const AuthenticatedView = ({ history }) => {
 	const { authData } = useContext(AuthContext);
 	const { state, dispatch } = useContext(GlobalStateContext);
-
+	const { width } = useMediaQuery();
 	const [isExpanded, setIsExpanded] = useState(true);
 	const [currentResident, setCurrentResident] = useState({});
 
@@ -35,7 +36,7 @@ const AuthenticatedView = ({ history }) => {
 	};
 	// IMPLEMENT MOBILE CHECKER FOR CONTAINER
 	const mobileStyles = {
-		paddingLeft: window.innerWidth <= 500 ? "2rem" : null
+		paddingLeft: width <= 630 ? "0" : null
 	};
 
 	const handleLogout = async e => {
@@ -100,6 +101,7 @@ const AuthenticatedView = ({ history }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	// ???REMOVE LATER MAYBE??? //
 	useEffect(() => {
 		let isMounted = true;
 		if (!isMounted) {
@@ -122,6 +124,7 @@ const AuthenticatedView = ({ history }) => {
 			window.removeEventListener("keydown", handleShortcuts);
 		};
 	}, [isExpanded]);
+	// ???REMOVE LATER MAYBE??? //
 
 	return (
 		<>
@@ -133,7 +136,7 @@ const AuthenticatedView = ({ history }) => {
 				/>
 				<section
 					className={styles.AuthenticatedView_dashboard}
-					style={customStyles}
+					style={width <= 630 ? mobileStyles : customStyles}
 				>
 					<header className={styles.AuthenticatedView_dashboard_header}>
 						<ResidentDropdown
@@ -151,6 +154,7 @@ const AuthenticatedView = ({ history }) => {
 					</header>
 					<DashboardContainer
 						isExpanded={isExpanded}
+						viewWidth={width}
 						state={state}
 						dispatch={dispatch}
 						handleSidebar={handleSidebar}

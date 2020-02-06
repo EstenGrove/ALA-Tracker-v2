@@ -8,20 +8,21 @@ import sprite from "../../assets/sidebar.svg";
 
 const Sidebar = ({
 	isExpanded,
+	viewWidth,
 	handleSidebar,
 	setShowModal,
 	state,
 	history
 }) => {
 	const match = useRouteMatch(); // required for nested routes & link
-	const { width, height } = useMediaQuery();
+	// const { width } = useMediaQuery();
 	const {
 		location: { pathname }
 	} = history;
 
 	// handles changing different sidebars
 	const renderSidebar = () => {
-		if (width <= 640) {
+		if (viewWidth <= 640) {
 			return mobileSidebar;
 		}
 		if (isExpanded) {
@@ -309,7 +310,7 @@ const Sidebar = ({
 		</aside>
 	);
 
-	console.log("<Sidebar/>", width);
+	console.log("<Sidebar/>", viewWidth);
 
 	return <>{renderSidebar()}</>;
 };
