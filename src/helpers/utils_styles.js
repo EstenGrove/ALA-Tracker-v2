@@ -99,7 +99,12 @@ const statusColors = {
 	},
 	missedevent: {
 		backgroundColor: themeColors.flat.red,
-		color: "hsla(218, 17%, 35%, 1)",
+		color: themeColors.main.red,
+		border: `1px solid ${themeColors.main.red}`
+	},
+	pastdue: {
+		backgroundColor: themeColors.flat.red,
+		color: themeColors.main.red,
 		border: `1px solid ${themeColors.main.red}`
 	}
 };
@@ -119,47 +124,55 @@ const iconChart = {
 };
 
 const statusReducer = (status = "PENDING") => {
+	const fonts = {
+		fontSize: "1.3rem",
+		fontWeight: "400"
+	};
 	switch (status) {
 		case "COMPLETE":
 			return {
 				backgroundColor: themeColors.flat.green,
 				color: "hsla(218, 17%, 35%, 1)",
 				border: `1px solid ${themeColors.main.green}`,
-				fontSize: "1.3rem",
-				fontWeight: "400"
+				...fonts
 			}; // "hsla(170, 100%, 39%, 1)"
 		case "NOT-COMPLETE":
 			return {
 				backgroundColor: themeColors.blueGreys.saturated,
 				color: themeColors.main.charcoal,
 				border: `1px solid ${themeColors.main.charcoal}`,
-				fontSize: "1.3rem",
-				fontWeight: "400"
+				...fonts
 			}; // "hsla(268, 10%, 30%, 1)"
 		case "IN-PROGRESS":
 			return {
 				backgroundColor: themeColors.main.mustard,
 				color: "hsla(218, 17%, 35%, 1)",
 				border: `1px solid ${themeColors.main.altRed}`,
-				fontSize: "1.3rem",
-				fontWeight: "400"
+				...fonts
 			}; // "hsla(39, 100%, 70%, 1)"
 		case "PENDING":
 			return {
 				backgroundColor: themeColors.flat.orange,
 				color: "hsla(218, 17%, 35%, 1)",
 				border: `1px solid ${themeColors.main.orange}`,
-				fontSize: "1.3rem",
-				fontWeight: "400"
+				...fonts
 			}; // "hsla(11, 100%, 75%, 1)"
 		case "MISSED-EVENT":
 			return {
 				backgroundColor: themeColors.flat.red,
 				color: "hsla(218, 17%, 35%, 1)",
 				border: `1px solid ${themeColors.main.red}`,
-				fontSize: "1.3rem",
-				fontWeight: "400"
+				...fonts
 			}; // "hsla(352, 70%, 50%, 1)"
+		case "PAST-DUE": {
+			return {
+				backgroundColor: themeColors.flat.red,
+				color: themeColors.main.red,
+				border: `1px solid ${themeColors.main.red}`,
+				fontSize: "1rem",
+				fontWeight: "400"
+			};
+		}
 		default:
 			return {
 				backgroundColor: themeColors.main.charcoal,

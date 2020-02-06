@@ -1,13 +1,12 @@
 import React from "react";
 import { PropTypes } from "prop-types";
-import { statusColors, statusReducer } from "../../helpers/utils_styles";
+import { statusReducer } from "../../helpers/utils_styles";
 import Badge from "./Badge";
 
 // STATUS OPTIONS
 // PENDING, NOT-COMPLETE, MISSED-EVENT, COMPLETE, IN-PROGRESS
 
 const StatusBadge = ({ size = "SM", status = "PENDING", children }) => {
-	// const custom = statusColors[status.toLowerCase()];
 	const custom = statusReducer(status);
 	return (
 		<Badge size={size} customStyles={custom}>

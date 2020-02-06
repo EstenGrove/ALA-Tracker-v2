@@ -3,8 +3,10 @@ import { PropTypes } from "prop-types";
 import { isEmptyVal, isEmptyArray } from "../../helpers/utils_types";
 import styles from "../../css/pastdue/PastDuePanel.module.scss";
 import sprite from "../../assets/carets-arrows.svg";
+import sprite2 from "../../assets/buttons.svg";
 import TextInput from "../shared/TextInput";
 import PastDueList from "./PastDueList";
+import PastDueController from "./PastDueController";
 import ButtonSM from "../shared/ButtonSM";
 import Placeholder from "../shared/Placeholder";
 import { sortPastDueRecords } from "../../helpers/utils_pastdue";
@@ -21,6 +23,7 @@ const viewMoreStyles = {
 };
 
 const PastDuePanel = ({ records = [] }) => {
+	const [showControls, setShowControls] = useState(false);
 	const [sortedRecords, setSortedRecords] = useState(
 		sortPastDueRecords(records)
 	);
@@ -52,6 +55,12 @@ const PastDuePanel = ({ records = [] }) => {
 	return (
 		<>
 			<article className={styles.PastDuePanel}>
+				<section className={styles.PastDuePanel_controls}>
+					<span onClick={() => setShowControls(!showControls)}>
+						Change Options
+					</span>
+				</section>
+				{showControls && <PastDueController />}
 				<section className={styles.PastDuePanel_search}>
 					<TextInput
 						name="searchByResident"
@@ -63,7 +72,10 @@ const PastDuePanel = ({ records = [] }) => {
 					/>
 				</section>
 				<section className={styles.PastDuePanel_entries}>
-					{sortedRecords ? (
+					{isEmptyArray(records) && (
+						<Placeholder msg="No past due records found" />
+					)}
+					{sortedRecords &&
 						sortedRecords.map((entry, index) => (
 							<>
 								<hr />
@@ -72,10 +84,7 @@ const PastDuePanel = ({ records = [] }) => {
 									key={entry.Resident[0].ResidentID + index}
 								/>
 							</>
-						))
-					) : (
-						<Placeholder msg="No Past Due records found" />
-					)}
+						))}
 					<div style={{ display: "flex", justifyContent: "center" }}>
 						<ButtonSM handleClick={viewMore} customStyles={viewMoreStyles}>
 							<div className={styles.PastDuePanel_viewMore}>

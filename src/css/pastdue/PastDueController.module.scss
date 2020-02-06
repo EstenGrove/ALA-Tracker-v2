@@ -1,0 +1,25 @@
+@import "../../sass/variables";
+@import "../../sass/mixins";
+
+.PastDueController {
+	width: 100%;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+	padding: 1rem;
+	border-top: 1px solid map-get($map: $colors, $key: "mainGrey");
+	border-bottom: 1px solid map-get($map: $colors, $key: "mainGrey");
+	margin-bottom: 1rem;
+
+	&_title {
+		font-size: 1.5rem;
+		color: map-get($map: $colors, $key: "charcoal");
+		text-decoration: underline;
+		margin-bottom: 3rem;
+	}
+
+	&_rangePicker {
+		width: 100%;
+		height: auto;
+	}
+}

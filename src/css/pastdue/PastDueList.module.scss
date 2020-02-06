@@ -2,20 +2,26 @@
 @import "../../sass/mixins";
 
 .PastDueList {
-  width: 100%;
-  height: auto;
+	width: 100%;
+	height: auto;
+	margin-bottom: 2.5rem;
 
-  &_heading {
-    @include row_start_center;
+	&_heading {
+		@include row_start_center;
 
-    &_title {
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: map-get($map: $colors, $key: "mainBlackBlue");
-      margin-left: 0.5rem;
-    }
-  }
-  &_entries {
-    @include fill_container;
-  }
+		&_title {
+			font-size: 1.6rem;
+			font-weight: 600;
+			color: map-get($map: $colors, $key: "mainBlackBlue");
+			margin-left: 0.5rem;
+		}
+	}
+	&_entries {
+		@include fill_container;
+
+		&_EMPTY {
+			padding-left: 1rem;
+			text-align: center;
+		}
+	}
 }
