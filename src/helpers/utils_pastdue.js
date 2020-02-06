@@ -143,7 +143,7 @@ const sortPastDueRecords = records => {
  * @param {function} iteratee - An inline function that explicitly defines a property in an object. ie x => x[prop]
  * @example countPastDueRecords(records, x => x.Resident[0].ResidentLastName)
  */
-const countPastDueRecords = (records, iteratee) => {
+const countPastDuePerResident = (records, iteratee) => {
 	return records.reduce((all, item) => {
 		const keyToGroupBy = iteratee(item);
 		if (!item[keyToGroupBy]) {
@@ -154,6 +154,20 @@ const countPastDueRecords = (records, iteratee) => {
 	}, {});
 };
 
+/**
+ * @description - Maps thru all currently "fetched" records and get's the total number of records.
+ * MAY WANT TO CONSIDER SHOWING COUNT BY RESIDENT (ie showing 12 of 12 residents)
+ * @param {array} records - An array of Past Due task records.
+ */
+const getTotalPastDueCount = records => {
+	if (isEmptyArray(records)) return 0;
+	return records.reduce((all, entry) => {
+		const { length } = entry.PastDueScheduleTask;
+		all += length;
+		return all;
+	}, 0);
+};
+
 // FETCHING PAST DUE RECORDS
 export {
 	getCommunityPastDue,
@@ -162,4 +176,4 @@ export {
 	getMonthlyPastDue
 };
 
-export { sortPastDueRecords, countPastDueRecords };
+export { sortPastDueRecords, countPastDuePerResident, getTotalPastDueCount };
