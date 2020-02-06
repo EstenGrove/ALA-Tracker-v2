@@ -189,6 +189,9 @@ const endpoints = {
 			note2: "Advantage/CountAssessmentUnscheduleTaskNote2"
 		}
 	},
+	pastDue: {
+		get: "Community/GetCommunityPastDueTasks"
+	},
 	reassess: {
 		updateSingle: "Advantage/UpdateAssessmentTrackingReassess",
 		updateMany: "Advantage/UpdateAssessmentTrackingReassessMany"
@@ -215,15 +218,11 @@ const {
 	assessmentTracking,
 	scheduledTasks,
 	unscheduledTasks,
+	pastDue,
 	reassess,
 	user,
 	reports
 } = endpoints;
-
-const baseParams = {
-	"db-meta": "Advantage",
-	source: ""
-};
 
 export {
 	auth,
@@ -237,6 +236,7 @@ export {
 	assessmentTracking,
 	scheduledTasks,
 	unscheduledTasks,
+	pastDue,
 	reassess,
 	user,
 	reports
