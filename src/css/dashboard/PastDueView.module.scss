@@ -1,6 +1,7 @@
-@import '../../sass/variables';
-@import '../../sass/mixins';
+@import "../../sass/variables";
+@import "../../sass/mixins";
 
 .PastDueView {
-    @include fill_container;
+	@include fill_container;
+	padding-left: 2rem;
 }

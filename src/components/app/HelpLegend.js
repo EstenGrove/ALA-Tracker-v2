@@ -68,6 +68,7 @@ const HelpLegend = () => {
 										</div>
 									))}
 							</div>
+							<hr className="divider" />
 							<div className={styles.HelpLegend_section_entry}>
 								<h2 className={styles.HelpLegend_section_title}>
 									Create a New Task
