@@ -1,7 +1,7 @@
 import { residentData, forTracker } from "./utils_endpoints";
 import { test } from "./utils_env";
 import { format, isWithinRange } from "date-fns";
-import { isEmptyVal, isEmptyObj } from "./utils_types";
+import { isEmptyVal, isEmptyArray } from "./utils_types";
 import { getUnscheduledTasks } from "./utils_unscheduled";
 
 // defaults to today's date if no date is passed
@@ -129,8 +129,12 @@ const getResidentLOA = async (token, residentID) => {
  * @returns boolean
  */
 const isLOA = loa => {
-	if (isEmptyObj(loa)) return false;
-	if (!isWithinRange(new Date(), loa.LeaveDate, loa.ReturnDate)) return false;
+	if (isEmptyArray(loa)) return false;
+	const [current] = loa;
+	const { LeaveDate, ReturnDate } = current;
+	if (!isWithinRange(new Date(), LeaveDate, ReturnDate)) {
+		return false;
+	}
 	return true;
 };
 

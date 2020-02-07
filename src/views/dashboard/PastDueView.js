@@ -58,16 +58,17 @@ const PastDueView = ({ history }) => {
 		return setPastDueCount(count);
 	};
 
-	const getInitialPastDue = () => {
-		getPastDueRecords();
-		getPastDueCount();
-	};
-
 	const viewMorePastDue = () => {
 		setCurrentIndex(currentIndex + 25);
 		return getMorePastDueRecords(currentIndex);
 	};
 
+	// runs every time the route is mounted (ie <PastDueView/>)
+	const getInitialPastDue = () => {
+		getPastDueRecords();
+		getPastDueCount();
+	};
+	// getInitialPastDue side effect handler
 	useEffect(() => {
 		let isMounted = true;
 		if (!isMounted) {
@@ -81,6 +82,7 @@ const PastDueView = ({ history }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []); // onMount ONLY
 
+	// handles changing from isLoading state to "loaded" state
 	useEffect(() => {
 		let isMounted = true;
 		if (!isMounted) {

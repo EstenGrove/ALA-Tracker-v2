@@ -19,11 +19,13 @@ const formatDate = (date = null) => {
 
 // used specifically for handling the LOA return date.
 // DOES NOT accept an actual date but rather a stringifyied date
-const formatReturnDate = strDate => {
-	const weekDay = format(new Date(strDate), "ddd"); // dddd for full weekDay
-	const month = format(new Date(strDate), "MMMM");
-	const day = format(new Date(strDate), "Do");
-	const year = format(new Date(strDate), "YYYY");
+const formatReturnDate = loaList => {
+	const [current] = loaList;
+	const { ReturnDate } = current;
+	const weekDay = format(new Date(ReturnDate), "ddd"); // dddd for full weekDay
+	const month = format(new Date(ReturnDate), "MMMM");
+	const day = format(new Date(ReturnDate), "Do");
+	const year = format(new Date(ReturnDate), "YYYY");
 	return `${weekDay} ${month}, ${day} ${year}`;
 };
 

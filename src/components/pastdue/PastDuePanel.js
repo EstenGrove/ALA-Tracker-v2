@@ -12,10 +12,6 @@ import Placeholder from "../shared/Placeholder";
 import Spinner from "../shared/Spinner";
 import { sortPastDueRecords } from "../../helpers/utils_pastdue";
 
-const customStyles = {
-	backgroundColor: "#ffffff"
-};
-
 const viewMoreStyles = {
 	borderRadius: "5rem",
 	marginTop: "2rem",

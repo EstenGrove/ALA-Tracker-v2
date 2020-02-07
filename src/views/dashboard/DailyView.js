@@ -45,7 +45,7 @@ const DailyView = props => {
 			<h1 className={styles.DailyView_title}>Today's Agenda</h1>
 			{isLOA && (
 				<h2 className={styles.DailyView_LOA}>
-					On Leave Of Absence Until {formatReturnDate(loa[0].ReturnDate)}
+					On Leave Of Absence Until {formatReturnDate(loa[0])}
 				</h2>
 			)}
 			{!isLOA && (

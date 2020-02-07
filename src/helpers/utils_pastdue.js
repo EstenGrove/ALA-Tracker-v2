@@ -168,6 +168,7 @@ const getTotalPastDueCount = records => {
 	}, 0);
 };
 
+// formats resident full name (ie First Last)
 const getResidentNamePastDue = record => {
 	const { ResidentFirstName, ResidentLastName } = record.Resident[0];
 	return `${ResidentFirstName} ${ResidentLastName}`;
