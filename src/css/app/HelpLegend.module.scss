@@ -1,6 +1,24 @@
 @import "../../sass/mixins";
 @import "../../sass/variables";
 
+// custom title wrapper for ModalSM HelpLegend
+.HelpTitle {
+	@include row_start_center;
+	& > span {
+		font-size: 2rem;
+	}
+}
+
+.HelpIcon {
+	width: 2rem;
+	height: 2rem;
+	padding: 0.2rem;
+	border-radius: 50%;
+	background-color: hsla(210, 52%, 47%, 1);
+	fill: #ffffff;
+	margin-left: 0.5rem;
+}
+
 .HelpLegend {
 	position: fixed;
 	bottom: 1rem;
@@ -9,6 +27,18 @@
 	height: 2.5rem;
 	border-radius: 50%;
 	background-color: hsla(210, 52%, 47%, 1); // hsla(210, 52%, 47%, 1)
+	z-index: 20;
+
+	&:hover {
+		cursor: pointer;
+		background-color: hsla(210, 52%, 47%, 0.6);
+	}
+	&:hover &_floating {
+		background-color: hsla(210, 52%, 47%, 0.6);
+	}
+	&:hover &_floating_icon {
+		background-color: hsla(210, 52%, 47%, 0.6);
+	}
 
 	&_floating {
 		@include fill_container;

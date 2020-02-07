@@ -13,6 +13,15 @@ import StatusBadge from "../shared/StatusBadge";
 // 1. COLOR LEGEND FOR STATUS
 // 2. SHOW STATUS BADGES WITH DEFINITIONS
 
+const HelpIcon = (
+	<div className={styles.HelpTitle}>
+		<span>Help Menu</span>
+		<svg className={styles.HelpIcon}>
+			<use xlinkHref={`${sprite}#icon-help1`}></use>
+		</svg>
+	</div>
+);
+
 const HelpLegend = () => {
 	const [openHelp, setOpenHelp] = useState(false);
 	return (
@@ -27,7 +36,7 @@ const HelpLegend = () => {
 			</section>
 
 			{openHelp && (
-				<ModalSM title="Help Menu" closeModal={() => setOpenHelp(false)}>
+				<ModalSM title={HelpIcon} closeModal={() => setOpenHelp(false)}>
 					<section className={styles.HelpLegend_section}>
 						<h2 className={styles.HelpLegend_section_title}>
 							Status Color Legend
