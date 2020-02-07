@@ -20,6 +20,7 @@ import ResidentDropdown from "../../components/app/ResidentDropdown";
 import ResidentCard from "../../components/app/ResidentCard";
 import DashboardNav from "../../components/dashboard/DashboardNav";
 import DashboardContainer from "../../components/dashboard/DashboardContainer";
+import HelpLegend from "../../components/app/HelpLegend";
 
 const AuthenticatedView = ({ history }) => {
 	const { authData } = useContext(AuthContext);
@@ -101,7 +102,7 @@ const AuthenticatedView = ({ history }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	// ???REMOVE LATER MAYBE??? //
+	// ??? REMOVE LATER MAYBE ??? //
 	useEffect(() => {
 		let isMounted = true;
 		if (!isMounted) {
@@ -124,7 +125,7 @@ const AuthenticatedView = ({ history }) => {
 			window.removeEventListener("keydown", handleShortcuts);
 		};
 	}, [isExpanded]);
-	// ???REMOVE LATER MAYBE??? //
+	// ??? REMOVE LATER MAYBE ??? //
 
 	return (
 		<>
@@ -161,6 +162,8 @@ const AuthenticatedView = ({ history }) => {
 					/>
 				</section>
 			</div>
+
+			<HelpLegend />
 		</>
 	);
 };

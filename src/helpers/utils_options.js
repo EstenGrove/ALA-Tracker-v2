@@ -30,7 +30,8 @@ const STATUS = [
 	"IN-PROGRESS",
 	"NOT-COMPLETE",
 	"PENDING",
-	"MISSED-EVENT"
+	"MISSED-EVENT",
+	"PAST-DUE"
 ];
 
 const RESOLUTIONS = [

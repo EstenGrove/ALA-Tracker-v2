@@ -109,6 +109,28 @@ const statusColors = {
 	}
 };
 
+// JUST TEXT COLORS
+const statusTextColor = {
+	complete: {
+		color: themeColors.main.green
+	},
+	pending: {
+		color: themeColors.main.orange
+	},
+	inprogress: {
+		color: themeColors.main.altYellow
+	},
+	notcomplete: {
+		color: themeColors.main.charcoal
+	},
+	missedevent: {
+		color: themeColors.main.red
+	},
+	pastdue: {
+		color: themeColors.main.red
+	}
+};
+
 const iconChart = {
 	stopwatch: "access_alarmalarm",
 	close: "clearclose",
@@ -135,7 +157,7 @@ const statusReducer = (status = "PENDING") => {
 				color: "hsla(218, 17%, 35%, 1)",
 				border: `1px solid ${themeColors.main.green}`,
 				...fonts
-			}; // "hsla(170, 100%, 39%, 1)"
+			}; // "hsla(144, 69%, 63%, .4)"
 		case "NOT-COMPLETE":
 			return {
 				backgroundColor: themeColors.blueGreys.saturated,
@@ -149,7 +171,7 @@ const statusReducer = (status = "PENDING") => {
 				color: "hsla(218, 17%, 35%, 1)",
 				border: `1px solid ${themeColors.main.altRed}`,
 				...fonts
-			}; // "hsla(39, 100%, 70%, 1)"
+			}; // "hsla(46, 100%, 50%, 1)"
 		case "PENDING":
 			return {
 				backgroundColor: themeColors.flat.orange,
@@ -450,6 +472,7 @@ export {
 	adlColors,
 	statusColors,
 	adlIcons,
+	statusTextColor,
 	// destructured
 	brand,
 	main,
