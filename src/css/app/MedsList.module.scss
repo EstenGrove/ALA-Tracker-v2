@@ -1,0 +1,34 @@
+@import "../../sass/mixins";
+@import "../../sass/variables";
+
+.MedsList {
+	width: -webkit-max-content;
+	width: -moz-max-content;
+	width: max-content;
+	height: -webkit-max-content;
+	height: -moz-max-content;
+	height: max-content;
+
+	&_list {
+		list-style-type: none;
+
+		&_item {
+			font-size: 1.2rem;
+			font-weight: 300;
+			@include col_start_start;
+
+			&_wrapper {
+				& > i {
+					color: map-get($map: $colors, $key: "mainRed");
+					font-weight: 500;
+				}
+			}
+		}
+	}
+
+	&_EMPTY {
+		font-size: 1.3rem;
+		font-weight: 500;
+		color: map-get($map: $colors, $key: "mainRed");
+	}
+}

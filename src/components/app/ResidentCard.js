@@ -9,6 +9,7 @@ import styles from "../../css/app/ResidentCard.module.scss";
 import sprite from "../../assets/resident-details.svg";
 import ResidentPhoto from "./ResidentPhoto";
 import { themeColors } from "../../helpers/utils_styles";
+import MedsList from "./MedsList";
 
 const ResidentCard = ({ currentResident, residentDetails, meds = [] }) => {
 	const cardRef = useRef();
@@ -95,10 +96,7 @@ const ResidentCard = ({ currentResident, residentDetails, meds = [] }) => {
 							</h4>
 						</div>
 						<div className={styles.ResidentCard_row_tile_group}>
-							<h6 className={styles.ResidentCard_row_tile_group_subtitle}>
-								Notes:{" "}
-								{replaceNullWithMsg(currentResident.medNotes, "No notes")}
-							</h6>
+							<MedsList meds={meds} />
 						</div>
 					</section>
 					<section className={styles.ResidentCard_row_tile}>

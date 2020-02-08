@@ -17,11 +17,14 @@ const populateState = (data, state) => {
 		UnscheduledTasks,
 		AssessmentUnscheduleTaskNote,
 		ADLCategory,
-		LOA
+		LOA,
+		Medications
 		// AssessmentTask,
 		// AssessmentTracking,
 	} = data;
 	const [resident] = Resident;
+
+	console.log("medications", Medications);
 
 	const newState = {
 		...state,
@@ -30,7 +33,8 @@ const populateState = (data, state) => {
 			currentResident: {
 				...resident,
 				ResidentId: ResidentId,
-				isLOA: isLOA(LOA[0])
+				isLOA: isLOA(LOA[0]),
+				Meds: handleEmpties(Medications)
 			},
 			adlDescriptions: handleEmpties(ADL),
 			unscheduledTasks: handleEmpties(UnscheduledTasks),

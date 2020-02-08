@@ -151,6 +151,7 @@ const AuthenticatedView = ({ history }) => {
 						<ResidentCard
 							currentResident={currentResident}
 							residentDetails={state.globals.currentResident}
+							meds={state.globals.currentResident.Meds}
 						/>
 					</header>
 					<DashboardContainer

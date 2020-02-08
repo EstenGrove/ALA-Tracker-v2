@@ -7,12 +7,6 @@ import ModalSM from "../shared/ModalSM";
 import sprite from "../../assets/sidebar.svg";
 import StatusBadge from "../shared/StatusBadge";
 
-// help-with-circle
-
-// REQUIREMENTS:
-// 1. COLOR LEGEND FOR STATUS
-// 2. SHOW STATUS BADGES WITH DEFINITIONS
-
 const HelpIcon = (
 	<div className={styles.HelpTitle}>
 		<span>Help Menu</span>
