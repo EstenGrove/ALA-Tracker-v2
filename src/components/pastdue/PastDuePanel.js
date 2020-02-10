@@ -75,7 +75,7 @@ const PastDuePanel = ({ records = [], isLoading, viewMore }) => {
 								<hr />
 								<PastDueList
 									record={entry}
-									key={entry.Resident[0].ResidentID + index}
+									key={`${entry.Resident[0].ResidentID}__${index}`}
 								/>
 							</>
 						))}

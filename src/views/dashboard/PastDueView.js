@@ -97,15 +97,19 @@ const PastDueView = ({ history }) => {
 	}, [pastDueRecords]);
 
 	return (
-		<div className={styles.PastDueView}>
-			<h1 className="title">Past Due View</h1>
-			<h2 className="subtitle">Under Construction</h2>
-			<PastDuePanel
-				records={pastDueRecords}
-				isLoading={isLoading}
-				viewMore={viewMorePastDue}
-			/>
-		</div>
+		<>
+			<div className={styles.PastDueView}>
+				<h1 className="title">Past Due View</h1>
+				<h2 className="subtitle">Under Construction</h2>
+				<PastDuePanel
+					records={pastDueRecords}
+					isLoading={isLoading}
+					viewMore={viewMorePastDue}
+				/>
+			</div>
+
+			{/* MODAL FOR VIEWING PAST DUE TASK DETAILS */}
+		</>
 	);
 };
 
