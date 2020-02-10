@@ -39,7 +39,7 @@ export default ModalSM;
 ModalSM.defaultProps = {};
 
 ModalSM.propTypes = {
-	title: PropTypes.string,
+	title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 	closeModal: PropTypes.func,
 	children: PropTypes.element
 };

@@ -26,15 +26,19 @@ const MedsList = ({ meds = [] }) => {
 									className={styles.MedsList_list_item_wrapper}
 									key={`${med.MedID}_${index}_1`}
 								>
-									<b>Med:</b>{" "}
-									<i>{replaceNullWithMsg(med.Medication, "Unknown")}</i>
+									<b key={`${med.MedID}__1`}>Med:</b>{" "}
+									<i key={`${med.MedID}___1`}>
+										{replaceNullWithMsg(med.Medication, "Unknown")}
+									</i>
 								</div>
 								<div
 									className={styles.MedsList_list_item_wrapper}
 									key={`${med.MedID}_${index}_2`}
 								>
-									<b>Quantity:</b>{" "}
-									<i>{replaceNullWithMsg(med.Quantity, "Unknown")}</i>
+									<b key={`${med.MedID}__2`}>Quantity:</b>{" "}
+									<i key={`${med.MedID}___2`}>
+										{replaceNullWithMsg(med.Quantity, "Unknown")}
+									</i>
 								</div>
 							</li>
 							<hr className="dividerSM" />

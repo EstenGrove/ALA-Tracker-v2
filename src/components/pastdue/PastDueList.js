@@ -1,6 +1,7 @@
 import React from "react";
 import { PropTypes } from "prop-types";
 import { isEmptyArray } from "../../helpers/utils_types";
+import { SCHEDULED_ID } from "../../helpers/utils_tasks";
 import { getResidentNamePastDue } from "../../helpers/utils_pastdue";
 import styles from "../../css/pastdue/PastDueList.module.scss";
 import ResidentPhoto from "../app/ResidentPhoto";
@@ -8,9 +9,10 @@ import PastDueEntry from "./PastDueEntry";
 import Placeholder from "../shared/Placeholder";
 
 // REQUIREMENTS:
-// 1. INTENDED TO INCLUDE ALL PAST DUE RECORDS FOR A GIVEN RESIDENT
+// 1. INTENDED TO INCLUDE ALL PAST DUE RECORDS FOR A GIVEN FACILITY/COMMUNITY
 // 2. INCLUDES A HEADING WITH THE RESIDENT'S FIRST & LAST NAMES
 // 3. INCLUDES RESIDENT AVATAR OR FALLBACK "user" ICON IF EMPTY
+// 4. PAST DUE RECORDS ARE CLICKABLE, WHEREIN THE USER WILL BE TAKEN TO THE TASK DETAILS
 
 // RENDERS A PAST DUE RECORDS LIST BY RESIDENT
 // INCLUDES THE RESIDENT AVATAR AND THEIR PAST DUE RECORDS
@@ -27,7 +29,10 @@ const PastDueList = ({ record }) => {
 			<section className={styles.PastDueList_entries}>
 				{!isEmptyArray(record.PastDueScheduleTask) &&
 					record.PastDueScheduleTask.map((entry, index) => (
-						<PastDueEntry task={entry} key={entry.SCHEDULED_ID} />
+						<PastDueEntry
+							task={entry}
+							key={`${entry[SCHEDULED_ID]}_${index}`}
+						/>
 					))}
 
 				{isEmptyArray(record.PastDueScheduleTask) && (
