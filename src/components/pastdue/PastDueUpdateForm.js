@@ -1,6 +1,10 @@
 import React from "react";
-import styles from "../../css/pastdue/PastDueUpdateForm.module.scss";
 import { PropTypes } from "prop-types";
+import { STATUS as statuses } from "../../helpers/utils_options";
+import { useForm } from "../../utils/useForm";
+import styles from "../../css/pastdue/PastDueUpdateForm.module.scss";
+import PortableForm from "../shared/PortableForm";
+import DropdownSelect from "../shared/DropdownSelect";
 
 // REQUIREMENTS:
 // 1. CURRENT RESIDENT
@@ -9,12 +13,47 @@ import { PropTypes } from "prop-types";
 // 3. ALL PAST DUE RECORDS FOR THAT RESIDENT
 // 4.
 
-const PastDueUpdateForm = ({ records = [] }) => {
+// REQUIRED PROPERTIES
+// 1. ADLCategory
+// 2. TaskDescription
+// 3. TaskNotes
+// 4. PriorityName
+// 5. DayOfWeek (scheduled for)
+// 6. EntryUserFirstName & EntryUserLastName (initials??)
+// 7. Description (secondary details)
+
+const PastDueUpdateForm = ({ activeTask = {}, records = [] }) => {
+	const {
+		formState,
+		handleChange,
+		handleCheckbox,
+		handleBlur,
+		handleReset
+	} = useForm({
+		pastDueStatus: activeTask?.TaskStatus,
+		pastDuePriority: activeTask?.PriorityName
+	});
+
+	const { values } = formState;
 	return (
 		<article className={styles.PastDueUpdateForm}>
-			{/*  */}
-			{/*  */}
-			{/*  */}
+			<h2 className={styles.PastDueUpdateForm_title}>
+				Edit/Update a Past Due Record
+			</h2>
+			<section className={styles.PastDueUpdateForm_inner}>
+				<PortableForm
+					handleBlur={handleBlur}
+					handleChange={handleChange}
+					handleCheckbox={handleCheckbox}
+				>
+					<DropdownSelect
+						val={values.pastDueStatus}
+						name="pastDueStatus"
+						id="pastDueStatus"
+						options={statuses}
+					/>
+				</PortableForm>
+			</section>
 		</article>
 	);
 };
@@ -24,5 +63,6 @@ export default PastDueUpdateForm;
 PastDueUpdateForm.defaultProps = {};
 
 PastDueUpdateForm.propTypes = {
+	activeTask: PropTypes.object.isRequired,
 	records: PropTypes.arrayOf(PropTypes.object)
 };
