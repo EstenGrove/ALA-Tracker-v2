@@ -138,7 +138,7 @@ const PastDueEntry = ({ task }) => {
 					title="View Past Due Task"
 					closeModal={() => setShowPastDueModal(false)}
 				>
-					<PastDueUpdateForm />
+					<PastDueUpdateForm activeTask={task} />
 				</ModalSM>
 			)}
 		</>

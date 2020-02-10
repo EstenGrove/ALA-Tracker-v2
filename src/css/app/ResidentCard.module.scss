@@ -4,7 +4,7 @@
 .ResidentCard {
 	display: block;
 	margin: 2rem auto;
-	max-width: 35rem;
+	max-width: 100%;
 	width: 35rem;
 	height: auto;
 	padding: 1rem;
@@ -154,5 +154,24 @@
 	&_active {
 		@extend .isLOA;
 		border: 2px solid map-get($map: $colors, $key: "mainRed");
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.ResidentCard {
+		display: block;
+		margin: 2rem auto;
+		max-width: 90%;
+		width: 35rem;
+		height: auto;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		-webkit-box-shadow: map-get($map: $shadows, $key: "medSubtle");
+		box-shadow: map-get($map: $shadows, $key: "medSubtle");
+		background-color: #ffffff;
+
+		&_row_tile_group {
+			font-size: 1.3rem;
+		}
 	}
 }

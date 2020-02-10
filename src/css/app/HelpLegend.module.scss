@@ -100,3 +100,16 @@
 		}
 	}
 }
+
+@media screen and (max-width: 645px) {
+	.HelpLegend {
+		position: fixed;
+		bottom: 8.5rem;
+		right: 1rem;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 50%;
+		background-color: hsla(210, 52%, 47%, 1); // hsla(210, 52%, 47%, 1)
+		z-index: 20;
+	}
+}

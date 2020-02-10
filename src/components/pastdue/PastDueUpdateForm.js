@@ -5,6 +5,14 @@ import { useForm } from "../../utils/useForm";
 import styles from "../../css/pastdue/PastDueUpdateForm.module.scss";
 import PortableForm from "../shared/PortableForm";
 import DropdownSelect from "../shared/DropdownSelect";
+import {
+	getTaskDescription,
+	getTaskStatus,
+	getTaskDueDate,
+	getTaskCategory,
+	checkForNotes
+} from "../../helpers/utils_tasks";
+import { themeColors } from "../../helpers/utils_styles";
 
 // REQUIREMENTS:
 // 1. CURRENT RESIDENT
@@ -37,9 +45,12 @@ const PastDueUpdateForm = ({ activeTask = {}, records = [] }) => {
 	const { values } = formState;
 	return (
 		<article className={styles.PastDueUpdateForm}>
-			<h2 className={styles.PastDueUpdateForm_title}>
-				Edit/Update a Past Due Record
-			</h2>
+			<section className={styles.PastDueUpdateForm_details}>
+				<h2 className={styles.PastDueUpdateForm_details_title}>
+					{getTaskCategory(activeTask)}
+				</h2>
+			</section>
+
 			<section className={styles.PastDueUpdateForm_inner}>
 				<PortableForm
 					handleBlur={handleBlur}
@@ -50,6 +61,7 @@ const PastDueUpdateForm = ({ activeTask = {}, records = [] }) => {
 						val={values.pastDueStatus}
 						name="pastDueStatus"
 						id="pastDueStatus"
+						label="Edit Status"
 						options={statuses}
 					/>
 				</PortableForm>
