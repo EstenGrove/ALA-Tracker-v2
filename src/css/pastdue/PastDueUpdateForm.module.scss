@@ -4,4 +4,34 @@
 .PastDueUpdateForm {
 	@include fill_container;
 	padding: 2rem 0;
+
+	&_title {
+		font-size: 2rem;
+		color: map-get($map: $colors, $key: "mainBlackBlue");
+		@include row_vertical_center;
+		margin-bottom: 4rem;
+	}
+
+	&_icon {
+		width: 2.6rem;
+		height: 2.6rem;
+		margin-right: 0.5rem;
+	}
+
+	&_details {
+		width: 100%;
+		height: auto;
+
+		&_heading {
+			font-size: 1.8rem;
+			font-weight: 600;
+			color: map-get($map: $blueGreys, $key: "subheadings");
+			text-decoration: underline;
+		}
+		& > p {
+			font-size: 1.3rem;
+			font-weight: 500;
+			margin-bottom: 3rem;
+		}
+	}
 }

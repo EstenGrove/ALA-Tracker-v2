@@ -99,6 +99,7 @@ const PastDueEntry = ({ task }) => {
 								</li>
 								<li
 									onClick={() => {
+										setShowOptions(false);
 										setShowPastDueModal(true);
 										markPastDueComplete(task);
 									}}
@@ -107,6 +108,7 @@ const PastDueEntry = ({ task }) => {
 								</li>
 								<li
 									onClick={() => {
+										setShowOptions(false);
 										setShowPastDueModal(true);
 										viewPastDueTask(task);
 									}}
@@ -115,6 +117,7 @@ const PastDueEntry = ({ task }) => {
 								</li>
 								<li
 									onClick={() => {
+										setShowOptions(false);
 										setShowPastDueModal(true);
 										deletePastDueTask(task);
 									}}
