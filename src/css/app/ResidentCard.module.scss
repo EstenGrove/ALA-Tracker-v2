@@ -169,9 +169,15 @@
 		-webkit-box-shadow: map-get($map: $shadows, $key: "medSubtle");
 		box-shadow: map-get($map: $shadows, $key: "medSubtle");
 		background-color: #ffffff;
-
+		&_row_tile_plans {
+			font-size: 1.1rem;
+		}
 		&_row_tile_group {
 			font-size: 1.3rem;
+
+			&_title {
+				font-size: 1.3rem;
+			}
 		}
 	}
 }
