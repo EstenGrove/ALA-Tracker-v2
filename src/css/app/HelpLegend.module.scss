@@ -112,4 +112,14 @@
 		background-color: hsla(210, 52%, 47%, 1); // hsla(210, 52%, 47%, 1)
 		z-index: 20;
 	}
+	.HelpTitle {
+		@include row_start_center;
+		& > span {
+			font-size: 1.6rem;
+		}
+	}
+	.HelpIcon {
+		width: 1.6rem;
+		height: 1.6rem;
+	}
 }
