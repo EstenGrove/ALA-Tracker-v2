@@ -115,6 +115,28 @@ const ADLS = [
 
 const RANGE_TYPES = ["Daily", "Weekly", "Monthly"];
 
+//////////////////////////////////
+///////// REPORT OPTIONS /////////
+//////////////////////////////////
+const UNIT_TYPES = ["Memory Care", "Independent", "Assisted Living"];
+const PARAMS = ["FacilityID", "CompletionStartDate", "CompletionEndDate"];
+const REPORTS = ["Completion Report", "Exception Report"];
+const FILTERS = ["By Shift", "By Resolution", "By Room #"];
+const SORTS = [
+	"By Resident",
+	"By Staff",
+	"By Shift",
+	"By Reason",
+	"By TimeStamp"
+];
+const DATE_RANGE_TYPES = [
+	"Last 30 days",
+	"By Month",
+	"By Quarter",
+	"Specific Date",
+	"Custom Date Range"
+];
+
 export {
 	SHIFTS,
 	DAYS,
@@ -130,5 +152,12 @@ export {
 	REASONS_DETAILS,
 	// priorities
 	PRIORITIES,
-	ADLS
+	ADLS,
+	// report options (dropdown lists)
+	UNIT_TYPES,
+	REPORTS,
+	FILTERS,
+	SORTS,
+	PARAMS,
+	DATE_RANGE_TYPES
 };

@@ -202,7 +202,8 @@ const endpoints = {
 	},
 	reports: {
 		getInfo: "Reports/GetReportInformation",
-		executeReport: "Reports/ExecuteReport"
+		executeReport: "Reports/ExecuteReport",
+		executeReportAsync: "Reports/ExecuteReportAsync"
 	}
 };
 

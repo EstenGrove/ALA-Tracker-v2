@@ -4,9 +4,32 @@ import {
 	isPast,
 	distanceInWordsToNow,
 	differenceInDays,
-	distanceInWords
+	distanceInWords,
+	startOfDay,
+	endOfDay,
+	startOfMonth,
+	endOfMonth,
+	startOfQuarter,
+	endOfQuarter,
+	subDays
 } from "date-fns";
+import { isEmptyVal } from "./utils_types";
 import { isScheduledTask } from "./utils_tasks";
+
+export const months = [
+	"Jan",
+	"Feb",
+	"Mar",
+	"Apr",
+	"May",
+	"Jun",
+	"Jul",
+	"Aug",
+	"Sep",
+	"Oct",
+	"Nov",
+	"Dec"
+];
 
 const formatDate = (date = null) => {
 	if (!date) return "No date";
@@ -106,7 +129,180 @@ const checkForPastDue = task => {
 		: formatDifferenceInDays(task.TrackDate);
 };
 
+const formatNum = num => {
+	if (num < 2 && num.length !== 2) {
+		return `0${num}`;
+	}
+	return num.toString();
+};
+
+//////////////////////////////////
+////// DATE PICKER HELPERS //////
+//////////////////////////////////
+
+// handles "By Month" selection
+// deps: months array
+const getRangeFromMonth = selection => {
+	if (isEmptyVal(selection)) return;
+	const mo = selection.split(" ")[0].trim();
+	const yr = Number(selection.split(" ")[1].trim());
+
+	const monthIdx = months.indexOf(mo);
+	const monthStart = format(
+		startOfMonth(new Date(yr, monthIdx, 1)),
+		"MM/DD/YYYY"
+	);
+	const monthEnd = format(endOfMonth(new Date(yr, monthIdx, 1)), "MM/DD/YYYY");
+	return {
+		startDate: monthStart,
+		endDate: monthEnd
+	};
+};
+
+// handles "By Quarter" selection
+const getRangeFromQuarter = selection => {
+	if (isEmptyVal(selection)) return;
+	const qtr = selection.split(" ")[0].trim();
+	const yr = Number(selection.split(" ")[1].trim());
+	if (qtr === "Q1") {
+		return {
+			startDate: format(startOfQuarter(new Date(yr, 0, 1)), "MM/DD/YYYY"),
+			endDate: format(endOfQuarter(new Date(yr, 0, 1)), "MM/DD/YYYY")
+		};
+	}
+	if (qtr === "Q2") {
+		return {
+			startDate: format(startOfQuarter(new Date(yr, 3, 1)), "MM/DD/YYYY"),
+			endDate: format(endOfQuarter(new Date(yr, 3, 1)), "MM/DD/YYYY")
+		};
+	}
+	if (qtr === "Q3") {
+		return {
+			startDate: format(startOfQuarter(new Date(yr, 6, 1)), "MM/DD/YYYY"),
+			endDate: format(endOfQuarter(new Date(yr, 6, 1)), "MM/DD/YYYY")
+		};
+	}
+	if (qtr === "Q4") {
+		return {
+			startDate: format(startOfQuarter(new Date(yr, 9, 1)), "MM/DD/YYYY"),
+			endDate: format(endOfQuarter(new Date(yr, 9, 1)), "MM/DD/YYYY")
+		};
+	}
+	throw new Error("❌ Oops. Invalid quarter given", qtr);
+};
+
+// handles "Last 30 Days" selection
+const getRangeFromLast30Days = () => {
+	return {
+		startDate: format(subDays(new Date(), 30), "MM/DD/YYYY"),
+		endDate: format(new Date(), "MM/DD/YYYY")
+	};
+};
+
+// handles "Specific Date" selection
+const getRangeFromDate = selection => {
+	if (isEmptyVal(selection)) return;
+	return {
+		startDate: format(startOfDay(selection), "MM/DD/YYYY"),
+		endDate: format(endOfDay(selection), "MM/DD/YYYY")
+	};
+};
+
+// converts dates for the reports' model params
+const getStartAndEndDates = vals => {
+	switch (vals.reportRangeType) {
+		case "Last 30 days": {
+			const { startDate, endDate } = getRangeFromLast30Days();
+			return {
+				...vals,
+				startDate,
+				endDate
+			};
+		}
+		case "By Month": {
+			const { startDate, endDate } = getRangeFromMonth(vals.byMonth);
+			return {
+				...vals,
+				startDate,
+				endDate
+			};
+		}
+		case "By Quarter": {
+			const { startDate, endDate } = getRangeFromQuarter(vals.byQuarter);
+			return {
+				...vals,
+				startDate,
+				endDate
+			};
+		}
+		case "Specific Date": {
+			const { startDate, endDate } = getRangeFromDate(vals.byDate);
+			return {
+				...vals,
+				startDate,
+				endDate
+			};
+		}
+		case "Custom Date Range": {
+			return { ...vals };
+		}
+		default:
+			throw new Error("❌ Oops. Invalid date range type", vals.reportRangeType);
+	}
+};
+
+// PARSE QUARTER AND PARSE MONTH ARE *NOT* NEEDED
+// THEY'RE CLONES OF THE "GETRANGEFROM*" HELPERS
+const parseQuarter = selection => {
+	if (isEmptyVal(selection)) return;
+	const qtr = selection.split(" ")[0].trim();
+	const yr = Number(selection.split(" ")[1].trim());
+	if (qtr === "Q1") {
+		return {
+			startDate: format(startOfQuarter(new Date(yr, 0, 1)), "MM/DD/YYYY"),
+			endDate: format(endOfQuarter(new Date(yr, 0, 1)), "MM/DD/YYYY")
+		};
+	}
+	if (qtr === "Q2") {
+		return {
+			startDate: format(startOfQuarter(new Date(yr, 3, 1)), "MM/DD/YYYY"),
+			endDate: format(endOfQuarter(new Date(yr, 3, 1)), "MM/DD/YYYY")
+		};
+	}
+	if (qtr === "Q3") {
+		return {
+			startDate: format(startOfQuarter(new Date(yr, 6, 1)), "MM/DD/YYYY"),
+			endDate: format(endOfQuarter(new Date(yr, 6, 1)), "MM/DD/YYYY")
+		};
+	}
+	if (qtr === "Q4") {
+		return {
+			startDate: format(startOfQuarter(new Date(yr, 9, 1)), "MM/DD/YYYY"),
+			endDate: format(endOfQuarter(new Date(yr, 9, 1)), "MM/DD/YYYY")
+		};
+	}
+	throw new Error("❌ Oops. Invalid quarter given", qtr);
+};
+
+const parseMonth = selection => {
+	if (isEmptyVal(selection)) return;
+	const mo = selection.split(" ")[0].trim();
+	const yr = Number(selection.split(" ")[1].trim());
+
+	const monthIdx = months.indexOf(mo);
+	const monthStart = format(
+		startOfMonth(new Date(yr, monthIdx, 1)),
+		"MM/DD/YYYY"
+	);
+	const monthEnd = format(endOfMonth(new Date(yr, monthIdx, 1)), "MM/DD/YYYY");
+	return {
+		startDate: monthStart,
+		endDate: monthEnd
+	};
+};
+
 export {
+	formatNum,
 	formatReturnDate,
 	formatDate,
 	formatTime,
@@ -118,4 +314,19 @@ export {
 	matchDayAndDate,
 	getZeroBasedDayOfWeek,
 	checkForPastDue
+};
+
+//////////////////////////////////
+////// DATE PICKER HELPERS //////
+//////////////////////////////////
+
+export {
+	getRangeFromDate,
+	getRangeFromLast30Days,
+	getRangeFromMonth,
+	getRangeFromQuarter,
+	getStartAndEndDates,
+	// parsing date selections
+	parseQuarter,
+	parseMonth
 };
