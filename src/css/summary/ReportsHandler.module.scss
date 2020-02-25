@@ -1,0 +1,127 @@
+@import "../../sass/variables";
+@import "../../sass/mixins";
+
+.ReportsHandler {
+	width: 100%;
+	height: auto;
+	padding: 1rem;
+	background-color: #ffffff;
+	border-radius: 0.5rem;
+	margin-bottom: 2rem;
+	box-shadow: map-get($map: $shadows, $key: "subtle");
+
+	&_top {
+		width: 100%;
+		height: 3rem;
+		@include row_vertical_center;
+		margin-bottom: 2rem;
+		&:hover,
+		&:hover &_title,
+		&:hover &_icon {
+			color: map-get($map: $colors, $key: "main");
+			fill: map-get($map: $colors, $key: "main");
+			cursor: pointer;
+		}
+
+		&_title {
+			font-size: 1.8rem;
+			color: map-get($map: $blueGreys, $key: "headings");
+		}
+		&_icon {
+			margin-left: 0.3rem;
+			width: 1.6rem;
+			height: 1.6rem;
+			fill: map-get($map: $blueGreys, $key: "headings");
+			&:hover {
+				cursor: pointer;
+				fill: map-get($map: $colors, $key: "main");
+			}
+		}
+	}
+
+	&_selection {
+		width: 100%;
+		height: auto;
+		margin-bottom: 2rem;
+
+		&_value {
+			font-size: 1.4rem;
+			font-weight: 600;
+			color: map-get($map: $blueGreys, $key: "subheadings");
+
+			& > b {
+				color: map-get($map: $colors, $key: "mainBlue");
+			}
+		}
+	}
+
+	&_handler {
+		@include fill_container;
+		min-height: 5rem;
+		height: auto;
+
+		&_form {
+			width: 100%;
+			height: max-content;
+			@include row_start_start;
+			flex-wrap: wrap;
+
+			&_item {
+				width: max-content;
+				height: auto;
+				margin-top: 1rem;
+
+				&:not(:first-child),
+				&:not(:last-child) {
+					margin-left: 1.5rem;
+				}
+
+				&_title {
+					font-size: 1.8rem;
+					font-weight: 600;
+					color: map-get($map: $blueGreys, $key: "subheadings");
+					margin-bottom: 1rem;
+				}
+			}
+
+			&_filters {
+				width: 100%;
+				height: auto;
+				margin-top: 2rem;
+				margin-left: 1rem;
+			}
+
+			&_filterOptions {
+				width: max-content;
+				margin-left: 1rem;
+				margin-top: 1rem;
+			}
+
+			&_controls {
+				width: 100%;
+				height: max-content;
+				margin-top: 1.5rem;
+				@include row_end_end;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 450px) {
+	.ReportsHandler {
+		&_handler {
+			min-height: 5rem;
+			height: auto;
+
+			&_form {
+				width: max-content;
+				height: max-content;
+				@include col_start_start;
+
+				&_item {
+					margin: 1rem 0;
+				}
+			}
+		}
+	}
+}

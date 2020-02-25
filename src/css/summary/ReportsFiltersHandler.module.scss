@@ -1,0 +1,12 @@
+@import "../../sass/variables";
+@import "../../sass/mixins";
+
+.ReportsFiltersHandler {
+	width: auto;
+
+	&_byRoom {
+		width: max-content;
+		height: auto;
+		@include row_start_start;
+	}
+}

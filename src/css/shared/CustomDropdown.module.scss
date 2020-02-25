@@ -48,6 +48,7 @@
 		overflow-y: auto;
 		background-color: #ffffff;
 		box-shadow: map-get($map: $shadows, $key: "medSubtle");
+		z-index: 20;
 
 		&_list {
 			@include fill_container;

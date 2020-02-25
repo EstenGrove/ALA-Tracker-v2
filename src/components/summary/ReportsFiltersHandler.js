@@ -1,0 +1,70 @@
+import React from "react";
+import styles from "../../css/summary/ReportsFiltersHandler.module.scss";
+import { PropTypes } from "prop-types";
+import TextInput from "../shared/TextInput";
+import CustomDropdown from "../shared/CustomDropdown";
+
+// HANDLES THE FILTERS DROPDOWNS AND LOGIC FOR REPORTS MODELS
+
+const SHIFTS = ["AM", "PM", "NOC", "ANY"];
+
+const bg_grey = {
+	backgroundColor: "#eaecef"
+};
+
+const ReportsFiltersHandler = ({
+	residents,
+	reportVals,
+	filterByVal,
+	handleSelection,
+	handleChange
+}) => {
+	return (
+		<div className={styles.ReportsFiltersHandler}>
+			{filterByVal === "By Resident" && (
+				<CustomDropdown
+					name="sortByResident"
+					id="sortByResident"
+					placeholder="Select a Resident"
+					selection={reportVals.sortByResident}
+					setSelection={handleSelection}
+					customStyles={bg_grey}
+					options={["Ascending", "Descending"]}
+				/>
+			)}
+			{filterByVal === "By Room #" && (
+				<section className={styles.ReportsFiltersHandler_byRoom}>
+					<TextInput
+						name="filterByRoomNumStart"
+						id="filterByRoomNumStart"
+						placeholder="Begin Room #"
+						handleChange={handleChange}
+						customStyles={{ marginRight: "1.5rem" }}
+					/>
+					<TextInput
+						name="filterByRoomNumEnd"
+						id="filterByRoomNumEnd"
+						placeholder="End Room #"
+						handleChange={handleChange}
+					/>
+				</section>
+			)}
+			{filterByVal === "By Shift" && (
+				<CustomDropdown
+					name="filterByShift"
+					id="filterByShift"
+					placeholder="Select Shift"
+					selection={reportVals.filterByShift}
+					setSelection={handleSelection}
+					options={SHIFTS}
+				/>
+			)}
+		</div>
+	);
+};
+
+export default ReportsFiltersHandler;
+
+ReportsFiltersHandler.defaultProps = {};
+
+ReportsFiltersHandler.propTypes = {};
