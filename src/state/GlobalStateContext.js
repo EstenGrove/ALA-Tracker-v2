@@ -57,6 +57,20 @@ const initialGlobalState = {
 		charting: {},
 		categories: [],
 		vitals: []
+	},
+	reports: {
+		src: "",
+		details: {
+			dateRange: {
+				startDate: "",
+				endDate: ""
+			},
+			model: {
+				ReportParms: [],
+				ReportSorts: []
+			}
+		},
+		recentlyViewed: []
 	}
 };
 

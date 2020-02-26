@@ -30,8 +30,7 @@ const ReportsMirror = ({
 	title = "",
 	size = "LG",
 	isLoading = false,
-	status = null,
-	loadReport
+	status = null
 }) => {
 	const isReady = () => {
 		if (!isEmptyVal(src) && status === "Ready") {

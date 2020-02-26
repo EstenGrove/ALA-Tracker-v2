@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
 import { themeColors } from "../../helpers/utils_styles";
 import { isEmptyVal } from "../../helpers/utils_types";
@@ -16,6 +16,7 @@ import {
 } from "../../helpers/utils_options";
 import { getNonEmptyValues } from "../../helpers/utils_reports";
 import { getStartAndEndDates } from "../../helpers/utils_dates";
+import { getReportInfo, executeReport } from "../../helpers/utils_reports";
 import styles from "../../css/summary/ReportsHandler.module.scss";
 import sprite from "../../assets/carets-arrows.svg";
 // SHARED COMPONENTS
@@ -88,7 +89,7 @@ const initialValState = {
 // ** TODOS **
 // 1. VALIDATE & PERFORM SAFE CHECKS WHEN "CREATE REPORT" BUTTON IS CLICKED
 
-const ReportsHandler = ({ title, facilityID, residents = [] }) => {
+const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 	const [reportIsLoading, setReportIsLoading] = useState(false); // when requesting/download report
 	// shows confirmation dialog box
 	const [showConfirm, setShowConfirm] = useState(false);
@@ -196,7 +197,7 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 		e.preventDefault();
 		const sanitized = getNonEmptyValues({
 			...reportVals,
-			facilityID: facilityID
+			facilityID: currentUser.facilityID
 		});
 		const { startDate, endDate } = getStartAndEndDates(sanitized);
 		const model = createReportModel({
@@ -222,7 +223,7 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 		const { startDate, endDate } = createDateRange(reportVals);
 		const sanitized = getNonEmptyValues({
 			...reportVals,
-			facilityID: facilityID,
+			facilityID: currentUser.facilityID,
 			startDate: startDate,
 			endDate: endDate
 		});
@@ -251,7 +252,7 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 				endDate
 			});
 			const sanitized = getNonEmptyValues({
-				facilityID: facilityID,
+				facilityID: currentUser.facilityID,
 				...reportVals
 			});
 			setReportDesc(createReportDescription(sanitized));
@@ -285,6 +286,24 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 		}
 		return { color: themeColors.main.red };
 	};
+
+	// fetches report data on inital load
+	const getReportData = async () => {
+		const { token, facilityID } = currentUser;
+		const reportData = await getReportInfo(token, facilityID);
+		return reportData;
+	};
+
+	useEffect(() => {
+		let isMounted = true;
+		if (!isMounted) {
+			return;
+		}
+		getReportData();
+		return () => {
+			isMounted = false;
+		};
+	}, []);
 
 	return (
 		<>
@@ -477,5 +496,7 @@ ReportsHandler.defaultProps = {
 
 ReportsHandler.propTypes = {
 	title: PropTypes.string,
-	residents: PropTypes.array.isRequired
+	currentUser: PropTypes.object.isRequired,
+	residents: PropTypes.array.isRequired,
+	dispatch: PropTypes.func.isRequired
 };
