@@ -507,6 +507,7 @@ const DIALOG_ICONS = {
 	SUCCESS: "check_circle",
 	INFO: "info-with-circle",
 	INFO2: "information-outline",
+	REPORT: "insert_chart_outlined",
 	PRINT: "local_print_shopprint",
 	SAVE: "save11",
 	CHECKMARK: "check_circle",
