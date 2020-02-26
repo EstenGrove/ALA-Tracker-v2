@@ -1,8 +1,35 @@
+import { test } from "./utils_env";
+import { reports } from "./utils_endpoints";
 import { isEmptyVal } from "./utils_types";
 import { findShiftID } from "./utils_shifts";
 import { findStatusID } from "./utils_status";
 import { getResolutionID } from "./utils_resolution";
 import { ReportsCompletionModel, ReportsExceptionModel } from "./utils_models";
+
+///////////////////////////////////////
+//////// REPORT FETCHING UTILS ////////
+///////////////////////////////////////
+
+const getReportInfo = async (token, facilityID = null) => {
+	let url = test.base + reports.getInfo;
+
+	if (facilityID) url += "?facilityID=" + facilityID;
+
+	try {
+		const request = await fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: "Basic " + btoa(test.user + ":" + test.password),
+				SecurityToken: token
+			}
+		});
+		const response = await request.json();
+		return response.Data;
+	} catch (err) {
+		console.log("An error occurred", err);
+		return err.message;
+	}
+};
 
 // "sanitizes" a object, by removing ALL empty values
 // "empty" === (undefined|null|"")
@@ -201,6 +228,9 @@ const createReportDescription = vals => {
 
 	return desc;
 };
+
+// REPORT REQUEST/DOWNLOAD HELPERS //
+export { getReportInfo };
 
 // REPORT HELPERS //
 export { createReportParams, createReportSorts, createReportModel };

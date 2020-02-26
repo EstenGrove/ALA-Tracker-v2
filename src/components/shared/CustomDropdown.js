@@ -74,10 +74,6 @@ const CustomDropdown = ({
 	const [hasFocus, setHasFocus] = useState("");
 	const [searchVal, setSearchVal] = useState("");
 
-	console.group("<CustomDropdown/>");
-	console.log("isEmptyVal(selection)", isEmptyVal(selection));
-	console.log("<CUSTOM DROPDOWN/>: selection", selection);
-	console.groupEnd();
 	// handles "click" selection for a menu option
 	const handleSelection = (name, option) => {
 		setSelection(name, option);
