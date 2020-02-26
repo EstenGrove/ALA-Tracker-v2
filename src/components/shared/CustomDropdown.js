@@ -90,10 +90,10 @@ const CustomDropdown = ({
 	// "ENTER" key is pressed
 	const handleSelectionByKey = e => {
 		const currentEl = e.target.textContent;
+
 		const hasMatch = val => {
 			return listOptions.includes(val);
 		};
-
 		if (hasMatch(currentEl) && e.key === ENTER) {
 			return handleSelection(currentEl);
 		}

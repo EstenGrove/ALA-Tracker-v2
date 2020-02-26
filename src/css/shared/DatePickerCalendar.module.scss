@@ -13,6 +13,13 @@
 	padding: 1rem;
 	box-shadow: map-get($map: $shadows, $key: "subtle");
 
+	&_focusMode {
+		@extend .DatePickerCalendar;
+		@include focusMode;
+		margin-left: -20rem;
+		margin-top: -23.5rem;
+	}
+
 	&_controls {
 		width: 100%;
 		height: -webkit-max-content;
