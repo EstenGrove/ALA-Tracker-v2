@@ -118,6 +118,22 @@ const createReportDescription = vals => {
 	return desc;
 };
 
+const checkForRange = vals => {
+	switch (vals.reportRangeType) {
+		case "By Month":
+			return vals.byMonth;
+		case "By Quarter":
+			return vals.byQuarter;
+		case "Specific Date":
+			return vals.byDate;
+		case "Custom Date Range":
+			return vals.byDateRange;
+
+		default:
+			throw new Error("❌ Missing a date range type", vals.reportRangeType);
+	}
+};
+
 export {
 	isValidForm,
 	getNonEmptyValues,
@@ -125,5 +141,6 @@ export {
 	selectionValidator,
 	createReportDescription,
 	getRangeDescription,
-	getFilterDescription
+	getFilterDescription,
+	checkForRange
 };
