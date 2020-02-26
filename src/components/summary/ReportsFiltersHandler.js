@@ -1,12 +1,11 @@
 import React from "react";
-import styles from "../../css/summary/ReportsFiltersHandler.module.scss";
 import { PropTypes } from "prop-types";
+import { SHIFTS } from "../../helpers/utils_options";
+import styles from "../../css/summary/ReportsFiltersHandler.module.scss";
 import TextInput from "../shared/TextInput";
 import CustomDropdown from "../shared/CustomDropdown";
 
 // HANDLES THE FILTERS DROPDOWNS AND LOGIC FOR REPORTS MODELS
-
-const SHIFTS = ["AM", "PM", "NOC", "ANY"];
 
 const bg_grey = {
 	backgroundColor: "#eaecef"
@@ -67,4 +66,10 @@ export default ReportsFiltersHandler;
 
 ReportsFiltersHandler.defaultProps = {};
 
-ReportsFiltersHandler.propTypes = {};
+ReportsFiltersHandler.propTypes = {
+	residents: PropTypes.arrayOf(PropTypes.object),
+	reportVals: PropTypes.object.isRequired,
+	filterByVal: PropTypes.string,
+	handleSelection: PropTypes.func.isRequired,
+	handleChange: PropTypes.func.isRequired
+};

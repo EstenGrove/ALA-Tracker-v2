@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "../../css/summary/ReportsSortsHandler.module.scss";
 import { PropTypes } from "prop-types";
+import { REASONS } from "../../helpers/utils_options";
+import styles from "../../css/summary/ReportsSortsHandler.module.scss";
 import CustomDropdown from "../shared/CustomDropdown";
-import { REASONS } from "../../helpers/utils_reportFilters";
 
 // HANDLES THE SORTING DROPDOWNS AND LOGIC FOR REPORTS MODELS
 

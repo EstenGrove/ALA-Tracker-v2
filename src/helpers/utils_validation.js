@@ -53,4 +53,77 @@ const selectionValidator = reportVals => {
 	return `Form has been filled out. Would you like to create the report, now?`;
 };
 
-export { isValidForm, getNonEmptyValues, isFilledOut, selectionValidator };
+// handles formatting the "reportRangeType" value
+const getRangeDescription = vals => {
+	console.log("vals (getRangeDesc)", vals);
+	switch (vals.reportRangeType) {
+		case "Last 30 days": {
+			return ` for the last 30 days `;
+		}
+		case "By Month": {
+			return ` for ${vals.byMonth} `;
+		}
+		case "By Quarter": {
+			return ` for ${vals.byQuarter} `;
+		}
+		case "Specific Date": {
+			return ` for ${vals.byDate} `;
+		}
+		case "Custom Date Range": {
+			return ` for ${vals.startDate} to ${vals.endDate} `;
+		}
+		default:
+			throw new Error("❌ Oops. Invalid 'reportRangeType' value.");
+	}
+};
+
+// handles formatting the "filterBy" value
+const getFilterDescription = vals => {
+	switch (vals.filterBy) {
+		case "By Shift": {
+			return ` that's sorted by the ${vals.filterByShift} shift `;
+		}
+		case "By Resident": {
+			return ` that's sorted by resident `;
+		}
+		case "By Status": {
+			return ` that's sorted by ${vals.filterByStatus} status `;
+		}
+		case "ByResolution": {
+			return ` that's sorted by the "${vals.filterByResolution}" resolution `;
+		}
+		case "By Room #": {
+			return ` that's sorted from room #${vals.filterByRoomNumStart} to room #${vals.filterByRoomNumEnd} `;
+		}
+		case "By Staff": {
+			return ` that's sorted by staff/employee name `;
+		}
+		case "By TimeStamp": {
+			return;
+		}
+		default:
+			throw new Error("❌ Oops. Invalid 'filterBy' value.");
+	}
+};
+
+const createReportDescription = vals => {
+	const base = "You've requested a ";
+	const { reportType } = vals;
+	let desc = base + reportType;
+	desc += getRangeDescription(vals);
+	// return early without filters/sorts
+	if (isEmptyVal(vals.filterBy)) return desc;
+	desc += getFilterDescription(vals);
+
+	return desc;
+};
+
+export {
+	isValidForm,
+	getNonEmptyValues,
+	isFilledOut,
+	selectionValidator,
+	createReportDescription,
+	getRangeDescription,
+	getFilterDescription
+};

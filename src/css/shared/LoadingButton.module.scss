@@ -1,0 +1,32 @@
+@import "../../sass/mixins";
+@import "../../sass/variables";
+@import "../../sass/animations";
+
+.LoadingButton {
+	max-width: 15rem;
+	height: auto;
+	padding: 0.5rem 1.2rem;
+	border-radius: 0.5rem;
+	border: none;
+	outline: none;
+	background-color: map-get($map: $colors, $key: "main");
+	color: #ffffff;
+	font-size: 1.4rem;
+	@include row_center_all;
+
+	&:hover,
+	&:focus {
+		cursor: pointer;
+		box-shadow: map-get($map: $shadows, $key: "mainOutline");
+	}
+	&_isDisabled {
+		@extend .LoadingButton;
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+	&:disabled {
+		@extend .LoadingButton;
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+}

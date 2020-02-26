@@ -5,18 +5,15 @@ import { isEmptyVal } from "../../helpers/utils_types";
 import { ALERTS_MODEL as alerts } from "../../helpers/utils_alerts";
 import {
 	createReportDescription,
-	isValidForm,
-	isFilledOut,
-	selectionValidator,
-	hasDateRange
+	checkForRange
 } from "../../helpers/utils_validation";
+import { createReportModel } from "../../helpers/utils_reportFilters";
 import {
-	createReportModel,
 	REPORTS,
 	FILTERS,
 	SORTS,
-	RANGE_TYPES
-} from "../../helpers/utils_reportFilters";
+	DATE_RANGE_TYPES as RANGE_TYPES
+} from "../../helpers/utils_options";
 import {
 	getStartAndEndDates,
 	getNonEmptyValues
@@ -28,7 +25,6 @@ import CustomDropdown from "../shared/CustomDropdown";
 import LoadingButton from "../shared/LoadingButton";
 import Dialog from "../shared/Dialog";
 import AlertsNotifier from "../shared/AlertsNotifier";
-import SelfDestruct from "../shared/SelfDestruct";
 // REPORT/SUMMARY COMPONENTS
 import ReportsDateHandler from "./ReportsDateHandler";
 import ReportsFiltersHandler from "./ReportsFiltersHandler";
@@ -141,14 +137,28 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 	};
 	// date handler
 	const handleDate = date => {
-		setReportVals({
-			...reportVals,
-			byDate: date
-		});
+		// if empty, then set to empty string
+		if (isEmptyVal(date)) {
+			return setReportVals({
+				...reportVals,
+				byDate: ""
+			});
+			// extract start and end dates and set state
+		} else {
+			const { startDate, endDate } = getStartAndEndDates({
+				...reportVals,
+				byDate: date
+			});
+			return setReportVals({
+				...reportVals,
+				byDate: date,
+				startDate,
+				endDate
+			});
+		}
 	};
 	// month handler
 	const handleMonth = month => {
-		console.log("month", month);
 		setReportVals({
 			...reportVals,
 			byMonth: month
@@ -191,21 +201,58 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 		setShowConfirm(false);
 	};
 
-	const handleFormValidation = e => {
-		e.preventDefault();
-		if (!isFilledOut(reportVals)) {
-			alerts.ERROR.subheading = selectionValidator(reportVals);
-			return setTriggerAlert(true);
-		}
+	const createDateRange = reportVals => {
+		if (isEmptyVal(reportVals.reportRangeType)) return;
+		const { startDate, endDate } = getStartAndEndDates(reportVals);
+
+		return {
+			startDate,
+			endDate
+		};
+	};
+
+	// SANITIZE, CREATE MODEL, TRIGGER CONFIRMATION, RUN REPORT
+	const sanitizeAndGetModel = reportVals => {
+		const { startDate, endDate } = createDateRange(reportVals);
 		const sanitized = getNonEmptyValues({
 			...reportVals,
-			facilityID: facilityID
+			facilityID: facilityID,
+			startDate: startDate,
+			endDate: endDate
 		});
 		const model = createReportModel(sanitized);
-		console.log("sanitized", sanitized);
-		console.log("model", model);
-		setReportDesc(createReportDescription(sanitized));
-		return setShowConfirm(true);
+		return {
+			sanitized: sanitized,
+			model: model
+		};
+	};
+
+	const handleFormValidation = e => {
+		e.preventDefault();
+		if (!isEmptyVal(reportVals.startDate) && !isEmptyVal(reportVals.endDate)) {
+			const { sanitized, model } = sanitizeAndGetModel(reportVals);
+			setReportDesc(createReportDescription(sanitized));
+			return setShowConfirm(true);
+			// NEED TO CHECK THE DATE RANGE TYPE'S VALUE
+		} else if (
+			!isEmptyVal(reportVals.reportRangeType) &&
+			!isEmptyVal(checkForRange(reportVals))
+		) {
+			const { startDate, endDate } = getStartAndEndDates(reportVals);
+			setReportVals({
+				...reportVals,
+				startDate,
+				endDate
+			});
+			const sanitized = getNonEmptyValues({
+				facilityID: facilityID,
+				...reportVals
+			});
+			setReportDesc(createReportDescription(sanitized));
+			return setShowConfirm(true);
+		} else {
+			return dispatchAlert(false);
+		}
 	};
 
 	// handles submitting the HTTP request to the server
@@ -253,6 +300,7 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 				{showReportOptions && (
 					<section className={styles.ReportsHandler_handler}>
 						<form className={styles.ReportsHandler_handler_form}>
+							{/* REPORT TYPE */}
 							<div className={styles.ReportsHandler_handler_form_item}>
 								<CustomDropdown
 									name="reportType"
@@ -264,6 +312,7 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 									setSelection={handleReportVals}
 								/>
 							</div>
+							{/* DATE RANGE TYPE */}
 							<div className={styles.ReportsHandler_handler_form_item}>
 								{!isEmptyVal(reportVals.reportType) && (
 									<CustomDropdown
@@ -277,6 +326,7 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 									/>
 								)}
 							</div>
+							{/* DATES HANDLER */}
 							<div className={styles.ReportsHandler_handler_form_item}>
 								<ReportsDateHandler
 									reportVals={reportVals}
@@ -414,6 +464,5 @@ ReportsHandler.defaultProps = {
 
 ReportsHandler.propTypes = {
 	title: PropTypes.string,
-	residents: PropTypes.array.isRequired,
-	facilityID: PropTypes.string.isRequired
+	residents: PropTypes.array.isRequired
 };
