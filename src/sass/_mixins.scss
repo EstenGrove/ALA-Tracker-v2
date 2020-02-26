@@ -2,6 +2,31 @@
 
 // handles scrolling shadows
 @mixin scroll_gradient {
+	background: -webkit-gradient(
+			linear,
+			left top,
+			left bottom,
+			color-stop(30%, #ffffff),
+			to(#ffffff)
+		),
+		-webkit-gradient(
+				linear,
+				left top,
+				left bottom,
+				from(#ffffff),
+				color-stop(70%, #ffffff)
+			) 0 100%,
+		radial-gradient(
+			farthest-side at 50% 0,
+			rgba(34, 34, 34, 0.5),
+			rgba(0, 0, 0, 0)
+		),
+		radial-gradient(
+				farthest-side at 50% 100%,
+				rgba(34, 34, 34, 0.5),
+				rgba(0, 0, 0, 0)
+			)
+			0 100%;
 	background: linear-gradient(#ffffff 30%, #ffffff),
 		linear-gradient(#ffffff, #ffffff 70%) 0 100%,
 		radial-gradient(
@@ -188,6 +213,13 @@
 	align-items: flex-start;
 }
 
+@mixin row_center {
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-pack: center;
+	justify-content: center;
+}
+
 // flex row centered horizontally and vertically
 @mixin row_center_all {
 	display: -webkit-box;
@@ -216,6 +248,7 @@
 	display: flex;
 	-webkit-box-pack: end;
 	justify-content: flex-end;
+	-webkit-box-align: start;
 	align-items: flex-start;
 }
 

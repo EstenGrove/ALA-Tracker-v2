@@ -4,6 +4,26 @@ import { findStatusID } from "./utils_status";
 import { getResolutionID } from "./utils_resolution";
 import { ReportsCompletionModel, ReportsExceptionModel } from "./utils_models";
 
+// "sanitizes" a object, by removing ALL empty values
+// "empty" === (undefined|null|"")
+const getNonEmptyValues = values => {
+	const keys = Object.keys(values);
+	const vals = Object.values(values);
+	return vals.reduce((all, val, idx) => {
+		if (!isEmptyVal(val)) {
+			return {
+				...all,
+				[keys[idx]]: val
+			};
+		}
+		return all;
+	});
+};
+
+///////////////////////////////////////
+//////// REPORT MODEL UPDATERS ////////
+///////////////////////////////////////
+
 // ✅ FINISHED!
 // populates a new ReportParms data model for a report
 const createReportParams = vals => {
@@ -187,3 +207,6 @@ export { createReportParams, createReportSorts, createReportModel };
 
 // CREATE REPORT DESCRIPTIONS //
 export { getRangeDescription, getFilterDescription, createReportDescription };
+
+// HELPERS
+export { getNonEmptyValues };

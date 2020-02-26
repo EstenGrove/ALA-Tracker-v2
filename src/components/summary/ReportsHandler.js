@@ -14,10 +14,8 @@ import {
 	SORTS,
 	DATE_RANGE_TYPES as RANGE_TYPES
 } from "../../helpers/utils_options";
-import {
-	getStartAndEndDates,
-	getNonEmptyValues
-} from "../../helpers/utils_reports";
+import { getNonEmptyValues } from "../../helpers/utils_reports";
+import { getStartAndEndDates } from "../../helpers/utils_dates";
 import styles from "../../css/summary/ReportsHandler.module.scss";
 import sprite from "../../assets/carets-arrows.svg";
 // SHARED COMPONENTS

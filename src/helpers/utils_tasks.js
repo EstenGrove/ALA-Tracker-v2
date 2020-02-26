@@ -3,6 +3,7 @@ import { replaceNullWithMsg, addEllipsis } from "./utils_processing";
 import { findStatusNameFromID } from "./utils_status";
 import { getCategoryNameFromID } from "./utils_categories";
 import { formatPastDate } from "./utils_dates.js";
+import { findShiftName } from "./utils_shifts.js";
 import { format } from "date-fns";
 
 export const SCHEDULED_ID = "AssessmentTrackingTaskId";
@@ -104,6 +105,10 @@ const getTaskID = task => {
 	return isScheduledTask(task) ? SCHEDULED_ID : UNSCHEDULED_ID;
 };
 
+// DETERMINES WHETHER A SCHEDULED TASK OR UNSCHEDULED TASK ID IS REQUIRED
+const getTaskIdType = task => {
+	return isScheduledTask(task) ? SCHEDULED_ID : UNSCHEDULED_ID;
+};
 // checks for notes in unscheduled tasks
 const checkForNotes = (task, msg) => {
 	if (isEmptyVal(task.Notes) && isEmptyVal(task.Description)) {
@@ -156,6 +161,13 @@ const getTaskCategory = task => {
 	);
 };
 
+const getTaskShift = task => {
+	if (isScheduledTask(task)) {
+		return task.Shift;
+	}
+	return findShiftName(task.CompletedAssessmentShiftId);
+};
+
 export {
 	findTaskRecordByProp,
 	sortByIdAsc,
@@ -178,4 +190,11 @@ export {
 };
 
 // determining scheduled|unscheduled tasks and their ids
-export { isScheduledTask, isUnscheduledTask, hasProp, getTaskID };
+export {
+	isScheduledTask,
+	isUnscheduledTask,
+	hasProp,
+	getTaskID,
+	getTaskIdType,
+	getTaskShift
+};
