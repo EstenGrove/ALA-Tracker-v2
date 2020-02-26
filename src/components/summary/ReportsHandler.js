@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PropTypes } from "prop-types";
 import { themeColors } from "../../helpers/utils_styles";
 import { isEmptyVal } from "../../helpers/utils_types";
-import { ALERTS_MODEL as alerts } from "../../helpers/utils_alerts";
+import { ALERTS_MODEL } from "../../helpers/utils_alerts";
 import {
 	createReportDescription,
 	checkForRange
@@ -27,6 +27,14 @@ import AlertsNotifier from "../shared/AlertsNotifier";
 import ReportsDateHandler from "./ReportsDateHandler";
 import ReportsFiltersHandler from "./ReportsFiltersHandler";
 import ReportsSortsHandler from "./ReportsSortsHandler";
+
+const alerts = {
+	...ALERTS_MODEL,
+	ERROR: {
+		heading: "Error",
+		subheading: "Please finish filling out the form."
+	}
+};
 
 // CUSTOM STYLES - BUTTONS
 const loadBtn = {
@@ -115,7 +123,7 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 	});
 	// primary handler for <CustomDropdown/>'s
 	const handleReportVals = (name, option) => {
-		setReportVals({
+		return setReportVals({
 			...reportVals,
 			[name]: option
 		});
@@ -271,6 +279,13 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 		}
 	};
 
+	const typeHandler = () => {
+		if (reportVals.reportType === "Completion Report") {
+			return { color: themeColors.main.green };
+		}
+		return { color: themeColors.main.red };
+	};
+
 	return (
 		<>
 			<article className={styles.ReportsHandler}>
@@ -292,7 +307,7 @@ const ReportsHandler = ({ title, facilityID, residents = [] }) => {
 						{!isEmptyVal(reportVals.reportType)
 							? "You've requested a "
 							: "Please select a report"}{" "}
-						<b>{reportVals.reportType}</b>
+						<b style={typeHandler()}>{reportVals.reportType}</b>
 					</h2>
 				</section>
 				{showReportOptions && (
