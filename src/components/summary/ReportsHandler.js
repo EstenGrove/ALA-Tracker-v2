@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
 import { themeColors } from "../../helpers/utils_styles";
-import { isEmptyVal } from "../../helpers/utils_types";
+import { isEmptyVal, isEmptyArray } from "../../helpers/utils_types";
 import { ALERTS_MODEL } from "../../helpers/utils_alerts";
 import {
 	createReportDescription,
 	checkForRange
 } from "../../helpers/utils_validation";
-import { createReportModel } from "../../helpers/utils_reportFilters";
 import {
 	REPORTS,
 	FILTERS,
 	SORTS,
 	DATE_RANGE_TYPES as RANGE_TYPES
 } from "../../helpers/utils_options";
-import { getNonEmptyValues } from "../../helpers/utils_reports";
+import {
+	getNonEmptyValues,
+	getReportType,
+	createReportModel
+} from "../../helpers/utils_reports";
 import { getStartAndEndDates } from "../../helpers/utils_dates";
 import { getReportInfo, executeReport } from "../../helpers/utils_reports";
 import styles from "../../css/summary/ReportsHandler.module.scss";
@@ -103,6 +106,7 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 		reportType: "",
 		reportRangeType: "",
 		// reportRangeType(s)
+		byLast30: "",
 		byQuarter: "",
 		byMonth: "",
 		byDate: "",
@@ -122,6 +126,7 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 		sortByStaff: "", // asc/desc
 		sortByTimeStamp: "" // asc/desc
 	});
+
 	// primary handler for <CustomDropdown/>'s
 	const handleReportVals = (name, option) => {
 		return setReportVals({
@@ -187,6 +192,23 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 		});
 	};
 
+	const resolveReport = async model => {
+		const reportName = getReportType(reportVals);
+		setReportIsLoading(true);
+		const reportData = await executeReport(
+			currentUser.token,
+			reportName,
+			model,
+			"PDF"
+		);
+		console.log("reportData", reportData);
+		if (!isEmptyArray(reportData)) {
+			dispatch({ type: "RUN_REPORT" });
+			return reportData;
+		}
+		return reportData;
+	};
+
 	// cancel report request
 	const cancelReportRequest = e => {
 		e.preventDefault();
@@ -195,15 +217,17 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 	};
 	const confirmReportRequest = e => {
 		e.preventDefault();
-		const sanitized = getNonEmptyValues({
+		const model = createReportModel({
 			...reportVals,
 			facilityID: currentUser.facilityID
 		});
-		const { startDate, endDate } = getStartAndEndDates(sanitized);
-		const model = createReportModel({
-			...sanitized,
-			startDate: startDate,
-			endDate: endDate
+		const reportData = resolveReport(model);
+		console.log("reportData(confirmation)", reportData);
+		dispatch({
+			type: "REQUEST_REPORT",
+			data: {
+				reportModel: model
+			}
 		});
 		setShowConfirm(false);
 	};
@@ -237,7 +261,7 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 	const handleFormValidation = e => {
 		e.preventDefault();
 		if (!isEmptyVal(reportVals.startDate) && !isEmptyVal(reportVals.endDate)) {
-			const { sanitized, model } = sanitizeAndGetModel(reportVals);
+			const { sanitized } = sanitizeAndGetModel(reportVals);
 			setReportDesc(createReportDescription(sanitized));
 			return setShowConfirm(true);
 			// NEED TO CHECK THE DATE RANGE TYPE'S VALUE
@@ -280,6 +304,7 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 		}
 	};
 
+	// handles styles for the report type display
 	const typeHandler = () => {
 		if (reportVals.reportType === "Completion Report") {
 			return { color: themeColors.main.green };
@@ -287,23 +312,23 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 		return { color: themeColors.main.red };
 	};
 
-	// fetches report data on inital load
-	const getReportData = async () => {
-		const { token, facilityID } = currentUser;
-		const reportData = await getReportInfo(token, facilityID);
-		return reportData;
-	};
-
 	useEffect(() => {
 		let isMounted = true;
 		if (!isMounted) {
 			return;
 		}
+		// fetches report data on inital load
+		const getReportData = async () => {
+			const { token, facilityID } = currentUser;
+			const reportData = await getReportInfo(token, facilityID);
+			return reportData;
+		};
+
 		getReportData();
 		return () => {
 			isMounted = false;
 		};
-	}, []);
+	}, [currentUser]);
 
 	return (
 		<>

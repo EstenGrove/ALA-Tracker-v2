@@ -120,6 +120,9 @@ const createReportDescription = vals => {
 
 const checkForRange = vals => {
 	switch (vals.reportRangeType) {
+		case "Last 30 days": {
+			return vals.byLast30;
+		}
 		case "By Month":
 			return vals.byMonth;
 		case "By Quarter":

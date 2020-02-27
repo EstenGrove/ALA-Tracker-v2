@@ -59,16 +59,10 @@ const initialGlobalState = {
 		vitals: []
 	},
 	reports: {
-		src: "",
-		details: {
-			dateRange: {
-				startDate: "",
-				endDate: ""
-			},
-			model: {
-				ReportParms: [],
-				ReportSorts: []
-			}
+		currentReport: {
+			src: "",
+			model: {},
+			registry: {}
 		},
 		recentlyViewed: []
 	}
@@ -210,6 +204,37 @@ const reducer = (state, action) => {
 				globals: {
 					...state.globals,
 					scheduledTasks: [...state.globals.scheduledTasks]
+				}
+			};
+		}
+		case "REQUEST_REPORT": {
+			const { reportModel } = action.data;
+
+			return {
+				...state,
+				app: {
+					...state.app,
+					isLoading: true
+				},
+				reports: {
+					...state.reports,
+					currentReport: {
+						model: { ...reportModel },
+						src: "",
+						registry: {}
+					}
+				}
+			};
+		}
+		case "RUN_REPORT": {
+			return {
+				...state,
+				app: {
+					...state.app,
+					hasLoaded: true,
+					isLoading: false,
+					isError: false,
+					hasCache: true
 				}
 			};
 		}

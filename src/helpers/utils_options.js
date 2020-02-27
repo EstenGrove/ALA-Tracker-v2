@@ -130,7 +130,7 @@ const SORTS = [
 	"By TimeStamp"
 ];
 const DATE_RANGE_TYPES = [
-	"Last 30 days",
+	// "Last 30 days",
 	"By Month",
 	"By Quarter",
 	"Specific Date",

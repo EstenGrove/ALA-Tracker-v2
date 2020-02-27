@@ -1,6 +1,6 @@
 import { test } from "./utils_env";
 import { reports } from "./utils_endpoints";
-import { isEmptyVal } from "./utils_types";
+import { isEmptyVal, isEmptyObj } from "./utils_types";
 import { findShiftID } from "./utils_shifts";
 import { findStatusID } from "./utils_status";
 import { getResolutionID } from "./utils_resolution";
@@ -67,7 +67,7 @@ const executeReport = async (
 		const response = await request.json();
 		console.log(response);
 
-		return response;
+		return response.Data;
 	} catch (err) {
 		return console.log("An error occured: " + err);
 	}
@@ -315,6 +315,12 @@ const createReportDescription = vals => {
 	return desc;
 };
 
+const getReportType = vals => {
+	if (isEmptyObj(vals)) return;
+	if (isEmptyVal(vals.reportType)) return;
+	return vals.reportType.replace(" ", "");
+};
+
 // REPORT REQUEST/DOWNLOAD HELPERS //
 export { getReportInfo, executeReport, executeReportAsync, constructReportURL };
 
@@ -325,4 +331,4 @@ export { createReportParams, createReportSorts, createReportModel };
 export { getRangeDescription, getFilterDescription, createReportDescription };
 
 // HELPERS
-export { getNonEmptyValues };
+export { getNonEmptyValues, getReportType };
