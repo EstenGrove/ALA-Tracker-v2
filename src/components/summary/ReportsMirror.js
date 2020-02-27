@@ -47,8 +47,6 @@ const ReportsMirror = ({
 					alt={alt}
 					title={title}
 					className={styles.ReportsMirror_mirror}
-					type="application/pdf"
-					allow
 					loading="lazy"
 				/>
 			)}

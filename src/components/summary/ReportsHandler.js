@@ -266,7 +266,7 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 	const sanitizeAndGetModel = reportVals => {
 		const { startDate, endDate } = createDateRange(reportVals);
 		const sanitized = getNonEmptyValues({
-			...reportVals,
+			reportVals,
 			facilityID: currentUser.facilityID,
 			startDate: startDate,
 			endDate: endDate
