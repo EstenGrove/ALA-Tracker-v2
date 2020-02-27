@@ -37,13 +37,14 @@ const ReportsFiltersHandler = ({
 						name="filterByRoomNumStart"
 						id="filterByRoomNumStart"
 						placeholder="Begin Room #"
+						val={reportVals.filterByRoomNumStart}
 						handleChange={handleChange}
-						customStyles={{ marginRight: "1.5rem" }}
 					/>
 					<TextInput
 						name="filterByRoomNumEnd"
 						id="filterByRoomNumEnd"
 						placeholder="End Room #"
+						val={reportVals.filterByRoomNumEnd}
 						handleChange={handleChange}
 					/>
 				</section>

@@ -5,8 +5,8 @@
 	width: auto;
 
 	&_byRoom {
-		width: max-content;
+		width: 100%;
 		height: auto;
-		@include row_start_start;
+		@include row_between_start;
 	}
 }

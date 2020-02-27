@@ -109,8 +109,6 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 	const [reportDesc, setReportDesc] = useState("");
 	const [showReportOptions, setShowReportOptions] = useState(true);
 
-	const [mirrorSrc, setMirrorSrc] = useState("");
-
 	const [reportVals, setReportVals] = useState({
 		// base selections
 		reportType: "",
@@ -224,18 +222,12 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 				fileRegistry[0].FileRegistryID,
 				fileRegistry[0].FileName
 			);
-			console.group("224");
-			console.log("fileRegistry.ID", fileRegistry[0].FileRegistryID);
-			console.log("filename", fileRegistry[0].FileName);
-			console.log("urlMirror", urlMirror);
-			console.groupEnd();
-			setMirrorSrc(urlMirror);
-			// return dispatch({
-			// 	type: "INIT_MIRROR",
-			// 	data: {
-			// 		src: urlMirror
-			// 	}
-			// });
+			return dispatch({
+				type: "INIT_MIRROR",
+				data: {
+					src: urlMirror
+				}
+			});
 		}
 		return fileRegistry;
 	};
