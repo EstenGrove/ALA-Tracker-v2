@@ -108,6 +108,11 @@ const executeReportAsync = async (
 	}
 };
 
+const createReportMirror = blob => {
+	const fileURL = window.URL.createObjectURL(blob);
+	return fileURL;
+};
+
 // handles forming the url string used for report mirroring
 const constructReportURL = (token, urlPath) => {
 	let url = test.base + urlPath;
@@ -331,4 +336,4 @@ export { createReportParams, createReportSorts, createReportModel };
 export { getRangeDescription, getFilterDescription, createReportDescription };
 
 // HELPERS
-export { getNonEmptyValues, getReportType };
+export { getNonEmptyValues, getReportType, createReportMirror };

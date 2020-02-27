@@ -210,6 +210,7 @@ const reducer = (state, action) => {
 		}
 		// ACTUALLY SUBMITS REQUEST TO RUN REPORT
 		// UPDATES CURRENT REPORT MODEL IN STATE
+		// REPORT LOADING STATE
 		case "REQUEST_REPORT": {
 			const { reportModel } = action.data;
 
@@ -256,6 +257,10 @@ const reducer = (state, action) => {
 
 			return {
 				...state,
+				app: {
+					...state.app,
+					isLoading: false
+				},
 				reports: {
 					...state.reports,
 					currentReport: {

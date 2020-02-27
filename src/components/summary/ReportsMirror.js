@@ -30,10 +30,11 @@ const ReportsMirror = ({
 	title = "",
 	size = "LG",
 	isLoading = false,
+	mirrorType = "EMBED", // implement later
 	status = null
 }) => {
 	const isReady = () => {
-		if (!isEmptyVal(src) && status === "ready") {
+		if (!isEmptyVal(src)) {
 			return true;
 		}
 		return false;
@@ -41,16 +42,16 @@ const ReportsMirror = ({
 
 	return (
 		<section className={styles.ReportsMirror} style={sizes[size]}>
-			{isReady() && (
-				<iframe
+			{!isEmptyVal(src) && (
+				<embed
 					src={src}
 					alt={alt}
 					title={title}
+					type="application/pdf"
 					className={styles.ReportsMirror_mirror}
-					loading="lazy"
 				/>
 			)}
-			{!isLoading && !status && (
+			{!isLoading && !isReady() && (
 				<div className={styles.ReportsMirror_empty}>
 					<h2 className={styles.ReportsMirror_empty_heading}>
 						No Report Has Been Loaded

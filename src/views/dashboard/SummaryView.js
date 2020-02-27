@@ -11,6 +11,7 @@ import { isEmptyVal, isEmptyObj } from "../../helpers/utils_types";
 const SummaryView = () => {
 	const { state, dispatch } = useContext(GlobalStateContext);
 	const { app, user, globals, reports } = state;
+	const { currentReport, recentlyViewed } = reports;
 	const { residents } = globals;
 
 	useEffect(() => {
@@ -34,11 +35,11 @@ const SummaryView = () => {
 			/>
 			<ReportPane title="Report">
 				<ReportsMirror
-					src={reports.currentReport.src}
+					src={currentReport.src}
 					isLoading={app.isLoading}
 					status={
-						!isEmptyObj(reports.currentReport.registry)
-							? reports.currentReport.registry.Status
+						!isEmptyObj(currentReport.registry)
+							? currentReport.registry.Status
 							: ""
 					}
 				/>

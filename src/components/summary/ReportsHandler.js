@@ -16,12 +16,14 @@ import {
 import {
 	getNonEmptyValues,
 	getReportType,
-	createReportModel
+	createReportModel,
+	createReportMirror
 } from "../../helpers/utils_reports";
 import {
 	saveFile,
 	downloadFile,
-	createFileURL
+	createFileURL,
+	initReportMirror
 } from "../../helpers/utils_downloads";
 import { getStartAndEndDates } from "../../helpers/utils_dates";
 import { getReportInfo, executeReport } from "../../helpers/utils_reports";
@@ -106,6 +108,9 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 	const [alertType, setAlertType] = useState("ERROR");
 	const [reportDesc, setReportDesc] = useState("");
 	const [showReportOptions, setShowReportOptions] = useState(true);
+
+	const [mirrorSrc, setMirrorSrc] = useState("");
+
 	const [reportVals, setReportVals] = useState({
 		// base selections
 		reportType: "",
@@ -214,17 +219,23 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 					registry: fileRegistry[0]
 				}
 			});
-			const blob = await downloadFile(
+			const urlMirror = await initReportMirror(
 				currentUser.token,
 				fileRegistry[0].FileRegistryID,
 				fileRegistry[0].FileName
 			);
-			return dispatch({
-				type: "INIT_MIRROR",
-				data: {
-					src: createFileURL(blob)
-				}
-			});
+			console.group("224");
+			console.log("fileRegistry.ID", fileRegistry[0].FileRegistryID);
+			console.log("filename", fileRegistry[0].FileName);
+			console.log("urlMirror", urlMirror);
+			console.groupEnd();
+			setMirrorSrc(urlMirror);
+			// return dispatch({
+			// 	type: "INIT_MIRROR",
+			// 	data: {
+			// 		src: urlMirror
+			// 	}
+			// });
 		}
 		return fileRegistry;
 	};
@@ -242,7 +253,6 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 			facilityID: currentUser.facilityID
 		});
 		const reportData = resolveReport(model);
-		console.log("reportData(confirmation)", reportData);
 		dispatch({
 			type: "REQUEST_REPORT",
 			data: {
@@ -278,6 +288,11 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 		};
 	};
 
+	// checks for date range
+	// if has date selection, then creates the start/end dates,
+	// creates description,
+	// opens confirmation
+	// if no date selection, then show dispatches alert message
 	const handleFormValidation = e => {
 		e.preventDefault();
 		if (!isEmptyVal(reportVals.startDate) && !isEmptyVal(reportVals.endDate)) {

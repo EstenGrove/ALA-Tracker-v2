@@ -16,11 +16,30 @@ const downloadFile = async (token, id, filename = null) => {
 				"Content-Type": "application/json"
 			}
 		});
-		console.log("REQUEST(downloadFile)", request);
+		const blob = await request.blob();
+		return blob;
+	} catch (err) {
+		console.log("There was an error " + err.message);
+		return err;
+	}
+};
+const initReportMirror = async (token, id, filename = null) => {
+	let url = test.base + downloads.getFile;
+	url += "?id=" + id;
+
+	try {
+		const request = await fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: "Basic " + btoa(test.user + ":" + test.password),
+				SecurityToken: token,
+				"Content-Type": "application/json"
+			}
+		});
+		console.log("initReportMirror", request);
 		const blob = await request.blob();
 		console.log("BLOB", blob);
-		return blob;
-		// return saveFile(blob, filename);
+		return window.URL.createObjectURL(blob);
 	} catch (err) {
 		console.log("There was an error " + err.message);
 		return err;
@@ -89,4 +108,10 @@ const createFileURL = blob => {
 // DOWNLOAD & FILE HELPERS //
 export { serializer, serializeWithKey };
 
-export { saveFile, downloadFile, downloadFileMany, createFileURL };
+export {
+	saveFile,
+	downloadFile,
+	downloadFileMany,
+	initReportMirror,
+	createFileURL
+};
