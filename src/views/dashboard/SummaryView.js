@@ -6,6 +6,7 @@ import ReportPane from "../../components/summary/ReportPane";
 import ReportsMirror from "../../components/summary/ReportsMirror";
 import ReportsHandler from "../../components/summary/ReportsHandler";
 import { useContext } from "react";
+import { isEmptyVal, isEmptyObj } from "../../helpers/utils_types";
 
 const SummaryView = () => {
 	const { state, dispatch } = useContext(GlobalStateContext);
@@ -32,7 +33,15 @@ const SummaryView = () => {
 				dispatch={dispatch}
 			/>
 			<ReportPane title="Report">
-				<ReportsMirror src={reports.src} isLoading={app.isLoading} />
+				<ReportsMirror
+					src={reports.currentReport.src}
+					isLoading={app.isLoading}
+					status={
+						!isEmptyObj(reports.currentReport.registry)
+							? reports.currentReport.registry.Status
+							: ""
+					}
+				/>
 			</ReportPane>
 		</section>
 	);

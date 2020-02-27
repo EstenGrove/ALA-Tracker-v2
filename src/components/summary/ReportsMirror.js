@@ -33,7 +33,7 @@ const ReportsMirror = ({
 	status = null
 }) => {
 	const isReady = () => {
-		if (!isEmptyVal(src) && status === "Ready") {
+		if (!isEmptyVal(src) && status === "ready") {
 			return true;
 		}
 		return false;
@@ -47,6 +47,9 @@ const ReportsMirror = ({
 					alt={alt}
 					title={title}
 					className={styles.ReportsMirror_mirror}
+					type="application/pdf"
+					allow
+					loading="lazy"
 				/>
 			)}
 			{!isLoading && !status && (

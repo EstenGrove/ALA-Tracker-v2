@@ -18,6 +18,11 @@ import {
 	getReportType,
 	createReportModel
 } from "../../helpers/utils_reports";
+import {
+	saveFile,
+	downloadFile,
+	createFileURL
+} from "../../helpers/utils_downloads";
 import { getStartAndEndDates } from "../../helpers/utils_dates";
 import { getReportInfo, executeReport } from "../../helpers/utils_reports";
 import styles from "../../css/summary/ReportsHandler.module.scss";
@@ -195,18 +200,33 @@ const ReportsHandler = ({ title, dispatch, currentUser, residents }) => {
 	const resolveReport = async model => {
 		const reportName = getReportType(reportVals);
 		setReportIsLoading(true);
-		const reportData = await executeReport(
+		const fileRegistry = await executeReport(
 			currentUser.token,
 			reportName,
 			model,
 			"PDF"
 		);
-		console.log("reportData", reportData);
-		if (!isEmptyArray(reportData)) {
-			dispatch({ type: "RUN_REPORT" });
-			return reportData;
+		console.log("fileRegistry", fileRegistry);
+		if (!isEmptyArray(fileRegistry)) {
+			dispatch({
+				type: "GET_REPORT",
+				data: {
+					registry: fileRegistry[0]
+				}
+			});
+			const blob = await downloadFile(
+				currentUser.token,
+				fileRegistry[0].FileRegistryID,
+				fileRegistry[0].FileName
+			);
+			return dispatch({
+				type: "INIT_MIRROR",
+				data: {
+					src: createFileURL(blob)
+				}
+			});
 		}
-		return reportData;
+		return fileRegistry;
 	};
 
 	// cancel report request

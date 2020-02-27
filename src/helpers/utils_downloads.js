@@ -3,7 +3,7 @@ import { test } from "./utils_env";
 import { downloads } from "./utils_endpoints";
 
 // downloads a single file.
-const downloadFile = async (token, id) => {
+const downloadFile = async (token, id, filename = null) => {
 	let url = test.base + downloads.getFile;
 	url += "?id=" + id;
 
@@ -17,9 +17,10 @@ const downloadFile = async (token, id) => {
 			}
 		});
 		console.log("REQUEST(downloadFile)", request);
-		const blob = await new Blob([request]);
+		const blob = await request.blob();
 		console.log("BLOB", blob);
-		return await blob;
+		return blob;
+		// return saveFile(blob, filename);
 	} catch (err) {
 		console.log("There was an error " + err.message);
 		return err;
@@ -70,22 +71,22 @@ const serializeWithKey = (paramsList, customKey) => {
 		.join("&");
 };
 
-// takes a file blob and filename
-// inits a download using URL.createObjectURL
-const startDownload = (blob, filename) => {
+// MUST TRANSFORM THE RESPONSE OBJECT IMMEDIATELY IN FETCH RETURN,
+//  THEN PASS BLOB TO THIS HELPER
+const saveFile = (blob, filename) => {
+	const fileURL = window.URL.createObjectURL(blob);
 	const link = document.createElement("a");
-	const url = window.URL.createObjectURL(blob);
-
-	link.href = url;
-	link.download = filename;
-	document.body.appendChild(link);
-
+	link.href = fileURL;
+	link.download = filename; // INCLUDES FILE EXTENSION
 	link.click();
-	window.URL.revokeObjectURL(url);
-	return;
+	window.URL.revokeObjectURL(fileURL);
+};
+
+const createFileURL = blob => {
+	return window.URL.createObjectURL(blob);
 };
 
 // DOWNLOAD & FILE HELPERS //
 export { serializer, serializeWithKey };
 
-export { startDownload, downloadFile, downloadFileMany };
+export { saveFile, downloadFile, downloadFileMany, createFileURL };

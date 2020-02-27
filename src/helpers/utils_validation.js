@@ -89,8 +89,8 @@ const getFilterDescription = vals => {
 		case "By Status": {
 			return ` that's sorted by ${vals.filterByStatus} status `;
 		}
-		case "ByResolution": {
-			return ` that's sorted by the "${vals.filterByResolution}" resolution `;
+		case "By Resolution": {
+			return ` that's sorted by the task resolution `;
 		}
 		case "By Room #": {
 			return ` that's sorted from room #${vals.filterByRoomNumStart} to room #${vals.filterByRoomNumEnd} `;

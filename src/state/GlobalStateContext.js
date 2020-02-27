@@ -60,6 +60,7 @@ const initialGlobalState = {
 	},
 	reports: {
 		currentReport: {
+			name: "",
 			src: "",
 			model: {},
 			registry: {}
@@ -207,6 +208,8 @@ const reducer = (state, action) => {
 				}
 			};
 		}
+		// ACTUALLY SUBMITS REQUEST TO RUN REPORT
+		// UPDATES CURRENT REPORT MODEL IN STATE
 		case "REQUEST_REPORT": {
 			const { reportModel } = action.data;
 
@@ -226,7 +229,9 @@ const reducer = (state, action) => {
 				}
 			};
 		}
-		case "RUN_REPORT": {
+		// triggers report download
+		case "GET_REPORT": {
+			const { registry } = action.data;
 			return {
 				...state,
 				app: {
@@ -235,6 +240,28 @@ const reducer = (state, action) => {
 					isLoading: false,
 					isError: false,
 					hasCache: true
+				},
+				reports: {
+					...state.reports,
+					currentReport: {
+						...state.reports.currentReport,
+						registry: { ...registry },
+						name: registry.FileName
+					}
+				}
+			};
+		}
+		case "INIT_MIRROR": {
+			const { src } = action.data;
+
+			return {
+				...state,
+				reports: {
+					...state.reports,
+					currentReport: {
+						...state.reports.currentReport,
+						src: src
+					}
 				}
 			};
 		}
